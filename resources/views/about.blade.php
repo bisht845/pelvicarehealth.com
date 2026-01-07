@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Page Header -->
-    <section class="bg-gradient-to-br from-pink-50 via-blue-50 to-pink-100 py-16">
+    <section class="bg-gradient-to-br from-pink-50 via-white to-pink-100 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 class="text-4xl md:text-5xl font-bold heading-font text-gray-900 text-center mb-4">
                 About Pelvicare
@@ -39,7 +39,7 @@
                     </p>
                 </div>
                 <div class="relative">
-                    <div class="bg-gradient-to-br from-pink-200 to-blue-200 rounded-3xl p-8 shadow-2xl">
+                    <div class="bg-gradient-to-br from-pink-200 to-rose-200 rounded-3xl p-8 shadow-2xl">
                         <div class="bg-white rounded-2xl p-8 shadow-xl">
                             <div class="text-center">
                                 <div class="w-32 h-32 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full mx-auto mb-6 flex items-center justify-center">
@@ -48,7 +48,7 @@
                                     </svg>
                                 </div>
                                 <h3 class="text-2xl font-bold heading-font text-gray-900 mb-2">Dr. Sunita Patel, PT</h3>
-                                <p class="text-gray-600 mb-4">Physiotherapist</p>
+                                <p class="text-pink-600 font-medium mb-4">Senior Pelvic Health Physiotherapist</p>
                                 <p class="text-gray-700 leading-relaxed">
                                     With years of specialized training and experience in women's health physiotherapy, 
                                     Dr. Sunita Patel brings expertise, compassion, and dedication to every patient interaction.
@@ -62,7 +62,7 @@
     </section>
 
     <!-- Values Section -->
-    <section class="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section class="py-20 bg-gradient-to-br from-pink-50 to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
@@ -71,8 +71,8 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
-                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl flex items-center justify-center mb-6">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-pink-100 group hover:-translate-y-2 duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                         </svg>
@@ -84,8 +84,8 @@
                     </p>
                 </div>
                 
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-pink-100 group hover:-translate-y-2 duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-rose-400 to-rose-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                         </svg>
@@ -97,8 +97,8 @@
                     </p>
                 </div>
                 
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-6">
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-pink-100 group hover:-translate-y-2 duration-300">
+                    <div class="w-16 h-16 bg-gradient-to-br from-fuchsia-400 to-fuchsia-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>
@@ -123,9 +123,9 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex gap-6">
+                <div class="flex gap-6 p-4 rounded-xl hover:bg-pink-50 transition-colors">
                     <div class="flex-shrink-0">
-                        <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg flex items-center justify-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg flex items-center justify-center shadow-md">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
@@ -139,9 +139,9 @@
                     </div>
                 </div>
                 
-                <div class="flex gap-6">
+                <div class="flex gap-6 p-4 rounded-xl hover:bg-pink-50 transition-colors">
                     <div class="flex-shrink-0">
-                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-rose-400 to-rose-500 rounded-lg flex items-center justify-center shadow-md">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                             </svg>
@@ -155,9 +155,9 @@
                     </div>
                 </div>
                 
-                <div class="flex gap-6">
+                <div class="flex gap-6 p-4 rounded-xl hover:bg-pink-50 transition-colors">
                     <div class="flex-shrink-0">
-                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-fuchsia-400 to-fuchsia-500 rounded-lg flex items-center justify-center shadow-md">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                             </svg>
@@ -171,9 +171,9 @@
                     </div>
                 </div>
                 
-                <div class="flex gap-6">
+                <div class="flex gap-6 p-4 rounded-xl hover:bg-pink-50 transition-colors">
                     <div class="flex-shrink-0">
-                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-500 rounded-lg flex items-center justify-center shadow-md">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>

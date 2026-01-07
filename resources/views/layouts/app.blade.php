@@ -35,21 +35,72 @@
     </script>
     
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700|playfair-display:400,500,600,700" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <style>
+        /* CSS Variables */
+        :root {
+            --pink-50: #FFE5EC;
+            --pink-100: #FFC2D4;
+            --pink-200: #FF9DBB;
+            --pink-300: #FF85A2;
+            --pink-400: #FF5C8D;
+            --pink-500: #FF3D7F;
+            --pink-600: #E6356F;
+        }
+        
+        /* Base Styles */
         body {
             font-family: 'Inter', sans-serif;
         }
+        
         .heading-font {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Poppins', sans-serif;
         }
+        
         html {
             scroll-behavior: smooth;
+        }
+        
+        /* Remove global transition that causes conflicts */
+        button, a, input, select, textarea {
+            transition: all 0.2s ease;
+        }
+        
+        /* Glassmorphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Navigation Styles */
+        .nav-link {
+            display: inline-block;
+            padding: 0.5rem 0;
+            white-space: nowrap;
+        }
+        
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+        }
+        
+        .mobile-menu.active {
+            display: block;
         }
     </style>
 </head>
@@ -59,7 +110,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <div class="flex items-center">
+                <div class="flex items-center flex-shrink-0">
                     <a href="{{ route('home') }}" class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,16 +125,88 @@
                 </div>
                 
                 <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-pink-600 transition-colors font-medium {{ request()->routeIs('home') ? 'text-pink-600' : '' }}">Home</a>
-                    <a href="{{ route('services') }}" class="text-gray-700 hover:text-pink-600 transition-colors font-medium {{ request()->routeIs('services') ? 'text-pink-600' : '' }}">Services</a>
-                    <a href="{{ route('treatments') }}" class="text-gray-700 hover:text-pink-600 transition-colors font-medium {{ request()->routeIs('treatments') ? 'text-pink-600' : '' }}">Treatments</a>
-                    <a href="{{ route('about') }}" class="text-gray-700 hover:text-pink-600 transition-colors font-medium {{ request()->routeIs('about') ? 'text-pink-600' : '' }}">About</a>
-                    <a href="{{ route('contact') }}" class="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 py-2 rounded-full hover:from-pink-600 hover:to-pink-700 transition-all shadow-md hover:shadow-lg">Contact</a>
+                <div class="hidden md:flex items-center space-x-3 lg:space-x-4 xl:space-x-6">
+                    <a href="{{ route('home') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('home') ? 'text-pink-600' : '' }}">Home</a>
+                    <a href="{{ route('services') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('services') ? 'text-pink-600' : '' }}">Services</a>
+                    <a href="{{ route('treatments') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('treatments') ? 'text-pink-600' : '' }}">Treatments</a>
+                    <a href="{{ route('about') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('about') ? 'text-pink-600' : '' }}">About</a>
+                    
+                    @auth
+                        <!-- Authenticated User Menu -->
+                        <div class="relative group" id="user-menu-container">
+                            <button id="user-menu-button" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                                <div class="w-8 h-8 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </div>
+                                <span class="text-gray-700 font-medium text-sm hidden lg:block truncate max-w-[15rem]">{{ Auth::user()->name }}</span>
+                                <svg class="w-4 h-4 text-gray-600" style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            
+                            <!-- Dropdown Menu -->
+                            <div id="user-menu-dropdown" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
+                                <div class="px-4 py-3 border-b border-gray-200">
+                                    <p class="text-sm font-semibold text-gray-900">{{ Auth::user()->name }}</p>
+                                    <p class="text-xs text-gray-500 mt-1">{{ Auth::user()->email }}</p>
+                                    <span class="inline-block mt-2 px-2 py-1 text-xs font-semibold rounded-full 
+                                        {{ Auth::user()->isSuperAdmin() ? 'bg-purple-100 text-purple-800' : '' }}
+                                        {{ Auth::user()->isAdmin() ? 'bg-blue-100 text-blue-800' : '' }}
+                                        {{ Auth::user()->isPatient() ? 'bg-pink-100 text-pink-800' : '' }}">
+                                        {{ ucfirst(str_replace('_', ' ', Auth::user()->role)) }}
+                                    </span>
+                                </div>
+                                
+                                <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pink-50 transition-colors">
+                                    <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                    </svg>
+                                    Dashboard
+                                </a>
+                                
+                                @if(Auth::user()->isPatient())
+                                <a href="{{ route('patient.profile') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pink-50 transition-colors">
+                                    <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                    My Profile
+                                </a>
+                                @endif
+                                
+                                <form method="POST" action="{{ route('logout') }}" class="border-t border-gray-200 mt-2 pt-2">
+                                    @csrf
+                                    <button type="submit" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                        </svg>
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @else
+                        <!-- Guest User Menu -->
+                        <a href="{{ route('book-appointment') }}" class="btn-primary bg-gradient-to-r from-pink-400 to-pink-500 text-white px-4 lg:px-5 py-2 lg:py-2.5 rounded-full hover:from-pink-500 hover:to-pink-600 shadow-md hover:shadow-lg font-semibold text-xs lg:text-sm">
+                            <svg class="w-3.5 h-3.5 lg:w-4 lg:h-4 mr-1 lg:mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <span class="hidden lg:inline">Book Appointment</span>
+                            <span class="lg:hidden">Book</span>
+                        </a>
+                        
+                        <a href="{{ route('login') }}" class="btn-primary bg-white text-pink-600 px-3 lg:px-5 py-2 lg:py-2.5 rounded-full hover:bg-pink-50 shadow-md hover:shadow-lg border-2 border-pink-300 font-semibold text-xs lg:text-sm">
+                            Sign In
+                        </a>
+                        
+                        <a href="{{ route('register-physiotherapist') }}" class="btn-primary bg-white text-pink-600 px-3 lg:px-5 py-2 lg:py-2.5 rounded-full hover:bg-pink-50 shadow-md hover:shadow-lg border-2 border-pink-300 font-semibold text-xs lg:text-sm">
+                            <span class="hidden xl:inline">Join as Physiotherapist</span>
+                            <span class="xl:hidden">Join Us</span>
+                        </a>
+                    @endauth
                 </div>
                 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-button" class="md:hidden text-gray-700 hover:text-pink-600">
+                <button id="mobile-menu-button" class="md:hidden text-gray-700 hover:text-pink-600 p-2">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -92,13 +215,56 @@
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-white border-t border-gray-200">
             <div class="px-4 pt-2 pb-4 space-y-2">
-                <a href="{{ route('home') }}" class="block px-4 py-2 text-gray-700 hover:bg-pink-50 rounded-lg {{ request()->routeIs('home') ? 'bg-pink-50 text-pink-600' : '' }}">Home</a>
-                <a href="{{ route('services') }}" class="block px-4 py-2 text-gray-700 hover:bg-pink-50 rounded-lg {{ request()->routeIs('services') ? 'bg-pink-50 text-pink-600' : '' }}">Services</a>
-                <a href="{{ route('treatments') }}" class="block px-4 py-2 text-gray-700 hover:bg-pink-50 rounded-lg {{ request()->routeIs('treatments') ? 'bg-pink-50 text-pink-600' : '' }}">Treatments</a>
-                <a href="{{ route('about') }}" class="block px-4 py-2 text-gray-700 hover:bg-pink-50 rounded-lg {{ request()->routeIs('about') ? 'bg-pink-50 text-pink-600' : '' }}">About</a>
-                <a href="{{ route('contact') }}" class="block px-4 py-2 bg-gradient-to-r from-pink-500 to-pink-600 text-white rounded-lg text-center">Contact</a>
+                <a href="{{ route('home') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('home') ? 'bg-pink-50 text-pink-600' : '' }}">Home</a>
+                <a href="{{ route('services') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('services') ? 'bg-pink-50 text-pink-600' : '' }}">Services</a>
+                <a href="{{ route('treatments') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('treatments') ? 'bg-pink-50 text-pink-600' : '' }}">Treatments</a>
+                <a href="{{ route('about') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('about') ? 'bg-pink-50 text-pink-600' : '' }}">About</a>
+                
+                @auth
+                    <div class="border-t border-gray-200 pt-3 mt-3">
+                        <div class="px-4 py-2 mb-2">
+                            <p class="text-sm font-semibold text-gray-900">{{ Auth::user()->name }}</p>
+                            <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
+                        </div>
+                        <a href="{{ route('admin.dashboard') }}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium">
+                            <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                            </svg>
+                            Dashboard
+                        </a>
+                        @if(Auth::user()->isPatient())
+                        <a href="{{ route('patient.profile') }}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium">
+                            <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                            My Profile
+                        </a>
+                        @endif
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg font-medium">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                </svg>
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <a href="{{ route('book-appointment') }}" class="block px-4 py-3 bg-gradient-to-r from-pink-400 to-pink-500 text-white rounded-lg text-center font-semibold">
+                        📅 Book Appointment
+                    </a>
+                    
+                    <a href="{{ route('login') }}" class="block px-4 py-3 bg-white text-pink-600 rounded-lg text-center font-semibold border-2 border-pink-300">
+                        Sign In
+                    </a>
+                    
+                    <a href="{{ route('register-physiotherapist') }}" class="block px-4 py-3 bg-white text-pink-600 rounded-lg text-center font-semibold border-2 border-pink-300">
+                        Join as Physiotherapist
+                    </a>
+                @endauth
             </div>
         </div>
     </nav>
@@ -186,13 +352,45 @@
         </div>
     </footer>
     
+    
     <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button')?.addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+        // Mobile menu toggle with proper class handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (!menuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+            }
+
+            // User menu dropdown toggle
+            const userMenuButton = document.getElementById('user-menu-button');
+            const userMenuDropdown = document.getElementById('user-menu-dropdown');
+            const userMenuContainer = document.getElementById('user-menu-container');
+            
+            if (userMenuButton && userMenuDropdown) {
+                userMenuButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    userMenuDropdown.classList.toggle('hidden');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(event) {
+                    if (userMenuContainer && !userMenuContainer.contains(event.target)) {
+                        userMenuDropdown.classList.add('hidden');
+                    }
+                });
+            }
         });
     </script>
 </body>
 </html>
-

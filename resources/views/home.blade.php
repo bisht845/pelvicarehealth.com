@@ -10,50 +10,161 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
 
 @section('content')
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-pink-50 via-blue-50 to-pink-100 overflow-hidden">
-        <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
-            <div class="text-center max-w-4xl mx-auto">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold heading-font text-gray-900 mb-6 leading-tight">
-                    Why Does Sex Hurt? You're Not Alone - And It's Treatable
+    <section class="relative bg-gradient-to-br from-pink-50 via-white to-pink-100 overflow-hidden flex items-center" style="height: 70vh; min-height: 500px;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full py-8">
+                <!-- Left Column - Text Content -->
+            <div class="order-2 lg:order-1 flex flex-col justify-center">
+                <div class="inline-block bg-pink-50 border border-pink-100 text-pink-700 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold mb-6 w-fit shadow-sm">
+                    ✨ Trusted by 5,000+ Women Across India
+                </div>
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold heading-font text-gray-900 mb-6 leading-tight">
+                    Your Body Deserves <br>
+                    <span class="relative inline-block mt-2">
+                        <span class="relative z-10 bg-pink-100 text-pink-600 px-4 py-1 rounded-lg shadow-md border border-pink-200">Expert Care</span>
+                        <span class="absolute -bottom-2 -right-2 w-full h-full bg-pink-50 rounded-lg -z-0"></span>
+                    </span>
                 </h1>
-                <p class="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed">
-                    If you're experiencing pain during sex, leaking urine after childbirth, or pelvic pain that doctors can't explain—this is a safe place to find answers. <strong>Over 5,000 Indian women found relief here. You can too.</strong>
+                <p class="text-lg text-gray-700 mb-8 leading-relaxed max-w-lg">
+                    Pain during sex? Leaking urine? Pelvic discomfort? You're not alone. Connect with verified women's health physiotherapists who understand your concerns.
                 </p>
                 
-                <!-- Trust Signals -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 max-w-3xl mx-auto">
-                    <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm">
-                        <div class="text-2xl font-bold text-pink-600">200+</div>
-                        <div class="text-sm text-gray-600">Verified Specialists</div>
+                <!-- Trust Signals - One Line with Icons -->
+                <div class="flex items-center gap-6 md:gap-8 mb-8 flex-wrap">
+                    <div class="flex items-center gap-3 group">
+                        <div class="w-10 h-10 bg-white border border-pink-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm group-hover:shadow-md transition-all text-pink-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-lg font-bold text-gray-900 leading-none">200+</div>
+                            <div class="text-xs text-gray-500 font-medium mt-0.5">Specialists</div>
+                        </div>
                     </div>
-                    <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm">
-                        <div class="text-2xl font-bold text-pink-600">100%</div>
-                        <div class="text-sm text-gray-600">Women-Only</div>
+                    
+                    <div class="flex items-center gap-3 group">
+                        <div class="w-10 h-10 bg-white border border-pink-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm group-hover:shadow-md transition-all text-pink-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-lg font-bold text-gray-900 leading-none">100%</div>
+                            <div class="text-xs text-gray-500 font-medium mt-0.5">Women-Only</div>
+                        </div>
                     </div>
-                    <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm">
-                        <div class="text-2xl font-bold text-pink-600">3</div>
-                        <div class="text-sm text-gray-600">Major Cities</div>
-                    </div>
-                    <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-sm">
-                        <div class="text-2xl font-bold text-pink-600">24/7</div>
-                        <div class="text-sm text-gray-600">Online Available</div>
+                    
+                    <div class="flex items-center gap-3 group">
+                        <div class="w-10 h-10 bg-white border border-pink-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm group-hover:shadow-md transition-all text-pink-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-lg font-bold text-gray-900 leading-none">24/7</div>
+                            <div class="text-xs text-gray-500 font-medium mt-0.5">Available</div>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- CTAs -->
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('contact') }}" class="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-pink-600 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg">
-                        Find Your Specialist in 60 Seconds →
+                <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                    <a href="{{ route('book-appointment') }}" class="flex items-center justify-center bg-pink-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-pink-700 transition-all shadow-lg hover:shadow-pink-200 hover:-translate-y-0.5 text-center text-base min-w-[200px]" style="background-color: #db2777;">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                        Book Consultation
                     </a>
-                    <a href="#problems" class="bg-white text-pink-600 px-8 py-4 rounded-full font-semibold hover:bg-pink-50 transition-all shadow-lg hover:shadow-xl border-2 border-pink-200 text-lg">
-                        Read about common issues first →
+                    <a href="#problems" class="flex items-center justify-center bg-white text-gray-700 px-8 py-4 rounded-xl font-bold hover:bg-gray-50 transition-all border border-gray-200 hover:border-pink-200 hover:text-pink-600 text-center text-base min-w-[160px]">
+                        Learn More
                     </a>
                 </div>
                 
-                <p class="text-sm text-gray-600 mt-6">
-                    Available in <strong>Delhi NCR, Mumbai, Bangalore</strong> • Online & Home Visits Available
+                <p class="text-xs text-gray-500 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    Available in <strong>Delhi NCR, Mumbai, Bangalore, Pune</strong> • 💻 Online & In-Person
                 </p>
+            </div>
+            
+            <!-- Right Column - Image -->
+            <div class="order-1 lg:order-2 flex items-center justify-center p-4 lg:p-8">
+                <div class="relative w-full max-w-md mx-auto">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-pink-100 to-pink-50 rounded-[2rem] transform rotate-3 scale-105 -z-10"></div>
+                    <img src="{{ asset('images/hero_woman_consultation.png') }}" alt="Women's Health Consultation" class="relative rounded-[1.5rem] shadow-2xl w-full h-auto object-cover border-4 border-white max-h-[500px]">
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Physiotherapists Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
+                    Meet Our Expert Physiotherapists
+                </h2>
+                <p class="text-lg text-gray-600">Certified specialists dedicated to women's pelvic health</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Physiotherapist 1 -->
+                <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100">
+                    <div class="relative mb-4">
+                        <img src="{{ asset('images/physiotherapist_1.png') }}" alt="Dr. Priya Sharma" class="w-full h-64 object-cover rounded-xl">
+                        <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
+                            ⭐ 4.9/5
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-2">Dr. Priya Sharma</h3>
+                    <p class="text-sm text-pink-600 font-semibold mb-3">MPT in Women's Health</p>
+                    <p class="text-sm text-gray-600 mb-4">8+ years experience in pelvic floor rehabilitation and postpartum care</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">📍 Delhi NCR</span>
+                        <a href="{{ route('book-appointment') }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm">Book Now →</a>
+                    </div>
+                </div>
+                
+                <!-- Physiotherapist 2 -->
+                <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100">
+                    <div class="relative mb-4">
+                        <img src="{{ asset('images/physiotherapist_2.png') }}" alt="Dr. Anjali Mehta" class="w-full h-64 object-cover rounded-xl">
+                        <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
+                            ⭐ 5.0/5
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-2">Dr. Anjali Mehta</h3>
+                    <p class="text-sm text-pink-600 font-semibold mb-3">Pelvic Health Specialist</p>
+                    <p class="text-sm text-gray-600 mb-4">10+ years treating sexual pain and pelvic dysfunction</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">📍 Mumbai</span>
+                        <a href="{{ route('book-appointment') }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm">Book Now →</a>
+                    </div>
+                </div>
+                
+                <!-- Physiotherapist 3 -->
+                <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100">
+                    <div class="relative mb-4">
+                        <img src="{{ asset('images/physiotherapist_3.png') }}" alt="Dr. Kavita Reddy" class="w-full h-64 object-cover rounded-xl">
+                        <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
+                            ⭐ 4.8/5
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-2">Dr. Kavita Reddy</h3>
+                    <p class="text-sm text-pink-600 font-semibold mb-3">Prenatal & Postnatal Expert</p>
+                    <p class="text-sm text-gray-600 mb-4">12+ years in pregnancy care and postpartum recovery</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">📍 Bangalore</span>
+                        <a href="{{ route('book-appointment') }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm">Book Now →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <a href="{{ route('book-appointment') }}" class="inline-block bg-gradient-to-r from-pink-400 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-pink-500 hover:to-pink-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    View All Specialists
+                </a>
             </div>
         </div>
     </section>
