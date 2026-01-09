@@ -97,7 +97,6 @@ class DoctorController extends Controller
             'day_of_week' => 'required|in:monday,tuesday,wednesday,thursday,friday,saturday,sunday',
             'start_time' => 'required',
             'end_time' => 'required|after:start_time',
-            'is_available' => 'boolean',
         ]);
 
         DoctorAvailability::updateOrCreate(
@@ -121,6 +120,83 @@ class DoctorController extends Controller
         $availability->delete();
 
         return redirect()->back()->with('success', 'Availability deleted successfully.');
+    }
+
+    public function profile()
+    {
+        $doctor = auth()->user();
+        $profile = $doctor->doctorProfile;
+        $documents = $doctor->doctorProfile->documents ?? collect();
+        
+        return view('admin.doctor.profile', compact('profile', 'documents'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'bio' => 'nullable|string|max:1000',
+            'clinic_name' => 'nullable|string|max:255',
+            'clinic_address' => 'nullable|string|max:500',
+            'home_visit_fee' => 'nullable|numeric|min:0',
+            'clinic_visit_fee' => 'nullable|numeric|min:0',
+            'video_session_fee' => 'nullable|numeric|min:0',
+            'slot_duration' => 'nullable|integer|min:15|max:120',
+            'max_patients_per_day' => 'nullable|integer|min:1|max:50',
+            'buffer_time' => 'nullable|integer|min:0|max:60',
+            'same_day_bookings' => 'boolean',
+        ]);
+
+        $doctor = auth()->user();
+        $profile = $doctor->doctorProfile;
+        
+        $profile->update([
+            'bio' => $request->bio,
+            'clinic_name' => $request->clinic_name,
+            'clinic_address' => $request->clinic_address,
+            'home_visit_fee' => $request->home_visit_fee,
+            'clinic_visit_fee' => $request->clinic_visit_fee,
+            'video_session_fee' => $request->video_session_fee,
+            'slot_duration' => $request->slot_duration ?? 30,
+            'max_patients_per_day' => $request->max_patients_per_day ?? 10,
+            'buffer_time' => $request->buffer_time ?? 10,
+            'same_day_bookings' => $request->has('same_day_bookings'),
+        ]);
+
+        return redirect()->back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function reuploadDocument(Request $request, $documentId)
+    {
+        $request->validate([
+            'document' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ]);
+
+        $doctor = auth()->user();
+        $document = $doctor->doctorProfile->documents()->findOrFail($documentId);
+        
+        // Only allow re-upload if document was rejected
+        if ($document->status !== 'rejected') {
+            return redirect()->back()->with('error', 'Only rejected documents can be re-uploaded.');
+        }
+
+        // Delete old file if it exists
+        if ($document->file_path && \Storage::disk('public')->exists($document->file_path)) {
+            \Storage::disk('public')->delete($document->file_path);
+        }
+
+        // Store new file
+        $file = $request->file('document');
+        $path = $file->store('doctor-documents', 'public');
+        
+        // Update document record
+        $document->update([
+            'file_path' => $path,
+            'file_name' => $file->getClientOriginalName(),
+            'status' => 'pending',
+            'rejection_reason' => null,
+        ]);
+
+        return redirect()->back()->with('success', 'Document re-uploaded successfully! Awaiting admin review.');
     }
 }
 

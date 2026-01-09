@@ -8,9 +8,34 @@ use Illuminate\Http\Request;
 
 class ContentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $contents = Content::with(['creator', 'updater'])->latest()->paginate(20);
+        $query = Content::with(['creator', 'updater']);
+
+        // Search
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('slug', 'like', "%{$search}%");
+            });
+        }
+
+        // Filter by Type
+        if ($request->has('type') && $request->type != '') {
+            $query->where('type', $request->type);
+        }
+
+        // Filter by Status
+        if ($request->has('status') && $request->status != '') {
+            if ($request->status == 'published') {
+                $query->where('is_published', true);
+            } elseif ($request->status == 'draft') {
+                $query->where('is_published', false);
+            }
+        }
+
+        $contents = $query->latest()->paginate(20)->withQueryString();
         return view('admin.super-admin.content.index', compact('contents'));
     }
 

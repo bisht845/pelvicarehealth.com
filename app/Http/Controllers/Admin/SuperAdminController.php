@@ -47,5 +47,40 @@ class SuperAdminController extends Controller
 
         return redirect()->back()->with('success', 'User role updated successfully.');
     }
+
+    public function appointments(Request $request)
+    {
+        $query = Appointment::with(['patient', 'doctor']);
+
+        // Filter by status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Search by patient or doctor name
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->whereHas('patient', function($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('doctor', function($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
+            });
+        }
+
+        $appointments = $query->latest()->paginate(20);
+
+        $stats = [
+            'total' => Appointment::count(),
+            'pending' => Appointment::where('status', 'pending')->count(),
+            'confirmed' => Appointment::where('status', 'confirmed')->count(),
+            'completed' => Appointment::where('status', 'completed')->count(),
+            'cancelled' => Appointment::where('status', 'cancelled')->count(),
+        ];
+
+        return view('admin.super-admin.appointments', compact('appointments', 'stats'));
+    }
 }
 

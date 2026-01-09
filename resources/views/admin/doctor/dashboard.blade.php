@@ -66,11 +66,11 @@
     @endif
 
     <!-- Quick Actions -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <a href="{{ route('doctor.appointments') }}" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-6 hover:from-blue-600 hover:to-blue-700 transition shadow-lg">
             <div class="flex items-center">
-                <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-blue-500 bg-opacity-20 rounded-full p-3 mr-4">
+                    <svg class="w-6 h-6" fill="none" stroke="white" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
                 </div>
@@ -82,14 +82,27 @@
         </a>
         <a href="{{ route('doctor.availability') }}" class="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg p-6 hover:from-green-600 hover:to-green-700 transition shadow-lg">
             <div class="flex items-center">
-                <div class="bg-white bg-opacity-20 rounded-full p-3 mr-4">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="bg-green-500 bg-opacity-20 rounded-full p-3 mr-4">
+                    <svg class="w-6 h-6" fill="none" stroke="white" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
                 <div>
                     <h3 class="font-semibold text-lg">Set Availability</h3>
                     <p class="text-sm text-green-100">Update your schedule</p>
+                </div>
+            </div>
+        </a>
+        <a href="{{ route('doctor.profile') }}" class="bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg p-6 hover:from-purple-600 hover:to-purple-700 transition shadow-lg">
+            <div class="flex items-center">
+                <div class="bg-purple-500 bg-opacity-20 rounded-full p-3 mr-4">
+                    <svg class="w-6 h-6" fill="none" stroke="white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-lg">My Profile</h3>
+                    <p class="text-sm text-purple-100">Manage documents & details</p>
                 </div>
             </div>
         </a>

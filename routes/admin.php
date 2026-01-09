@@ -17,6 +17,9 @@ Route::middleware(['auth', 'role:super_admin'])->prefix('admin/super-admin')->na
     Route::get('/users', [SuperAdminController::class, 'manageUsers'])->name('users');
     Route::post('/users/{id}/role', [SuperAdminController::class, 'updateUserRole'])->name('users.update-role');
     
+    // Appointments Management
+    Route::get('/appointments', [SuperAdminController::class, 'appointments'])->name('appointments');
+    
     // Doctor Verification
     Route::get('/doctor-verification', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'index'])->name('doctor-verification');
     Route::get('/doctor-verification/{id}', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'show'])->name('doctor-verification.show');
@@ -41,6 +44,7 @@ Route::middleware(['auth', 'role:super_admin'])->prefix('admin/blog')->name('adm
     Route::get('/', [PostController::class, 'index'])->name('index');
     Route::get('/create', [PostController::class, 'create'])->name('create');
     Route::post('/', [PostController::class, 'store'])->name('store');
+    Route::post('/upload-image', [PostController::class, 'uploadImage'])->name('upload-image');
     Route::get('/{id}', [PostController::class, 'show'])->name('show');
     Route::get('/{id}/edit', [PostController::class, 'edit'])->name('edit');
     Route::put('/{id}', [PostController::class, 'update'])->name('update');
@@ -55,6 +59,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin/doctor')->name('doctor.
     Route::get('/availability', [DoctorController::class, 'availability'])->name('availability');
     Route::post('/availability', [DoctorController::class, 'storeAvailability'])->name('availability.store');
     Route::delete('/availability/{id}', [DoctorController::class, 'deleteAvailability'])->name('availability.delete');
+    Route::get('/profile', [DoctorController::class, 'profile'])->name('profile');
+    Route::post('/profile', [DoctorController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/profile/document/{id}/reupload', [DoctorController::class, 'reuploadDocument'])->name('profile.document.reupload');
 });
 
 // Patient Routes

@@ -27,8 +27,8 @@
                         <h2 class="text-2xl font-bold text-white heading-font">Verify Your Identity</h2>
                         <p class="text-blue-100 text-sm mt-1">Upload your professional documents</p>
                     </div>
-                    <div class="bg-white bg-opacity-20 rounded-full px-4 py-2">
-                        <span class="text-white font-semibold">Step 2 of 4</span>
+                    <div class="bg-white text-black bg-opacity-20 rounded-full px-4 py-2">
+                        <span class="text-black font-semibold">Step 2 of 4</span>
                     </div>
                 </div>
                 <div class="w-full bg-white bg-opacity-20 rounded-full h-2">

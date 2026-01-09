@@ -33,7 +33,7 @@
             </div>
             <div>
                 <label class="flex items-center">
-                    <input type="checkbox" name="is_available" checked class="rounded border-gray-300">
+                    <input type="checkbox" name="is_available" value="1" checked class="rounded border-gray-300">
                     <span class="ml-2 text-sm text-gray-700">Available</span>
                 </label>
             </div>

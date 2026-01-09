@@ -10,7 +10,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
 
 @section('content')
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-br from-pink-50 via-white to-pink-100 overflow-hidden flex items-center" style="height: 70vh; min-height: 500px;">
+    <section class="relative bg-gradient-to-br from-pink-50 via-white to-pink-100 overflow-hidden flex items-center" style="height: auto; min-height: 500px;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center w-full">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full py-8">
                 <!-- Left Column - Text Content -->
@@ -99,7 +99,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- Featured Physiotherapists Section -->
-    <section class="py-16 bg-white">
+    <section class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
@@ -111,8 +111,8 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Physiotherapist 1 -->
                 <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100">
-                    <div class="relative mb-4">
-                        <img src="{{ asset('images/physiotherapist_1.png') }}" alt="Dr. Priya Sharma" class="w-full h-64 object-cover rounded-xl">
+                    <div class="relative mb-6">
+                        <img src="{{ asset('images/physiotherapist_1.png') }}" alt="Dr. Priya Sharma" class="w-full h-84 object-cover rounded-xl">
                         <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
                             ⭐ 4.9/5
                         </div>
@@ -128,8 +128,8 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 
                 <!-- Physiotherapist 2 -->
                 <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100">
-                    <div class="relative mb-4">
-                        <img src="{{ asset('images/physiotherapist_2.png') }}" alt="Dr. Anjali Mehta" class="w-full h-64 object-cover rounded-xl">
+                    <div class="relative mb-6">
+                        <img src="{{ asset('images/physiotherapist_2.png') }}" alt="Dr. Anjali Mehta" class="w-full h-84 object-cover rounded-xl">
                         <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
                             ⭐ 5.0/5
                         </div>
@@ -145,8 +145,8 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 
                 <!-- Physiotherapist 3 -->
                 <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100">
-                    <div class="relative mb-4">
-                        <img src="{{ asset('images/physiotherapist_3.png') }}" alt="Dr. Kavita Reddy" class="w-full h-64 object-cover rounded-xl">
+                    <div class="relative mb-6">
+                        <img src="{{ asset('images/physiotherapist_3.png') }}" alt="Dr. Kavita Reddy" class="w-full h-84 object-cover rounded-xl">
                         <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
                             ⭐ 4.8/5
                         </div>
@@ -161,7 +161,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 </div>
             </div>
             
-            <div class="text-center mt-10">
+            <div class="text-center mt-8">
                 <a href="{{ route('book-appointment') }}" class="inline-block bg-gradient-to-r from-pink-400 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-pink-500 hover:to-pink-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                     View All Specialists
                 </a>
@@ -170,7 +170,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- Problem Discovery Section -->
-    <section id="problems" class="py-20 bg-white">
+    <section id="problems" class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
@@ -297,7 +297,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- Validation Section -->
-    <section class="py-20 bg-gradient-to-br from-pink-50 to-blue-50">
+    <section class="py-8 bg-gradient-to-br from-pink-50 to-blue-50">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-6">
                 "Doctors Said Everything Is Normal. So Why Does It Still Hurt?"
@@ -331,7 +331,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- How It Works Section -->
-    <section class="py-20 bg-white">
+    <section class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
@@ -380,7 +380,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- Social Proof Section -->
-    <section id="testimonials" class="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section id="testimonials" class="py-8 bg-gradient-to-br from-gray-50 to-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
@@ -434,7 +434,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- What We Treat Section -->
-    <section class="py-20 bg-white">
+    <section class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
@@ -495,7 +495,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- Who You'll Meet Section -->
-    <section class="py-20 bg-gradient-to-br from-pink-50 to-blue-50">
+    <section class="py-8 bg-gradient-to-br from-pink-50 to-blue-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
@@ -549,7 +549,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- Questions Section -->
-    <section class="py-20 bg-white">
+    <section class="py-8 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
@@ -595,7 +595,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- Privacy Promise Section -->
-    <section class="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section class="py-8 bg-gradient-to-br from-gray-50 to-gray-100">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-8">
                 Your Privacy Is Non-Negotiable
@@ -642,7 +642,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- Final Conversion Push -->
-    <section class="py-20 bg-gradient-to-r from-pink-500 to-pink-600">
+    <section class="py-8 bg-gradient-to-r from-pink-500 to-pink-600">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl md:text-4xl font-bold heading-font text-white mb-6">
                 If You've Been Carrying This Silently - Put It Down Here

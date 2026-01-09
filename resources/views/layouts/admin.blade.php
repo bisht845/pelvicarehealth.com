@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Admin Dashboard') - Pelvicare</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
@@ -13,6 +14,7 @@
             font-family: 'Poppins', sans-serif;
         }
     </style>
+    @stack('styles')
 </head>
 <body class="bg-gray-50">
     <div class="min-h-screen flex">
@@ -79,6 +81,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         Availability
+                    </a>
+                    <a href="{{ route('doctor.profile') }}" class="flex items-center px-4 py-3 mb-1 rounded-lg {{ request()->routeIs('doctor.profile*') ? 'bg-blue-100 text-blue-700 shadow-sm' : 'text-gray-700 hover:bg-gray-100' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        My Profile
                     </a>
                 @elseif(auth()->user()->isPatient())
                     <a href="{{ route('patient.dashboard') }}" class="flex items-center px-4 py-3 mb-1 rounded-lg {{ request()->routeIs('patient.dashboard') ? 'bg-pink-100 text-pink-700 shadow-sm' : 'text-gray-700 hover:bg-gray-100' }}">
@@ -179,6 +187,7 @@
             </div>
         </main>
     </div>
+    @stack('scripts')
 </body>
 </html>
 

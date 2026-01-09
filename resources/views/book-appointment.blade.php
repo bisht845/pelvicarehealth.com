@@ -20,10 +20,10 @@ Book Appointment - Pelvic Health Physiotherapy
 </section>
 
 <!-- Booking Form Section -->
-<section class="py-16 bg-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Left Column - Form -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+            <!-- Left Column - Form (Takes 2 columns) -->
             <div class="lg:col-span-2">
                 <div class="bg-white rounded-2xl shadow-xl p-8 border border-pink-100">
                     @if(session('success'))
@@ -38,29 +38,29 @@ Book Appointment - Pelvic Health Physiotherapy
                         <!-- Step 1: Personal Information -->
                         <div>
                             <h3 class="text-2xl font-bold heading-font text-gray-900 mb-6 flex items-center">
-                                <span class="w-8 h-8 bg-gradient-to-r from-pink-400 to-pink-500 text-white rounded-full flex items-center justify-center mr-3 text-sm">1</span>
+                                <span class="w-10 h-10 bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-full flex items-center justify-center mr-3 text-base shadow-md">1</span>
                                 Personal Information
                             </h3>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
-                                    <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all" placeholder="Enter your full name">
+                                    <input type="text" name="name" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm" placeholder="Enter your full name">
                                 </div>
                                 
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Age *</label>
-                                    <input type="number" name="age" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all" placeholder="Your age">
+                                    <input type="number" name="age" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm" placeholder="Your age">
                                 </div>
                                 
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number *</label>
-                                    <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all" placeholder="+91 XXXXX XXXXX">
+                                    <input type="tel" name="phone" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm" placeholder="+91 XXXXX XXXXX">
                                 </div>
                                 
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                                    <input type="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all" placeholder="your@email.com">
+                                    <input type="email" name="email" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm" placeholder="your@email.com">
                                 </div>
                             </div>
                         </div>
@@ -70,14 +70,14 @@ Book Appointment - Pelvic Health Physiotherapy
                         <!-- Step 2: Concern/Issue -->
                         <div>
                             <h3 class="text-2xl font-bold heading-font text-gray-900 mb-6 flex items-center">
-                                <span class="w-8 h-8 bg-gradient-to-r from-pink-400 to-pink-500 text-white rounded-full flex items-center justify-center mr-3 text-sm">2</span>
+                                <span class="w-10 h-10 bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-full flex items-center justify-center mr-3 text-base shadow-md">2</span>
                                 What brings you here?
                             </h3>
                             
                             <div class="space-y-4">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Select your primary concern *</label>
-                                    <select name="concern" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all">
+                                    <select name="concern" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm">
                                         <option value="">Choose a concern...</option>
                                         <option value="pain-during-sex">Pain During Sex</option>
                                         <option value="postpartum-recovery">Postpartum Recovery</option>
@@ -90,7 +90,7 @@ Book Appointment - Pelvic Health Physiotherapy
                                 
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Additional Details (Optional)</label>
-                                    <textarea name="details" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all" placeholder="Share any additional information that might help us serve you better..."></textarea>
+                                    <textarea name="details" rows="4" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm resize-none" placeholder="Share any additional information that might help us serve you better..."></textarea>
                                     <p class="text-xs text-gray-500 mt-1">Your privacy is our priority. All information is confidential.</p>
                                 </div>
                             </div>
@@ -101,19 +101,19 @@ Book Appointment - Pelvic Health Physiotherapy
                         <!-- Step 3: Appointment Preferences -->
                         <div>
                             <h3 class="text-2xl font-bold heading-font text-gray-900 mb-6 flex items-center">
-                                <span class="w-8 h-8 bg-gradient-to-r from-pink-400 to-pink-500 text-white rounded-full flex items-center justify-center mr-3 text-sm">3</span>
+                                <span class="w-10 h-10 bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-full flex items-center justify-center mr-3 text-base shadow-md">3</span>
                                 Appointment Preferences
                             </h3>
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Preferred Date *</label>
-                                    <input type="date" name="preferred_date" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all">
+                                    <input type="date" name="preferred_date" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm">
                                 </div>
                                 
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Preferred Time *</label>
-                                    <select name="preferred_time" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all">
+                                    <select name="preferred_time" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm">
                                         <option value="">Select time slot...</option>
                                         <option value="morning">Morning (9 AM - 12 PM)</option>
                                         <option value="afternoon">Afternoon (12 PM - 4 PM)</option>
@@ -123,7 +123,7 @@ Book Appointment - Pelvic Health Physiotherapy
                                 
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Consultation Type *</label>
-                                    <select name="consultation_type" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all">
+                                    <select name="consultation_type" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm">
                                         <option value="">Choose type...</option>
                                         <option value="video">Online Video Consultation</option>
                                         <option value="clinic">In-Clinic Visit</option>
@@ -133,7 +133,7 @@ Book Appointment - Pelvic Health Physiotherapy
                                 
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">City *</label>
-                                    <select name="city" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all">
+                                    <select name="city" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm">
                                         <option value="">Select city...</option>
                                         <option value="delhi">Delhi NCR</option>
                                         <option value="mumbai">Mumbai</option>
@@ -146,7 +146,7 @@ Book Appointment - Pelvic Health Physiotherapy
 
                         <!-- Submit Button -->
                         <div class="pt-6">
-                            <button type="submit" class="w-full bg-gradient-to-r from-pink-400 to-pink-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-pink-500 hover:to-pink-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                            <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:from-pink-600 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                                 <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
@@ -160,9 +160,9 @@ Book Appointment - Pelvic Health Physiotherapy
                 </div>
             </div>
 
-            <!-- Right Column - Info & Image -->
+            <!-- Right Column - Sidebar (Takes 1 column) -->
             <div class="lg:col-span-1">
-                <div class="sticky top-24 space-y-6">
+                <div class="sticky top-6 space-y-6">
                     <!-- Image -->
                     <div class="rounded-2xl overflow-hidden shadow-lg">
                         <img src="{{ asset('images/appointment_booking.png') }}" alt="Appointment Booking" class="w-full h-64 object-cover">
