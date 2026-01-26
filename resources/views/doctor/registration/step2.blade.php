@@ -53,8 +53,43 @@
                     </div>
                 </div>
 
-                <form action="{{ route('doctor.registration.store.step2') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <form action="{{ route('doctor.registration.store.step2') }}" method="POST" enctype="multipart/form-data" class="space-y-6" id="registrationForm">
                     @csrf
+                    
+                    <!-- Profile Photo Upload -->
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-blue-400 transition mb-6">
+                        <label class="block">
+                            <div class="flex items-center justify-between mb-2">
+                                <div>
+                                    <span class="block text-sm font-semibold text-gray-900">Profile Photo</span>
+                                    <span class="text-xs text-gray-500">This will be displayed on your public profile</span>
+                                    @if(isset($profile) && $profile->profile_image)
+                                        <span class="text-xs text-green-600 font-medium block mt-1">✓ Photo uploaded</span>
+                                        <div class="mt-3">
+                                            <img src="{{ asset('storage/' . $profile->profile_image) }}" alt="Current profile photo" class="w-32 h-40 object-cover rounded-lg border-2 border-gray-200">
+                                        </div>
+                                    @endif
+                                </div>
+                                <span class="px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded">Recommended</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-3">Supported: JPG, PNG (Max 1MB, 3:4 aspect ratio)</p>
+                            
+                            <!-- Image Preview and Crop Area -->
+                            <div id="imagePreviewContainer" class="hidden mb-4">
+                                <div class="relative bg-gray-100 rounded-lg overflow-hidden" style="max-width: 600px; max-height: 450px;">
+                                    <img id="imagePreview" src="" alt="Preview" class="max-w-full h-auto">
+                                </div>
+                                <p class="text-xs text-gray-600 mt-2">Crop your image to 3:4 aspect ratio (Height:Width). You can drag and resize the crop area.</p>
+                                <input type="hidden" name="profile_image_cropped" id="profile_image_cropped">
+                            </div>
+                            
+                            <input type="file" name="profile_image" id="profile_image" accept="image/jpeg,image/jpg,image/png" 
+                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 @error('profile_image') border-red-500 @enderror">
+                            @error('profile_image')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </label>
+                    </div>
                     
                     <!-- Required Documents -->
                     <div class="space-y-5">
@@ -209,5 +244,105 @@
         </div>
     </div>
 </div>
+
+<!-- Cropper.js CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+
+@push('scripts')
+<!-- Cropper.js JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<script>
+let cropper;
+let imagePreview = document.getElementById('imagePreview');
+let imagePreviewContainer = document.getElementById('imagePreviewContainer');
+let profileImageInput = document.getElementById('profile_image');
+let croppedImageInput = document.getElementById('profile_image_cropped');
+
+profileImageInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    
+    if (!file) {
+        imagePreviewContainer.classList.add('hidden');
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
+        return;
+    }
+    
+    // Validate file size (1MB)
+    if (file.size > 1024 * 1024) {
+        alert('File size must be less than 1MB. Please choose a smaller image.');
+        profileImageInput.value = '';
+        return;
+    }
+    
+    // Validate file type
+    if (!file.type.match('image.*')) {
+        alert('Please select an image file (JPG or PNG).');
+        profileImageInput.value = '';
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        imagePreview.src = e.target.result;
+        imagePreviewContainer.classList.remove('hidden');
+        
+        // Destroy existing cropper if any
+        if (cropper) {
+            cropper.destroy();
+        }
+        
+        // Initialize cropper with 3:4 aspect ratio (height:width)
+        cropper = new Cropper(imagePreview, {
+            aspectRatio: 3 / 4, // Height:Width = 3:4
+            viewMode: 1,
+            dragMode: 'move',
+            autoCropArea: 0.8,
+            restore: false,
+            guides: true,
+            center: true,
+            highlight: false,
+            cropBoxMovable: true,
+            cropBoxResizable: true,
+            toggleDragModeOnDblclick: false,
+            responsive: true,
+            minCropBoxWidth: 200,
+            minCropBoxHeight: 150, // 3:4 ratio: 200 * 3/4 = 150
+        });
+    };
+    reader.readAsDataURL(file);
+});
+
+// Before form submit, get cropped image
+document.getElementById('registrationForm').addEventListener('submit', function(e) {
+    if (cropper && profileImageInput.files.length > 0) {
+        e.preventDefault();
+        
+        // Get cropped canvas
+        const canvas = cropper.getCroppedCanvas({
+            width: 800,  // Output width
+            height: 600, // Output height (3:4 ratio: 800 * 3/4 = 600)
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+        });
+        
+        // Convert canvas to blob
+        canvas.toBlob(function(blob) {
+            // Convert blob to base64
+            const reader = new FileReader();
+            reader.onload = function() {
+                croppedImageInput.value = reader.result;
+                // Continue with form submission
+                e.target.submit();
+            };
+            reader.readAsDataURL(blob);
+        }, 'image/jpeg', 0.9); // 90% quality
+    }
+});
+</script>
+@endpush
 @endsection
 

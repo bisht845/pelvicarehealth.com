@@ -41,6 +41,7 @@
     
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
     
     <style>
         /* CSS Variables */
@@ -127,6 +128,7 @@
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-3 lg:space-x-4 xl:space-x-6">
                     <a href="{{ route('home') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('home') ? 'text-pink-600' : '' }}">Home</a>
+                    <a href="{{ route('doctors.index') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('doctors.*') ? 'text-pink-600' : '' }}">Doctors</a>
                     <a href="{{ route('services') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('services') ? 'text-pink-600' : '' }}">Services</a>
                     <a href="{{ route('treatments') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('treatments') ? 'text-pink-600' : '' }}">Treatments</a>
                     <a href="{{ route('about') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('about') ? 'text-pink-600' : '' }}">About</a>
@@ -218,6 +220,7 @@
         <div id="mobile-menu" class="mobile-menu md:hidden bg-white border-t border-gray-200">
             <div class="px-4 pt-2 pb-4 space-y-2">
                 <a href="{{ route('home') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('home') ? 'bg-pink-50 text-pink-600' : '' }}">Home</a>
+                <a href="{{ route('doctors.index') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('doctors.*') ? 'bg-pink-50 text-pink-600' : '' }}">Doctors</a>
                 <a href="{{ route('services') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('services') ? 'bg-pink-50 text-pink-600' : '' }}">Services</a>
                 <a href="{{ route('treatments') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('treatments') ? 'bg-pink-50 text-pink-600' : '' }}">Treatments</a>
                 <a href="{{ route('about') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('about') ? 'bg-pink-50 text-pink-600' : '' }}">About</a>
@@ -315,6 +318,7 @@
                         <li><a href="{{ route('home') }}#problems" class="hover:text-pink-400 transition-colors">Is This Normal?</a></li>
                         <li><a href="{{ route('about') }}" class="hover:text-pink-400 transition-colors">What to Expect</a></li>
                         <li><a href="{{ route('home') }}#testimonials" class="hover:text-pink-400 transition-colors">Success Stories</a></li>
+                        <li><a href="{{ route('doctors.index') }}" class="hover:text-pink-400 transition-colors">Our Specialists</a></li>
                         <li><a href="#" class="hover:text-pink-400 transition-colors">Blog</a></li>
                     </ul>
                 </div>
@@ -323,6 +327,7 @@
                     <h3 class="font-semibold mb-4 heading-font text-white">Company</h3>
                     <ul class="space-y-2 text-gray-400 text-sm">
                         <li><a href="{{ route('about') }}" class="hover:text-pink-400 transition-colors">About Us</a></li>
+                        <li><a href="{{ route('doctors.index') }}" class="hover:text-pink-400 transition-colors">Find a Doctor</a></li>
                         <li><a href="#" class="hover:text-pink-400 transition-colors">Privacy & Safety</a></li>
                         <li><a href="{{ route('contact') }}" class="hover:text-pink-400 transition-colors">Contact Us</a></li>
                         <li><a href="#" class="hover:text-pink-400 transition-colors">Partner Clinics</a></li>
@@ -392,5 +397,6 @@
             }
         });
     </script>
+    @stack('scripts')
 </body>
 </html>

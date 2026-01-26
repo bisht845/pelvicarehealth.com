@@ -23,8 +23,10 @@ Route::middleware(['auth', 'role:super_admin'])->prefix('admin/super-admin')->na
     // Doctor Verification
     Route::get('/doctor-verification', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'index'])->name('doctor-verification');
     Route::get('/doctor-verification/{id}', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'show'])->name('doctor-verification.show');
+    Route::post('/doctor-verification/bulk-approve', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'bulkApprove'])->name('doctor-verification.bulk-approve');
     Route::post('/doctor-verification/{id}/approve', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'approveDoctor'])->name('doctor-verification.approve');
     Route::post('/doctor-verification/{id}/reject', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'rejectDoctor'])->name('doctor-verification.reject');
+    Route::post('/doctor-verification/{id}/toggle-featured', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'toggleFeatured'])->name('doctor-verification.toggle-featured');
     Route::post('/doctor-verification/document/{id}/approve', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'approveDocument'])->name('doctor-verification.document.approve');
     Route::post('/doctor-verification/document/{id}/reject', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'rejectDocument'])->name('doctor-verification.document.reject');
 });
@@ -61,6 +63,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin/doctor')->name('doctor.
     Route::delete('/availability/{id}', [DoctorController::class, 'deleteAvailability'])->name('availability.delete');
     Route::get('/profile', [DoctorController::class, 'profile'])->name('profile');
     Route::post('/profile', [DoctorController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/profile/photo', [DoctorController::class, 'updateProfilePhoto'])->name('profile.photo.update');
     Route::post('/profile/document/{id}/reupload', [DoctorController::class, 'reuploadDocument'])->name('profile.document.reupload');
 });
 

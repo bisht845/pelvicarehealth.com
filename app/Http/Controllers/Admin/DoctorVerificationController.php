@@ -7,20 +7,58 @@ use App\Models\User;
 use App\Models\DoctorProfile;
 use App\Models\DoctorDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DoctorVerificationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $doctors = User::where('role', 'admin')
-            ->with(['doctorProfile', 'doctorDocuments'])
-            ->where(function($query) {
+        $query = User::where('role', 'admin')
+            ->with(['doctorProfile', 'doctorDocuments']);
+
+        // Filter by verification status
+        if ($request->has('status') && $request->status) {
+            if ($request->status === 'pending') {
+                $query->where(function($q) {
+                    $q->whereHas('doctorProfile', function($profileQuery) {
+                        $profileQuery->where('verification_status', 'pending');
+                    })->orDoesntHave('doctorProfile');
+                });
+            } elseif ($request->status === 'rejected') {
                 $query->whereHas('doctorProfile', function($q) {
-                    $q->whereIn('verification_status', ['pending', 'rejected']);
+                    $q->where('verification_status', 'rejected');
+                });
+            } elseif ($request->status === 'approved') {
+                $query->whereHas('doctorProfile', function($q) {
+                    $q->where('verification_status', 'approved');
+                });
+            }
+        } else {
+            // Default: show pending and rejected
+            $query->where(function($q) {
+                $q->whereHas('doctorProfile', function($profileQuery) {
+                    $profileQuery->whereIn('verification_status', ['pending', 'rejected']);
                 })->orDoesntHave('doctorProfile');
-            })
-            ->latest()
-            ->paginate(20);
+            });
+        }
+
+        // Filter by city
+        if ($request->has('city') && $request->city) {
+            $query->whereHas('doctorProfile', function($q) use ($request) {
+                $q->where('city', 'like', '%' . $request->city . '%');
+            });
+        }
+
+        // Search by name or email
+        if ($request->has('search') && $request->search) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+
+        $doctors = $query->latest()->paginate(20)->appends($request->query());
 
         return view('admin.super-admin.doctor-verification', compact('doctors'));
     }
@@ -49,14 +87,14 @@ class DoctorVerificationController extends Controller
         if ($profile) {
             $profile->update([
                 'verification_status' => 'approved',
-                'verified_by' => auth()->id(),
+                'verified_by' => Auth::id(),
                 'verified_at' => now(),
             ]);
 
             // Approve all documents
             $doctor->doctorDocuments()->update([
                 'status' => 'approved',
-                'verified_by' => auth()->id(),
+                'verified_by' => Auth::id(),
                 'verified_at' => now(),
             ]);
         }
@@ -82,7 +120,7 @@ class DoctorVerificationController extends Controller
             $profile->update([
                 'verification_status' => 'rejected',
                 'rejection_reason' => $request->rejection_reason,
-                'verified_by' => auth()->id(),
+                'verified_by' => Auth::id(),
                 'verified_at' => now(),
             ]);
         }
@@ -96,7 +134,7 @@ class DoctorVerificationController extends Controller
         
         $document->update([
             'status' => 'approved',
-            'verified_by' => auth()->id(),
+            'verified_by' => Auth::id(),
             'verified_at' => now(),
         ]);
 
@@ -114,11 +152,87 @@ class DoctorVerificationController extends Controller
         $document->update([
             'status' => 'rejected',
             'rejection_reason' => $request->rejection_reason,
-            'verified_by' => auth()->id(),
+            'verified_by' => Auth::id(),
             'verified_at' => now(),
         ]);
 
         return redirect()->back()->with('success', 'Document rejected.');
+    }
+
+    public function bulkApprove(Request $request)
+    {
+        $request->validate([
+            'doctor_ids' => 'required|array',
+            'doctor_ids.*' => 'exists:users,id',
+        ]);
+
+        $doctorIds = $request->doctor_ids;
+        $approvedCount = 0;
+
+        foreach ($doctorIds as $doctorId) {
+            $doctor = User::findOrFail($doctorId);
+            
+            if (!$doctor->isAdmin()) {
+                continue;
+            }
+
+            $profile = $doctor->doctorProfile;
+            
+            if ($profile) {
+                $profile->update([
+                    'verification_status' => 'approved',
+                    'verified_by' => Auth::id(),
+                    'verified_at' => now(),
+                ]);
+
+                // Approve all documents
+                $doctor->doctorDocuments()->update([
+                    'status' => 'approved',
+                    'verified_by' => Auth::id(),
+                    'verified_at' => now(),
+                ]);
+                
+                $approvedCount++;
+            }
+        }
+
+        return redirect()->back()->with('success', "Successfully approved {$approvedCount} doctor(s)!");
+    }
+
+    public function toggleFeatured(Request $request, $id)
+    {
+        $doctor = User::findOrFail($id);
+        
+        if (!$doctor->isAdmin()) {
+            abort(404);
+        }
+
+        $profile = $doctor->doctorProfile;
+        
+        if (!$profile) {
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'Doctor profile not found.'], 404);
+            }
+            return redirect()->back()->with('error', 'Doctor profile not found.');
+        }
+
+        // Toggle featured status
+        $profile->update([
+            'is_featured' => !$profile->is_featured,
+        ]);
+
+        $status = $profile->is_featured ? 'featured' : 'normal';
+        
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => "Doctor marked as {$status} successfully!",
+                'is_featured' => $profile->is_featured,
+                'status_text' => $profile->is_featured ? 'Premium' : 'Normal'
+            ]);
+        }
+        
+        return redirect()->back()->with('success', "Doctor marked as {$status} successfully!");
     }
 }
 

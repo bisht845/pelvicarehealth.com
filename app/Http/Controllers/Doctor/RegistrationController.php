@@ -97,7 +97,7 @@ class RegistrationController extends Controller
         // Get uploaded documents to show which ones are already uploaded
         $documents = $user->doctorDocuments;
         
-        return view('doctor.registration.step2', compact('documents'));
+        return view('doctor.registration.step2', compact('documents', 'profile'));
     }
 
     public function storeStep2(Request $request)
@@ -112,6 +112,8 @@ class RegistrationController extends Controller
         
         // Validate - only require if not already uploaded
         $rules = [
+            'profile_image' => 'nullable|image|mimes:jpeg,jpg,png|max:1024', // 1MB max
+            'profile_image_cropped' => 'nullable|string',
             'iap_membership' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
             'clinic_proof' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ];
@@ -160,6 +162,18 @@ class RegistrationController extends Controller
                         'status' => 'pending',
                     ]
                 );
+            }
+        }
+
+        // Handle profile image upload (cropped)
+        if ($request->has('profile_image_cropped') && $request->profile_image_cropped) {
+            $this->saveCroppedProfileImage($user, $request->profile_image_cropped);
+        } elseif ($request->hasFile('profile_image')) {
+            // Fallback: if cropped image not provided, use original (shouldn't happen but just in case)
+            $file = $request->file('profile_image');
+            if ($file->getSize() <= 1024 * 1024) { // 1MB check
+                $path = $file->store('doctor-profiles', 'public');
+                $this->updateDoctorProfileImage($user, $path);
             }
         }
 
@@ -447,6 +461,73 @@ class RegistrationController extends Controller
         }
         
         return view('doctor.registration.complete', compact('profile'));
+    }
+
+    /**
+     * Save cropped profile image from base64 string
+     */
+    private function saveCroppedProfileImage($user, $base64Image)
+    {
+        // Remove data URL prefix if present
+        $base64Image = preg_replace('/^data:image\/\w+;base64,/', '', $base64Image);
+        $imageData = base64_decode($base64Image);
+        
+        if ($imageData === false) {
+            return false;
+        }
+        
+        // Generate unique filename
+        $filename = 'profile_' . $user->id . '_' . time() . '.jpg';
+        $path = 'doctor-profiles/' . $filename;
+        
+        // Delete old profile image if exists
+        $profile = $user->doctorProfile;
+        if ($profile && $profile->profile_image) {
+            $oldPath = $profile->profile_image;
+            if (Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+        }
+        
+        // Save new image
+        Storage::disk('public')->put($path, $imageData);
+        
+        // Update or create profile with image path
+        if ($profile) {
+            $profile->update(['profile_image' => $path]);
+        } else {
+            DoctorProfile::create([
+                'user_id' => $user->id,
+                'profile_image' => $path,
+            ]);
+        }
+        
+        return true;
+    }
+
+    /**
+     * Update doctor profile image
+     */
+    private function updateDoctorProfileImage($user, $path)
+    {
+        $profile = $user->doctorProfile;
+        
+        // Delete old profile image if exists
+        if ($profile && $profile->profile_image && $profile->profile_image !== $path) {
+            if (Storage::disk('public')->exists($profile->profile_image)) {
+                Storage::disk('public')->delete($profile->profile_image);
+            }
+        }
+        
+        // Update or create profile with image path
+        if ($profile) {
+            $profile->update(['profile_image' => $path]);
+        } else {
+            DoctorProfile::create([
+                'user_id' => $user->id,
+                'profile_image' => $path,
+            ]);
+        }
     }
 }
 

@@ -8,6 +8,89 @@ Women's Health Physiotherapy India | Pain During Sex & Postpartum Care
 Pain during sex? Leaking urine after childbirth? Connect with verified women's health physiotherapists in Delhi NCR. Private, safe, judgment-free care.
 @endsection
 
+@push('styles')
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<style>
+    /* Featured Doctors Swiper Styles */
+    .featured-doctors-swiper {
+        padding: 20px 60px 60px 60px !important;
+    }
+    
+    .featured-doctors-swiper .swiper-slide {
+        height: auto;
+    }
+    
+    /* Navigation Arrows */
+    .featured-doctors-next,
+    .featured-doctors-prev {
+        background: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        color: #db2777;
+        transition: all 0.3s ease;
+    }
+    
+    .featured-doctors-next:hover,
+    .featured-doctors-prev:hover {
+        background: #fce7f3;
+        transform: scale(1.1);
+        box-shadow: 0 6px 16px rgba(219, 39, 119, 0.3);
+    }
+    
+    .featured-doctors-next::after,
+    .featured-doctors-prev::after {
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    /* Pagination */
+    .featured-doctors-pagination {
+        bottom: 20px !important;
+    }
+    
+    .featured-doctors-pagination .swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+        background: #d1d5db;
+        opacity: 1;
+        transition: all 0.3s ease;
+    }
+    
+    .featured-doctors-pagination .swiper-pagination-bullet-active {
+        background: #db2777;
+        width: 30px;
+        border-radius: 5px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .featured-doctors-swiper {
+            padding: 20px 40px 60px 40px !important;
+        }
+        
+        .featured-doctors-next,
+        .featured-doctors-prev {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .featured-doctors-next::after,
+        .featured-doctors-prev::after {
+            font-size: 14px;
+        }
+    }
+    
+    @media (max-width: 640px) {
+        .featured-doctors-swiper {
+            padding: 20px 30px 60px 30px !important;
+        }
+    }
+</style>
+@endpush
+
 @section('content')
     <!-- Hero Section -->
     <section class="relative bg-gradient-to-br from-pink-50 via-white to-pink-100 overflow-hidden flex items-center" style="height: auto; min-height: 500px;">
@@ -108,61 +191,68 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 <p class="text-lg text-gray-600">Certified specialists dedicated to women's pelvic health</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Physiotherapist 1 -->
-                <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100">
-                    <div class="relative mb-6">
-                        <img src="{{ asset('images/physiotherapist_1.png') }}" alt="Dr. Priya Sharma" class="w-full h-84 object-cover rounded-xl">
-                        <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
-                            ⭐ 4.9/5
-                        </div>
+            @if($featuredDoctors->count() > 0)
+            <!-- Swiper Container -->
+            <div class="relative">
+                <div class="swiper featured-doctors-swiper">
+                    <div class="swiper-wrapper">
+                        @foreach($featuredDoctors as $doctor)
+                            @php
+                                $profile = $doctor->doctorProfile;
+                                $specializations = is_array($profile->specializations) ? $profile->specializations : [];
+                                $rating = $profile->rating ?? 4.5;
+                                $city = $profile->city ?? 'Multiple Locations';
+                                $image = $profile->profile_image ? asset('storage/' . $profile->profile_image) : asset('images/physiotherapist_' . (($loop->index % 3) + 1) . '.png');
+                            @endphp
+                            <div class="swiper-slide">
+                                <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100 h-full">
+                                    <div class="relative mb-6">
+                                        <img src="{{ $image }}" alt="{{ $doctor->name }}" class="w-full h-64 object-cover rounded-xl">
+                                        <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
+                                            ⭐ {{ number_format($rating, 1) }}/5
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-2">{{ $doctor->name }}</h3>
+                                    @if(!empty($specializations))
+                                        <div class="flex flex-wrap gap-1.5 mb-3">
+                                            @foreach($specializations as $spec)
+                                                <span class="bg-pink-100 text-pink-700 px-2.5 py-1 rounded-full text-xs font-semibold border border-pink-200">
+                                                    {{ $spec }}
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <p class="text-sm text-pink-600 font-semibold mb-3">Women's Health Specialist</p>
+                                    @endif
+                                    <p class="text-sm text-gray-600 mb-4">
+                                        {{ $profile->years_of_experience ?? 0 }}+ years experience
+                                        @if($profile->bio)
+                                            {{ Str::limit(strip_tags($profile->bio), 60) }}
+                                        @endif
+                                    </p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs text-gray-500">📍 {{ $city }}</span>
+                                        <a href="{{ route('doctors.show', $doctor->id) }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm">View Profile →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-2">Dr. Priya Sharma</h3>
-                    <p class="text-sm text-pink-600 font-semibold mb-3">MPT in Women's Health</p>
-                    <p class="text-sm text-gray-600 mb-4">8+ years experience in pelvic floor rehabilitation and postpartum care</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-gray-500">📍 Delhi NCR</span>
-                        <a href="{{ route('book-appointment') }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm">Book Now →</a>
-                    </div>
-                </div>
-                
-                <!-- Physiotherapist 2 -->
-                <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100">
-                    <div class="relative mb-6">
-                        <img src="{{ asset('images/physiotherapist_2.png') }}" alt="Dr. Anjali Mehta" class="w-full h-84 object-cover rounded-xl">
-                        <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
-                            ⭐ 5.0/5
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-2">Dr. Anjali Mehta</h3>
-                    <p class="text-sm text-pink-600 font-semibold mb-3">Pelvic Health Specialist</p>
-                    <p class="text-sm text-gray-600 mb-4">10+ years treating sexual pain and pelvic dysfunction</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-gray-500">📍 Mumbai</span>
-                        <a href="{{ route('book-appointment') }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm">Book Now →</a>
-                    </div>
-                </div>
-                
-                <!-- Physiotherapist 3 -->
-                <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100">
-                    <div class="relative mb-6">
-                        <img src="{{ asset('images/physiotherapist_3.png') }}" alt="Dr. Kavita Reddy" class="w-full h-84 object-cover rounded-xl">
-                        <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
-                            ⭐ 4.8/5
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-2">Dr. Kavita Reddy</h3>
-                    <p class="text-sm text-pink-600 font-semibold mb-3">Prenatal & Postnatal Expert</p>
-                    <p class="text-sm text-gray-600 mb-4">12+ years in pregnancy care and postpartum recovery</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-gray-500">📍 Bangalore</span>
-                        <a href="{{ route('book-appointment') }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm">Book Now →</a>
-                    </div>
+                    <!-- Navigation arrows -->
+                    <div class="swiper-button-next featured-doctors-next"></div>
+                    <div class="swiper-button-prev featured-doctors-prev"></div>
+                    <!-- Pagination -->
+                    <div class="swiper-pagination featured-doctors-pagination"></div>
                 </div>
             </div>
+            @else
+            <div class="text-center py-12">
+                <p class="text-gray-600 mb-4">No doctors available at the moment.</p>
+            </div>
+            @endif
             
             <div class="text-center mt-8">
-                <a href="{{ route('book-appointment') }}" class="inline-block bg-gradient-to-r from-pink-400 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-pink-500 hover:to-pink-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <a href="{{ route('doctors.index') }}" class="inline-block bg-gradient-to-r from-pink-400 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-pink-500 hover:to-pink-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                     View All Specialists
                 </a>
             </div>
@@ -664,4 +754,76 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             </div>
         </div>
     </section>
+
+@push('scripts')
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Featured Doctors Swiper
+        const featuredDoctorsSwiper = new Swiper('.featured-doctors-swiper', {
+            // Responsive breakpoints
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: {{ $featuredDoctors->count() > 3 ? 'true' : 'false' }},
+            loopAdditionalSlides: 2,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+            },
+            speed: 600,
+            grabCursor: true,
+            
+            // Navigation arrows
+            navigation: {
+                nextEl: '.featured-doctors-next',
+                prevEl: '.featured-doctors-prev',
+            },
+            
+            // Pagination
+            pagination: {
+                el: '.featured-doctors-pagination',
+                clickable: true,
+                dynamicBullets: true,
+            },
+            
+            // Responsive breakpoints
+            breakpoints: {
+                // Mobile (default)
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                // Tablet
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 24,
+                },
+                // Desktop
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 32,
+                },
+                // Large Desktop
+                1280: {
+                    slidesPerView: 3,
+                    spaceBetween: 32,
+                },
+            },
+            
+            // Effects
+            effect: 'slide',
+            
+            // Accessibility
+            a11y: {
+                prevSlideMessage: 'Previous doctor',
+                nextSlideMessage: 'Next doctor',
+                firstSlideMessage: 'This is the first doctor',
+                lastSlideMessage: 'This is the last doctor',
+            },
+        });
+    });
+</script>
+@endpush
 @endsection

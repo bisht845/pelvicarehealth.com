@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use App\Models\DoctorAvailability;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
@@ -163,6 +164,82 @@ class DoctorController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function updateProfilePhoto(Request $request)
+    {
+        $request->validate([
+            'profile_image' => 'nullable|image|mimes:jpeg,jpg,png|max:1024', // 1MB max
+            'profile_image_cropped' => 'nullable|string',
+        ]);
+
+        $doctor = auth()->user();
+        $profile = $doctor->doctorProfile;
+        
+        if (!$profile) {
+            return redirect()->back()->with('error', 'Profile not found.');
+        }
+
+        // Handle cropped profile image
+        if ($request->has('profile_image_cropped') && $request->profile_image_cropped) {
+            $this->saveCroppedProfileImage($doctor, $request->profile_image_cropped);
+        } elseif ($request->hasFile('profile_image')) {
+            // Fallback: if cropped image not provided, use original
+            $file = $request->file('profile_image');
+            if ($file->getSize() <= 1024 * 1024) { // 1MB check
+                // Delete old profile image if exists
+                if ($profile->profile_image) {
+                    if (Storage::disk('public')->exists($profile->profile_image)) {
+                        Storage::disk('public')->delete($profile->profile_image);
+                    }
+                }
+                
+                $path = $file->store('doctor-profiles', 'public');
+                $profile->update(['profile_image' => $path]);
+            } else {
+                return redirect()->back()->with('error', 'Image size must be less than 1MB.');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Please select an image to upload.');
+        }
+
+        return redirect()->back()->with('success', 'Profile photo updated successfully.');
+    }
+
+    /**
+     * Save cropped profile image from base64 string
+     */
+    private function saveCroppedProfileImage($user, $base64Image)
+    {
+        // Remove data URL prefix if present
+        $base64Image = preg_replace('/^data:image\/\w+;base64,/', '', $base64Image);
+        $imageData = base64_decode($base64Image);
+        
+        if ($imageData === false) {
+            return false;
+        }
+        
+        $profile = $user->doctorProfile;
+        
+        // Delete old profile image if exists
+        if ($profile && $profile->profile_image) {
+            $oldPath = $profile->profile_image;
+            if (Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+        }
+        
+        // Generate unique filename
+        $filename = 'profile_' . $user->id . '_' . time() . '.jpg';
+        $path = 'doctor-profiles/' . $filename;
+        
+        // Save new image
+        Storage::disk('public')->put($path, $imageData);
+        
+        // Update profile with image path
+        $profile->update(['profile_image' => $path]);
+        
+        return true;
     }
 
     public function reuploadDocument(Request $request, $documentId)

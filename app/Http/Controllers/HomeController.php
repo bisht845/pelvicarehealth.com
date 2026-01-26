@@ -2,13 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        // Fetch only featured/premium verified doctors (limit to 10 for home page swiper)
+        $featuredDoctors = User::where('role', 'admin')
+            ->whereHas('doctorProfile', function($q) {
+                $q->where('verification_status', 'approved')
+                  ->where('profile_completed', true)
+                  ->where('is_featured', true);
+            })
+            ->with('doctorProfile')
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+
+        return view('home', compact('featuredDoctors'));
     }
     
     public function services()

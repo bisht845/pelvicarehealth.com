@@ -6,6 +6,80 @@
 
 @section('content')
 <div class="space-y-8">
+    <!-- Profile Photo Section -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-pink-50 to-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-xl font-bold heading-font text-gray-900">Profile Photo</h3>
+                    <p class="text-sm text-gray-600 mt-1">Update your profile picture (3:4 aspect ratio, max 1MB)</p>
+                </div>
+                <div class="p-3 bg-pink-100 rounded-xl">
+                    <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-8">
+            <form action="{{ route('doctor.profile.photo.update') }}" method="POST" enctype="multipart/form-data" id="photoUploadForm">
+                @csrf
+                
+                <div class="flex flex-col md:flex-row gap-8 items-start md:items-center">
+                    <!-- Current Photo -->
+                    <div class="flex-shrink-0">
+                        @if($profile->profile_image)
+                            <img src="{{ asset('storage/' . $profile->profile_image) }}" alt="Current profile photo" class="w-48 h-64 object-cover rounded-xl border-4 border-gray-200 shadow-lg">
+                        @else
+                            <div class="w-48 h-64 bg-gray-200 rounded-xl border-4 border-gray-300 flex items-center justify-center">
+                                <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Upload Section -->
+                    <div class="flex-1 w-full">
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-pink-400 transition">
+                            <label class="block">
+                                <div class="mb-4">
+                                    <span class="block text-sm font-semibold text-gray-900 mb-1">Upload New Photo</span>
+                                    <span class="text-xs text-gray-500">JPG or PNG, max 1MB, 3:4 aspect ratio (Height:Width)</span>
+                                </div>
+                                
+                                <!-- Image Preview and Crop Area -->
+                                <div id="imagePreviewContainer" class="hidden mb-4">
+                                    <div class="relative bg-gray-100 rounded-lg overflow-hidden" style="max-width: 600px; max-height: 450px;">
+                                        <img id="imagePreview" src="" alt="Preview" class="max-w-full h-auto">
+                                    </div>
+                                    <p class="text-xs text-gray-600 mt-2">Crop your image to 3:4 aspect ratio (Height:Width). You can drag and resize the crop area.</p>
+                                    <input type="hidden" name="profile_image_cropped" id="profile_image_cropped">
+                                </div>
+                                
+                                <input type="file" name="profile_image" id="profile_image" accept="image/jpeg,image/jpg,image/png" 
+                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 @error('profile_image') border-red-500 @enderror">
+                                @error('profile_image')
+                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                @enderror
+                            </label>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                                </svg>
+                                Update Photo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Profile Information Section -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-pink-50 to-white">
@@ -250,4 +324,104 @@
         </div>
     </div>
 </div>
+
+<!-- Cropper.js CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+
+@push('scripts')
+<!-- Cropper.js JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<script>
+let cropper;
+let imagePreview = document.getElementById('imagePreview');
+let imagePreviewContainer = document.getElementById('imagePreviewContainer');
+let profileImageInput = document.getElementById('profile_image');
+let croppedImageInput = document.getElementById('profile_image_cropped');
+
+profileImageInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    
+    if (!file) {
+        imagePreviewContainer.classList.add('hidden');
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
+        return;
+    }
+    
+    // Validate file size (1MB)
+    if (file.size > 1024 * 1024) {
+        alert('File size must be less than 1MB. Please choose a smaller image.');
+        profileImageInput.value = '';
+        return;
+    }
+    
+    // Validate file type
+    if (!file.type.match('image.*')) {
+        alert('Please select an image file (JPG or PNG).');
+        profileImageInput.value = '';
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        imagePreview.src = e.target.result;
+        imagePreviewContainer.classList.remove('hidden');
+        
+        // Destroy existing cropper if any
+        if (cropper) {
+            cropper.destroy();
+        }
+        
+        // Initialize cropper with 3:4 aspect ratio (height:width)
+        cropper = new Cropper(imagePreview, {
+            aspectRatio: 3 / 4, // Height:Width = 3:4
+            viewMode: 1,
+            dragMode: 'move',
+            autoCropArea: 0.8,
+            restore: false,
+            guides: true,
+            center: true,
+            highlight: false,
+            cropBoxMovable: true,
+            cropBoxResizable: true,
+            toggleDragModeOnDblclick: false,
+            responsive: true,
+            minCropBoxWidth: 200,
+            minCropBoxHeight: 150, // 3:4 ratio: 200 * 3/4 = 150
+        });
+    };
+    reader.readAsDataURL(file);
+});
+
+// Before form submit, get cropped image
+document.getElementById('photoUploadForm').addEventListener('submit', function(e) {
+    if (cropper && profileImageInput.files.length > 0) {
+        e.preventDefault();
+        
+        // Get cropped canvas
+        const canvas = cropper.getCroppedCanvas({
+            width: 800,  // Output width
+            height: 600, // Output height (3:4 ratio: 800 * 3/4 = 600)
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+        });
+        
+        // Convert canvas to blob
+        canvas.toBlob(function(blob) {
+            // Convert blob to base64
+            const reader = new FileReader();
+            reader.onload = function() {
+                croppedImageInput.value = reader.result;
+                // Continue with form submission
+                e.target.submit();
+            };
+            reader.readAsDataURL(blob);
+        }, 'image/jpeg', 0.9); // 90% quality
+    }
+});
+</script>
+@endpush
 @endsection

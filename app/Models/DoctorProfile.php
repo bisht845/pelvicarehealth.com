@@ -11,6 +11,7 @@ class DoctorProfile extends Model
     protected $fillable = [
         'user_id',
         'years_of_experience',
+        'rating',
         'specializations',
         'languages',
         'verification_status',
@@ -20,6 +21,8 @@ class DoctorProfile extends Model
         'bio',
         'clinic_name',
         'clinic_address',
+        'city',
+        'profile_image',
         'home_visit_fee',
         'clinic_visit_fee',
         'video_session_fee',
@@ -28,17 +31,20 @@ class DoctorProfile extends Model
         'buffer_time',
         'same_day_bookings',
         'profile_completed',
+        'is_featured',
     ];
 
     protected $casts = [
         'specializations' => 'array',
         'languages' => 'array',
+        'rating' => 'decimal:2',
         'home_visit_fee' => 'decimal:2',
         'clinic_visit_fee' => 'decimal:2',
         'video_session_fee' => 'decimal:2',
         'verified_at' => 'datetime',
         'same_day_bookings' => 'boolean',
         'profile_completed' => 'boolean',
+        'is_featured' => 'boolean',
     ];
 
     public function user(): BelongsTo
