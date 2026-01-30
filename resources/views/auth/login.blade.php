@@ -25,10 +25,16 @@
         <!-- Right Side - Form -->
         <div class="w-full md:w-1/2 p-8 md:p-12 lg:p-16 flex flex-col justify-center">
             <div class="text-center md:text-left mb-10">
-                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-pink-100 text-pink-600 mb-6 shadow-sm">
-                   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                    </svg>
+                <div class="flex justify-center md:justify-start mb-6">
+                    <img src="{{ asset('images/pelvicarehealth_logo.png') }}" 
+                         alt="Pelvicare Health" 
+                         class="h-16 w-auto object-contain"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hidden items-center justify-center w-12 h-12 rounded-full bg-pink-100 text-pink-600 shadow-sm">
+                       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
                 </div>
                 <h2 class="text-3xl font-bold heading-font text-gray-900">Sign In</h2>
                 <p class="mt-2 text-sm text-gray-600">Please enter your credentials to access your account</p>

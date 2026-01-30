@@ -66,20 +66,20 @@
                                     @if(isset($profile) && $profile->profile_image)
                                         <span class="text-xs text-green-600 font-medium block mt-1">✓ Photo uploaded</span>
                                         <div class="mt-3">
-                                            <img src="{{ asset('storage/' . $profile->profile_image) }}" alt="Current profile photo" class="w-32 h-40 object-cover rounded-lg border-2 border-gray-200">
+                                            <img src="{{ asset('storage/' . $profile->profile_image) }}" alt="Current profile photo" class="w-32 h-32 object-cover rounded-lg border-2 border-gray-200 aspect-square">
                                         </div>
                                     @endif
                                 </div>
                                 <span class="px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded">Recommended</span>
                             </div>
-                            <p class="text-xs text-gray-500 mb-3">Supported: JPG, PNG (Max 1MB, 3:4 aspect ratio)</p>
+                            <p class="text-xs text-gray-500 mb-3">Supported: JPG, PNG (Max 1MB, 1:1 square)</p>
                             
                             <!-- Image Preview and Crop Area -->
                             <div id="imagePreviewContainer" class="hidden mb-4">
-                                <div class="relative bg-gray-100 rounded-lg overflow-hidden" style="max-width: 600px; max-height: 450px;">
+                                <div class="relative bg-gray-100 rounded-lg overflow-hidden" style="max-width: 560px; max-height: 560px;">
                                     <img id="imagePreview" src="" alt="Preview" class="max-w-full h-auto">
                                 </div>
-                                <p class="text-xs text-gray-600 mt-2">Crop your image to 3:4 aspect ratio (Height:Width). You can drag and resize the crop area.</p>
+                                <p class="text-xs text-gray-600 mt-2">Crop your image to a 1:1 square. You can drag and resize the crop area.</p>
                                 <input type="hidden" name="profile_image_cropped" id="profile_image_cropped">
                             </div>
                             
@@ -295,9 +295,9 @@ profileImageInput.addEventListener('change', function(e) {
             cropper.destroy();
         }
         
-        // Initialize cropper with 3:4 aspect ratio (height:width)
+        // Initialize cropper with 1:1 (square) aspect ratio
         cropper = new Cropper(imagePreview, {
-            aspectRatio: 3 / 4, // Height:Width = 3:4
+            aspectRatio: 1,
             viewMode: 1,
             dragMode: 'move',
             autoCropArea: 0.8,
@@ -310,7 +310,7 @@ profileImageInput.addEventListener('change', function(e) {
             toggleDragModeOnDblclick: false,
             responsive: true,
             minCropBoxWidth: 200,
-            minCropBoxHeight: 150, // 3:4 ratio: 200 * 3/4 = 150
+            minCropBoxHeight: 200,
         });
     };
     reader.readAsDataURL(file);
@@ -321,10 +321,10 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     if (cropper && profileImageInput.files.length > 0) {
         e.preventDefault();
         
-        // Get cropped canvas
+        // Get cropped canvas (1:1 square)
         const canvas = cropper.getCroppedCanvas({
-            width: 800,  // Output width
-            height: 600, // Output height (3:4 ratio: 800 * 3/4 = 600)
+            width: 600,
+            height: 600,
             imageSmoothingEnabled: true,
             imageSmoothingQuality: 'high',
         });

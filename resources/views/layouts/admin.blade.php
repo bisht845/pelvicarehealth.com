@@ -13,6 +13,44 @@
         .heading-font {
             font-family: 'Poppins', sans-serif;
         }
+        /* Global heading scale – uniform, professional, responsive */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+            color: inherit;
+        }
+        h1 { font-size: 1.5rem !important; }
+        h2 { font-size: 1.375rem !important; }
+        h3 { font-size: 1.25rem !important; }
+        h4 { font-size: 1.125rem !important; }
+        h5 { font-size: 1rem !important; }
+        h6 { font-size: 0.9375rem !important; }
+        @media (min-width: 640px) {
+            h1 { font-size: 1.75rem !important; }
+            h2 { font-size: 1.5rem !important; }
+            h3 { font-size: 1.375rem !important; }
+            h4 { font-size: 1.25rem !important; }
+            h5 { font-size: 1.125rem !important; }
+            h6 { font-size: 1rem !important; }
+        }
+        @media (min-width: 1024px) {
+            h1 { font-size: 2rem !important; }
+            h2 { font-size: 1.625rem !important; }
+            h3 { font-size: 1.5rem !important; }
+            h4 { font-size: 1.25rem !important; }
+            h5 { font-size: 1.125rem !important; }
+            h6 { font-size: 1rem !important; }
+        }
+        /* Global paragraph and body text – reduced, professional */
+        body {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+        p, li, .prose p, .prose li { font-size: inherit; line-height: 1.6; }
+        @media (min-width: 1024px) {
+            body { font-size: 1rem; }
+        }
     </style>
     @stack('styles')
 </head>
@@ -21,14 +59,22 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-gradient-to-b from-white to-gray-50 shadow-lg flex flex-col">
             <div class="p-6 border-b">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
-                        <span class="text-white font-bold text-lg">{{ substr(auth()->user()->name, 0, 1) }}</span>
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold heading-font text-gray-900">Pelvicare</h1>
-                        <p class="text-xs text-gray-600">{{ ucfirst(str_replace('_', ' ', auth()->user()->role)) }}</p>
-                    </div>
+                <div class="flex items-center justify-center">
+                    <a href="{{ route('home') }}" class="flex items-center">
+                        <img src="{{ asset('images/pelvicarehealth_logo.png') }}" 
+                             alt="Pelvicare Health" 
+                             class="h-12 w-auto object-contain max-w-full"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="hidden items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">{{ substr(auth()->user()->name, 0, 1) }}</span>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold heading-font text-gray-900">Pelvicare</h1>
+                                <p class="text-xs text-gray-600">{{ ucfirst(str_replace('_', ' ', auth()->user()->role)) }}</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
             <nav class="mt-4 px-2">
@@ -56,6 +102,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                         Content Management
+                    </a>
+                    <a href="{{ route('admin.service-categories.index') }}" class="flex items-center px-4 py-3 mb-1 rounded-lg {{ request()->routeIs('admin.service-categories.*') || request()->routeIs('admin.service-subcategories.*') ? 'bg-pink-100 text-pink-700 shadow-sm' : 'text-gray-700 hover:bg-gray-100' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        Service Management
                     </a>
                     <a href="{{ route('admin.blog.index') }}" class="flex items-center px-4 py-3 mb-1 rounded-lg {{ request()->routeIs('admin.blog.*') ? 'bg-pink-100 text-pink-700 shadow-sm' : 'text-gray-700 hover:bg-gray-100' }}">
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

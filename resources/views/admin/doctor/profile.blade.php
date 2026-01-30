@@ -6,13 +6,42 @@
 
 @section('content')
 <div class="space-y-8">
+    @if(session('success'))
+        <div class="mb-4 bg-green-50 border-l-4 border-green-400 p-4 rounded-lg">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-green-700">{{ session('success') }}</p>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="mb-4 bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-red-700">{{ session('error') }}</p>
+                </div>
+            </div>
+        </div>
+    @endif
     <!-- Profile Photo Section -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-pink-50 to-white">
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="text-xl font-bold heading-font text-gray-900">Profile Photo</h3>
-                    <p class="text-sm text-gray-600 mt-1">Update your profile picture (3:4 aspect ratio, max 1MB)</p>
+                    <p class="text-sm text-gray-600 mt-1">Update your profile picture (1:1 square, max 1MB)</p>
                 </div>
                 <div class="p-3 bg-pink-100 rounded-xl">
                     <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -30,9 +59,9 @@
                     <!-- Current Photo -->
                     <div class="flex-shrink-0">
                         @if($profile->profile_image)
-                            <img src="{{ asset('storage/' . $profile->profile_image) }}" alt="Current profile photo" class="w-48 h-64 object-cover rounded-xl border-4 border-gray-200 shadow-lg">
+                            <img src="{{ asset('storage/' . $profile->profile_image) }}" alt="Current profile photo" class="w-48 h-48 object-cover rounded-xl border-4 border-gray-200 shadow-lg aspect-square">
                         @else
-                            <div class="w-48 h-64 bg-gray-200 rounded-xl border-4 border-gray-300 flex items-center justify-center">
+                            <div class="w-48 h-48 bg-gray-200 rounded-xl border-4 border-gray-300 flex items-center justify-center aspect-square">
                                 <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                 </svg>
@@ -46,15 +75,15 @@
                             <label class="block">
                                 <div class="mb-4">
                                     <span class="block text-sm font-semibold text-gray-900 mb-1">Upload New Photo</span>
-                                    <span class="text-xs text-gray-500">JPG or PNG, max 1MB, 3:4 aspect ratio (Height:Width)</span>
+                                    <span class="text-xs text-gray-500">JPG or PNG, max 1MB, 1:1 square</span>
                                 </div>
                                 
                                 <!-- Image Preview and Crop Area -->
                                 <div id="imagePreviewContainer" class="hidden mb-4">
-                                    <div class="relative bg-gray-100 rounded-lg overflow-hidden" style="max-width: 600px; max-height: 450px;">
+                                    <div class="relative bg-gray-100 rounded-lg overflow-hidden" style="max-width: 560px; max-height: 560px;">
                                         <img id="imagePreview" src="" alt="Preview" class="max-w-full h-auto">
                                     </div>
-                                    <p class="text-xs text-gray-600 mt-2">Crop your image to 3:4 aspect ratio (Height:Width). You can drag and resize the crop area.</p>
+                                    <p class="text-xs text-gray-600 mt-2">Crop your image to a 1:1 square. You can drag and resize the crop area.</p>
                                     <input type="hidden" name="profile_image_cropped" id="profile_image_cropped">
                                 </div>
                                 
@@ -96,14 +125,14 @@
             </div>
         </div>
 
-        <form action="{{ route('doctor.profile.update') }}" method="POST" class="p-8">
+        <form action="{{ route('doctor.profile.update') }}" method="POST" class="p-8" id="profileForm">
             @csrf
             
-            <!-- Bio Section -->
+            <!-- Bio Section (Rich text) -->
             <div class="mb-8">
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Professional Bio</label>
-                <textarea name="bio" rows="4" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm resize-none" placeholder="Tell patients about your experience and approach to care...">{{ old('bio', $profile->bio) }}</textarea>
-                <p class="text-xs text-gray-500 mt-1">This will be displayed on your public profile</p>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Professional Bio / Description</label>
+                <p class="text-xs text-gray-500 mb-2">Format your description with headings, lists, and images. Shown on your public profile.</p>
+                <x-tinymce-editor name="bio" id="doctor-bio" :value="old('bio', $profile->bio)" height="400px" :uploadUrl="route('doctor.upload-image')" />
                 @error('bio')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -215,6 +244,198 @@
                     </svg>
                     Save Changes
                 </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- FAQs Section -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-white">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                    <h3 class="text-xl font-bold heading-font text-gray-900">FAQs</h3>
+                    <p class="text-sm text-gray-600 mt-1">Add questions & answers shown on your public profile</p>
+                </div>
+                <div class="p-3 bg-indigo-100 rounded-xl">
+                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+            </div>
+        </div>
+        <div class="p-8">
+            <form action="{{ route('doctor.faqs.store') }}" method="POST" class="mb-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
+                @csrf
+                <h4 class="font-semibold text-gray-900 mb-4">Add FAQ</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div class="md:col-span-2">
+                        <input type="text" name="question" required placeholder="Question" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500" value="{{ old('question') }}">
+                        @error('question')<p class="text-red-600 text-sm mt-1">{{ $message }}</p>@enderror
+                    </div>
+                    <div class="md:col-span-2">
+                        <textarea name="answer" required rows="2" placeholder="Answer" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 resize-none">{{ old('answer') }}</textarea>
+                        @error('answer')<p class="text-red-600 text-sm mt-1">{{ $message }}</p>@enderror
+                    </div>
+                </div>
+                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">Add FAQ</button>
+            </form>
+            <div class="space-y-4">
+                @php $faqsList = is_iterable($profile->faqs ?? null) ? ($profile->faqs ?? []) : []; @endphp
+                @forelse($faqsList as $faq)
+                <div class="flex items-start justify-between gap-4 p-4 bg-white border border-gray-200 rounded-xl">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-semibold text-gray-900">{{ $faq->question }}</p>
+                        <p class="text-sm text-gray-600 mt-1">{{ $faq->answer }}</p>
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <a href="{{ route('doctor.profile') }}?edit_faq={{ $faq->id }}#faq-{{ $faq->id }}" class="p-2 text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition">Edit</a>
+                        <form action="{{ route('doctor.faqs.destroy', $faq->id) }}" method="POST" class="inline" onsubmit="return confirm('Remove this FAQ?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition">Delete</button>
+                        </form>
+                    </div>
+                </div>
+                @empty
+                <p class="text-gray-500 text-sm italic">No FAQs yet. Add one above.</p>
+                @endforelse
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery & Clinic Photos -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-amber-50 to-white">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                    <h3 class="text-xl font-bold heading-font text-gray-900">Profile & Clinic Photos</h3>
+                    <p class="text-sm text-gray-600 mt-1">Gallery photos show in your profile slider. Clinic photos (optional) show only under your profile when added.</p>
+                </div>
+                <div class="p-3 bg-amber-100 rounded-xl">
+                    <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+            </div>
+        </div>
+        <div class="p-8">
+            @if($profile->photos->isNotEmpty())
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
+                @foreach($profile->photos as $photo)
+                <div class="relative group rounded-xl overflow-hidden border border-gray-200 aspect-square">
+                    <img src="{{ asset('storage/' . $photo->path) }}" alt="" class="w-full h-full object-cover">
+                    <span class="absolute top-2 left-2 px-2 py-0.5 rounded text-xs font-medium {{ $photo->type === 'clinic' ? 'bg-amber-500 text-white' : 'bg-gray-800 text-white' }}">{{ $photo->type }}</span>
+                    <form action="{{ route('doctor.photos.destroy', $photo->id) }}" method="POST" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="p-1.5 bg-red-500 text-white rounded-lg hover:bg-red-600" onclick="return confirm('Remove this photo?');">×</button>
+                    </form>
+                </div>
+                @endforeach
+            </div>
+            @endif
+            <form action="{{ route('doctor.photos.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                @csrf
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Gallery photos</label>
+                    <input type="file" name="gallery_photos[]" accept="image/*" multiple class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Clinic photos <span class="text-gray-400 font-normal">(optional, shown only under your profile)</span></label>
+                    <input type="file" name="clinic_photos[]" accept="image/*" multiple class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                </div>
+                <button type="submit" class="bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-amber-700">Upload Photos</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Change Password Section -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 border-b border-gray-100 bg-gradient-to-r from-pink-50 to-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-xl font-bold heading-font text-gray-900">Change Password</h3>
+                    <p class="text-sm text-gray-600 mt-1">Update your account password</p>
+                </div>
+                <div class="p-3 bg-pink-100 rounded-xl">
+                    <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <form action="{{ route('doctor.password.update') }}" method="POST" class="p-8">
+            @csrf
+            @method('PUT')
+            
+            <div class="space-y-6">
+                <div>
+                    <label for="current_password" class="block text-sm font-semibold text-gray-700 mb-2">Current Password <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <input type="password" name="current_password" id="current_password" required 
+                               class="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm @error('current_password') border-red-500 @enderror" 
+                               placeholder="Enter your current password">
+                        <button type="button" id="toggleCurrentPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none transition-colors">
+                            <svg id="eyeIconCurrent" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                            </svg>
+                            <svg id="eyeOffIconCurrent" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    @error('current_password')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="new_password" class="block text-sm font-semibold text-gray-700 mb-2">New Password <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="password" name="password" id="new_password" required 
+                                   class="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm @error('password') border-red-500 @enderror" 
+                                   placeholder="Enter new password">
+                            <button type="button" id="toggleNewPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none transition-colors">
+                                <svg id="eyeIconNew" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                <svg id="eyeOffIconNew" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        @error('password')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="password_confirmation" class="block text-sm font-semibold text-gray-700 mb-2">Confirm New Password <span class="text-red-500">*</span></label>
+                        <div class="relative">
+                            <input type="password" name="password_confirmation" id="password_confirmation" required 
+                                   class="w-full px-4 py-3 pr-12 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all shadow-sm" 
+                                   placeholder="Confirm new password">
+                            <button type="button" id="togglePasswordConfirmation" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none transition-colors">
+                                <svg id="eyeIconConfirmation" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                <svg id="eyeOffIconConfirmation" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-100">
+                    <button type="submit" class="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        Update Password
+                    </button>
+                </div>
             </div>
         </form>
     </div>
@@ -375,9 +596,9 @@ profileImageInput.addEventListener('change', function(e) {
             cropper.destroy();
         }
         
-        // Initialize cropper with 3:4 aspect ratio (height:width)
+        // Initialize cropper with 1:1 (square) aspect ratio
         cropper = new Cropper(imagePreview, {
-            aspectRatio: 3 / 4, // Height:Width = 3:4
+            aspectRatio: 1,
             viewMode: 1,
             dragMode: 'move',
             autoCropArea: 0.8,
@@ -390,7 +611,7 @@ profileImageInput.addEventListener('change', function(e) {
             toggleDragModeOnDblclick: false,
             responsive: true,
             minCropBoxWidth: 200,
-            minCropBoxHeight: 150, // 3:4 ratio: 200 * 3/4 = 150
+            minCropBoxHeight: 200,
         });
     };
     reader.readAsDataURL(file);
@@ -401,10 +622,10 @@ document.getElementById('photoUploadForm').addEventListener('submit', function(e
     if (cropper && profileImageInput.files.length > 0) {
         e.preventDefault();
         
-        // Get cropped canvas
+        // Get cropped canvas (1:1 square)
         const canvas = cropper.getCroppedCanvas({
-            width: 800,  // Output width
-            height: 600, // Output height (3:4 ratio: 800 * 3/4 = 600)
+            width: 600,
+            height: 600,
             imageSmoothingEnabled: true,
             imageSmoothingQuality: 'high',
         });
@@ -421,6 +642,34 @@ document.getElementById('photoUploadForm').addEventListener('submit', function(e
             reader.readAsDataURL(blob);
         }, 'image/jpeg', 0.9); // 90% quality
     }
+    
+    // Password visibility toggles
+    function setupPasswordToggle(toggleId, inputId, eyeIconId, eyeOffIconId) {
+        const toggle = document.getElementById(toggleId);
+        const input = document.getElementById(inputId);
+        const eyeIcon = document.getElementById(eyeIconId);
+        const eyeOffIcon = document.getElementById(eyeOffIconId);
+        
+        if (toggle && input && eyeIcon && eyeOffIcon) {
+            toggle.addEventListener('click', function() {
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                
+                if (type === 'text') {
+                    eyeIcon.classList.add('hidden');
+                    eyeOffIcon.classList.remove('hidden');
+                } else {
+                    eyeIcon.classList.remove('hidden');
+                    eyeOffIcon.classList.add('hidden');
+                }
+            });
+        }
+    }
+    
+    // Setup all password toggles
+    setupPasswordToggle('toggleCurrentPassword', 'current_password', 'eyeIconCurrent', 'eyeOffIconCurrent');
+    setupPasswordToggle('toggleNewPassword', 'new_password', 'eyeIconNew', 'eyeOffIconNew');
+    setupPasswordToggle('togglePasswordConfirmation', 'password_confirmation', 'eyeIconConfirmation', 'eyeOffIconConfirmation');
 });
 </script>
 @endpush

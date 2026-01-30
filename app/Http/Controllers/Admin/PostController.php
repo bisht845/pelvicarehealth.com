@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\PostImage;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -60,11 +61,17 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'excerpt' => 'nullable|string',
             'content' => 'required',
-            'featured_image' => 'nullable|image|max:2048',
+            'featured_image' => 'nullable|image|max:5120',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id',
             'is_published' => 'boolean',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:512',
+            'meta_keywords' => 'nullable|string|max:255',
+            'og_image' => 'nullable|image|max:2048',
+            'gallery_images' => 'nullable|array',
+            'gallery_images.*' => 'image|max:5120',
         ]);
 
         $data = [
@@ -75,10 +82,17 @@ class PostController extends Controller
             'category_id' => $request->category_id,
             'is_published' => $request->has('is_published'),
             'author_id' => auth()->id(),
+            'meta_title' => $request->meta_title,
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
         ];
 
         if ($request->hasFile('featured_image')) {
             $data['featured_image'] = $request->file('featured_image')->store('blog', 'public');
+        }
+
+        if ($request->hasFile('og_image')) {
+            $data['og_image'] = $request->file('og_image')->store('blog/og', 'public');
         }
 
         if ($request->has('is_published') && $request->is_published) {
@@ -87,7 +101,13 @@ class PostController extends Controller
 
         $post = Post::create($data);
 
-        // Sync tags
+        if ($request->hasFile('gallery_images')) {
+            foreach ($request->file('gallery_images') as $index => $file) {
+                $path = $file->store('blog/gallery', 'public');
+                $post->images()->create(['path' => $path, 'sort_order' => $index]);
+            }
+        }
+
         if ($request->has('tags')) {
             $post->tags()->sync($request->tags);
         }
@@ -103,7 +123,7 @@ class PostController extends Controller
 
     public function edit($id)
     {
-        $post = Post::with('tags')->findOrFail($id);
+        $post = Post::with(['tags', 'images'])->findOrFail($id);
         $categories = Category::all();
         $tags = Tag::all();
         return view('admin.super-admin.blog.edit', compact('post', 'categories', 'tags'));
@@ -115,11 +135,17 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             'excerpt' => 'nullable|string',
             'content' => 'required',
-            'featured_image' => 'nullable|image|max:2048',
+            'featured_image' => 'nullable|image|max:5120',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id',
             'is_published' => 'boolean',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:512',
+            'meta_keywords' => 'nullable|string|max:255',
+            'og_image' => 'nullable|image|max:2048',
+            'gallery_images' => 'nullable|array',
+            'gallery_images.*' => 'image|max:5120',
         ]);
 
         $post = Post::findOrFail($id);
@@ -130,14 +156,23 @@ class PostController extends Controller
             'content' => $request->content,
             'category_id' => $request->category_id,
             'is_published' => $request->has('is_published'),
+            'meta_title' => $request->meta_title,
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
         ];
 
         if ($request->hasFile('featured_image')) {
-            // Delete old image
             if ($post->featured_image) {
                 Storage::disk('public')->delete($post->featured_image);
             }
             $data['featured_image'] = $request->file('featured_image')->store('blog', 'public');
+        }
+
+        if ($request->hasFile('og_image')) {
+            if ($post->og_image) {
+                Storage::disk('public')->delete($post->og_image);
+            }
+            $data['og_image'] = $request->file('og_image')->store('blog/og', 'public');
         }
 
         if ($request->has('is_published') && $request->is_published && !$post->published_at) {
@@ -146,7 +181,14 @@ class PostController extends Controller
 
         $post->update($data);
 
-        // Sync tags
+        if ($request->hasFile('gallery_images')) {
+            $startOrder = $post->images()->max('sort_order') ?? -1;
+            foreach ($request->file('gallery_images') as $index => $file) {
+                $path = $file->store('blog/gallery', 'public');
+                $post->images()->create(['path' => $path, 'sort_order' => $startOrder + 1 + $index]);
+            }
+        }
+
         if ($request->has('tags')) {
             $post->tags()->sync($request->tags);
         } else {
@@ -156,15 +198,29 @@ class PostController extends Controller
         return redirect()->route('admin.blog.index')->with('success', 'Blog post updated successfully.');
     }
 
+    public function destroyPostImage(Request $request, $postId, $imageId)
+    {
+        $post = Post::findOrFail($postId);
+        $image = $post->images()->findOrFail($imageId);
+        Storage::disk('public')->delete($image->path);
+        $image->delete();
+        return response()->json(['success' => true]);
+    }
+
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        
-        // Delete featured image
+
         if ($post->featured_image) {
             Storage::disk('public')->delete($post->featured_image);
         }
-        
+        if ($post->og_image) {
+            Storage::disk('public')->delete($post->og_image);
+        }
+        foreach ($post->images as $img) {
+            Storage::disk('public')->delete($img->path);
+        }
+
         $post->delete();
 
         return redirect()->route('admin.blog.index')->with('success', 'Blog post deleted successfully.');
@@ -173,11 +229,11 @@ class PostController extends Controller
     public function uploadImage(Request $request)
     {
         $request->validate([
-            'file' => 'required|image|max:2048',
+            'file' => 'required|image|max:5120',
         ]);
 
         $path = $request->file('file')->store('blog/images', 'public');
-        $url = Storage::url($path);
+        $url = asset('storage/' . $path);
 
         return response()->json(['location' => $url]);
     }

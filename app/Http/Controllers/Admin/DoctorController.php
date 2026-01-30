@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\DoctorAvailability;
+use App\Models\DoctorFaq;
+use App\Models\DoctorPhoto;
+use App\Models\DoctorProfile;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class DoctorController extends Controller
 {
@@ -127,7 +132,8 @@ class DoctorController extends Controller
     {
         $doctor = auth()->user();
         $profile = $doctor->doctorProfile;
-        $documents = $doctor->doctorProfile->documents ?? collect();
+        $documents = $profile->documents ?? collect();
+        $profile->load(['faqs' => fn ($q) => $q->orderBy('sort_order')], 'photos');
         
         return view('admin.doctor.profile', compact('profile', 'documents'));
     }
@@ -135,7 +141,7 @@ class DoctorController extends Controller
     public function updateProfile(Request $request)
     {
         $request->validate([
-            'bio' => 'nullable|string|max:1000',
+            'bio' => 'nullable|string',
             'clinic_name' => 'nullable|string|max:255',
             'clinic_address' => 'nullable|string|max:500',
             'home_visit_fee' => 'nullable|numeric|min:0',
@@ -149,9 +155,15 @@ class DoctorController extends Controller
 
         $doctor = auth()->user();
         $profile = $doctor->doctorProfile;
+
+        $slug = DoctorProfile::generateSlug($doctor->name);
+        if (!$profile->slug) {
+            $profile->slug = $slug;
+        }
         
         $profile->update([
             'bio' => $request->bio,
+            'slug' => $profile->slug ?? $slug,
             'clinic_name' => $request->clinic_name,
             'clinic_address' => $request->clinic_address,
             'home_visit_fee' => $request->home_visit_fee,
@@ -164,6 +176,85 @@ class DoctorController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $request->validate(['file' => 'required|image|max:5120']);
+        $path = $request->file('file')->store('doctor/bio-images', 'public');
+        return response()->json(['location' => asset('storage/' . $path)]);
+    }
+
+    public function storeFaq(Request $request)
+    {
+        $request->validate([
+            'question' => 'required|string|max:500',
+            'answer' => 'required|string|max:2000',
+            'sort_order' => 'nullable|integer|min:0',
+        ]);
+        $profile = auth()->user()->doctorProfile;
+        $profile->faqs()->create([
+            'question' => $request->question,
+            'answer' => $request->answer,
+            'sort_order' => (int) ($request->sort_order ?? $profile->faqs()->max('sort_order') + 1),
+        ]);
+        return redirect()->back()->with('success', 'FAQ added.');
+    }
+
+    public function updateFaq(Request $request, $id)
+    {
+        $request->validate([
+            'question' => 'required|string|max:500',
+            'answer' => 'required|string|max:2000',
+            'sort_order' => 'nullable|integer|min:0',
+        ]);
+        $faq = auth()->user()->doctorProfile->faqs()->findOrFail($id);
+        $faq->update([
+            'question' => $request->question,
+            'answer' => $request->answer,
+            'sort_order' => (int) ($request->sort_order ?? $faq->sort_order),
+        ]);
+        return redirect()->back()->with('success', 'FAQ updated.');
+    }
+
+    public function destroyFaq($id)
+    {
+        auth()->user()->doctorProfile->faqs()->findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'FAQ removed.');
+    }
+
+    public function storePhotos(Request $request)
+    {
+        $request->validate([
+            'gallery_photos' => 'nullable|array',
+            'gallery_photos.*' => 'image|max:5120',
+            'clinic_photos' => 'nullable|array',
+            'clinic_photos.*' => 'image|max:5120',
+        ]);
+        $profile = auth()->user()->doctorProfile;
+        $maxOrder = $profile->photos()->max('sort_order') ?? -1;
+        $order = $maxOrder + 1;
+        if ($request->hasFile('gallery_photos')) {
+            foreach ($request->file('gallery_photos') as $file) {
+                $path = $file->store('doctor/photos', 'public');
+                $profile->photos()->create(['path' => $path, 'type' => 'gallery', 'sort_order' => $order++]);
+            }
+        }
+        if ($request->hasFile('clinic_photos')) {
+            foreach ($request->file('clinic_photos') as $file) {
+                $path = $file->store('doctor/photos', 'public');
+                $profile->photos()->create(['path' => $path, 'type' => 'clinic', 'sort_order' => $order++]);
+            }
+        }
+        return redirect()->back()->with('success', 'Photos added.');
+    }
+
+    public function destroyPhoto($id)
+    {
+        $photo = auth()->user()->doctorProfile->photos()->findOrFail($id);
+        Storage::disk('public')->delete($photo->path);
+        $photo->delete();
+        return redirect()->back()->with('success', 'Photo removed.');
     }
 
     public function updateProfilePhoto(Request $request)
@@ -274,6 +365,30 @@ class DoctorController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Document re-uploaded successfully! Awaiting admin review.');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = auth()->user();
+
+        // Verify current password
+        if (!Hash::check($request->current_password, $user->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => ['The current password is incorrect.'],
+            ]);
+        }
+
+        // Update password
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()->with('success', 'Password updated successfully!');
     }
 }
 

@@ -88,43 +88,47 @@
                         $city = $profile->city ?? 'Multiple Locations';
                         $image = $profile->profile_image ? asset('storage/' . $profile->profile_image) : asset('images/physiotherapist_' . (($loop->index % 3) + 1) . '.png');
                     @endphp
-                    <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100">
+                    <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100 flex flex-col h-full">
                         <div class="relative">
-                            <img src="{{ $image }}" alt="{{ $doctor->name }}" class="w-full h-64 object-cover">
+                            <img src="{{ $image }}" alt="{{ $doctor->name }}" class="w-full h-56 object-cover">
                             <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
                                 ⭐ {{ number_format($rating, 1) }}/5
                             </div>
                         </div>
-                        <div class="p-6">
+                        <div class="p-6 flex flex-col flex-1">
                             <h3 class="text-xl font-bold heading-font text-gray-900 mb-2">{{ $doctor->name }}</h3>
                             @if(!empty($specializations))
-                                <div class="flex flex-wrap gap-1.5 mb-3">
-                                    @foreach($specializations as $spec)
-                                        <span class="bg-pink-100 text-pink-700 px-2.5 py-1 rounded-full text-xs font-semibold border border-pink-200">
+                                <div class="flex flex-wrap gap-1.5 mb-3 min-h-[3.25rem] overflow-hidden" style="max-height: 3.25rem;">
+                                    @foreach(array_slice($specializations, 0, 4) as $spec)
+                                        <span class="bg-pink-100 text-pink-700 px-2.5 py-1 rounded-full text-xs font-semibold border border-pink-200 shrink-0">
                                             {{ $spec }}
                                         </span>
                                     @endforeach
                                 </div>
                             @else
-                                <p class="text-sm text-pink-600 font-semibold mb-3">Women's Health Specialist</p>
+                                <div class="min-h-[3.25rem] flex items-center mb-3">
+                                    <p class="text-sm text-pink-600 font-semibold">Women's Health Specialist</p>
+                                </div>
                             @endif
-                            <p class="text-sm text-gray-600 mb-4 line-clamp-2">
+                            <p class="text-sm text-gray-600 mb-4 line-clamp-2 min-h-[2.5rem]">
                                 {{ $profile->years_of_experience ?? 0 }}+ years experience
                                 @if($profile->bio)
                                     • {{ Str::limit(strip_tags($profile->bio), 80) }}
                                 @endif
                             </p>
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="text-xs text-gray-500 flex items-center">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 12z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    </svg>
-                                    {{ $city }}
-                                </span>
+                            <div class="mb-4">
+                                @if($city !== 'Multiple Locations')
+                                    <span class="text-xs text-gray-500 flex items-center">
+                                        <svg class="w-4 h-4 mr-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 12z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                        {{ $city }}
+                                    </span>
+                                @endif
                             </div>
-                            <div class="flex gap-2">
-                                <a href="{{ route('doctors.show', $doctor->id) }}" class="flex-1 text-center bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 transition-colors font-semibold text-sm">
+                            <div class="mt-auto flex gap-2">
+                                <a href="{{ route('doctors.show', $doctor->doctorProfile->slug) }}" class="flex-1 text-center bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 transition-colors font-semibold text-sm">
                                     View Profile
                                 </a>
                                 <a href="{{ route('book-appointment', ['doctor_id' => $doctor->id]) }}" class="flex-1 text-center bg-white text-pink-600 border-2 border-pink-600 px-4 py-2 rounded-lg hover:bg-pink-50 transition-colors font-semibold text-sm">

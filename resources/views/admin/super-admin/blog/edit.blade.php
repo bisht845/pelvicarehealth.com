@@ -51,18 +51,12 @@
                     </div>
 
 
-                    <!-- Content -->
+                    <!-- Content (TinyMCE) -->
                     <div class="group">
                         <label for="content" class="block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-pink-600 transition-colors">
                             Content <span class="text-pink-500">*</span>
                         </label>
-                        <x-quill-editor 
-                            name="content" 
-                            id="content" 
-                            :value="old('content', $post->content)" 
-                            height="500px"
-                            placeholder="Write your blog post content here..."
-                        />
+                        <x-tinymce-editor name="content" id="content" :value="old('content', $post->content)" height="500px" />
                         @error('content')
                             <p class="mt-2 text-sm text-red-600 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -228,6 +222,70 @@
                         @enderror
                     </div>
                 </div>
+
+                <!-- Gallery Images -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex items-center space-x-2 mb-6 border-b border-gray-50 pb-4">
+                        <div class="p-2 bg-amber-50 rounded-lg text-amber-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 16a2 2 0 002-2v-2a2 2 0 00-2-2h-2M6 12h12"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 heading-font">Gallery Images</h3>
+                    </div>
+                    @if($post->images->isNotEmpty())
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+                        @foreach($post->images as $img)
+                        <div class="relative group rounded-xl overflow-hidden border border-gray-200 aspect-square">
+                            <img src="{{ asset('storage/' . $img->path) }}" alt="" class="w-full h-full object-cover">
+                            <button type="button" onclick="deleteGalleryImage({{ $post->id }}, {{ $img->id }}, this)"
+                                    class="absolute top-2 right-2 w-8 h-8 bg-red-500 text-white rounded-lg opacity-0 group-hover:opacity-100 transition flex items-center justify-center hover:bg-red-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                        @endforeach
+                    </div>
+                    @endif
+                    <p class="text-sm text-gray-600 mb-2">Add more images (optional). Multiple selection allowed.</p>
+                    <input type="file" name="gallery_images[]" id="gallery_images" accept="image/*" multiple
+                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100">
+                </div>
+
+                <!-- SEO -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex items-center space-x-2 mb-6 border-b border-gray-50 pb-4">
+                        <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 heading-font">SEO</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="meta_title" class="block text-sm font-semibold text-gray-700 mb-1">Meta title</label>
+                            <input type="text" name="meta_title" id="meta_title" value="{{ old('meta_title', $post->meta_title) }}" maxlength="255"
+                                   class="w-full rounded-xl border-gray-200 shadow-sm focus:border-pink-500 focus:ring-pink-500 p-3 text-sm"
+                                   placeholder="Leave blank to use post title">
+                        </div>
+                        <div>
+                            <label for="meta_description" class="block text-sm font-semibold text-gray-700 mb-1">Meta description</label>
+                            <textarea name="meta_description" id="meta_description" rows="2" maxlength="512"
+                                      class="w-full rounded-xl border-gray-200 shadow-sm focus:border-pink-500 focus:ring-pink-500 p-3 text-sm resize-none"
+                                      placeholder="155–160 chars for search results">{{ old('meta_description', $post->meta_description) }}</textarea>
+                        </div>
+                        <div>
+                            <label for="meta_keywords" class="block text-sm font-semibold text-gray-700 mb-1">Meta keywords (comma-separated)</label>
+                            <input type="text" name="meta_keywords" id="meta_keywords" value="{{ old('meta_keywords', $post->meta_keywords) }}" maxlength="255"
+                                   class="w-full rounded-xl border-gray-200 shadow-sm focus:border-pink-500 focus:ring-pink-500 p-3 text-sm"
+                                   placeholder="e.g. pelvic health, women health">
+                        </div>
+                        <div>
+                            <label for="og_image" class="block text-sm font-semibold text-gray-700 mb-1">OG image (social share)</label>
+                            @if($post->og_image)
+                            <div class="mb-2"><img src="{{ asset('storage/' . $post->og_image) }}" alt="OG" class="h-16 w-auto object-cover rounded border"></div>
+                            @endif
+                            <input type="file" name="og_image" id="og_image" accept="image/*"
+                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gray-100 file:text-gray-700">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
@@ -235,7 +293,6 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.tiny.cloud/1/lh8jehix8bjhc4pveqx22drhh6jounjjgqg3b2ba72xotr3e/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Excerpt Counter
@@ -259,59 +316,19 @@
         // Drag and Drop Effects
         const dropZone = document.getElementById('drop-zone');
         const fileInput = document.getElementById('featured_image');
-
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, preventDefaults, false);
-        });
-
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
+        if (dropZone && fileInput) {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+            function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+            ['dragenter', 'dragover'].forEach(eventName => { dropZone.addEventListener(eventName, () => dropZone.classList.add('border-pink-500', 'bg-pink-50'), false); });
+            ['dragleave', 'drop'].forEach(eventName => { dropZone.addEventListener(eventName, () => dropZone.classList.remove('border-pink-500', 'bg-pink-50'), false); });
+            dropZone.addEventListener('drop', function(e) {
+                var files = e.dataTransfer.files;
+                fileInput.files = files;
+                previewImage({ target: { files: files } });
+            }, false);
         }
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, highlight, false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, unhighlight, false);
-        });
-
-        function highlight(e) {
-            dropZone.classList.add('border-pink-500', 'bg-pink-50');
-        }
-
-        function unhighlight(e) {
-            dropZone.classList.remove('border-pink-500', 'bg-pink-50');
-        }
-
-        dropZone.addEventListener('drop', handleDrop, false);
-
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            fileInput.files = files;
-            const event = { target: { files: files } };
-            previewImage(event);
-        }
-
-        // TinyMCE Init
-        tinymce.init({
-            selector: '#content',
-            height: 600,
-            menubar: true,
-            skin: 'oxide',
-            icons: 'default',
-            plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'help', 'wordcount'
-            ],
-            toolbar: 'undo redo | blocks | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image media link | code fullscreen | help',
-            content_style: 'body { font-family: "Inter", sans-serif; font-size: 16px; line-height: 1.8; color: #374151; padding: 20px; max-width: 800px; margin: 0 auto; } img { max-width: 100%; height: auto; border-radius: 8px; }',
-            images_upload_url: '{{ route("admin.blog.upload-image") }}',
-            automatic_uploads: true
-        });
     });
 
     // Image Preview Function
@@ -342,12 +359,23 @@
         const removeBtn = document.getElementById('remove-image');
         const overlay = document.getElementById('preview-overlay');
         
-        fileInput.value = ''; // Clear file input
+        fileInput.value = '';
         preview.src = '';
         preview.classList.add('hidden');
         placeholder.classList.remove('hidden');
         removeBtn.classList.add('hidden');
         overlay.classList.add('hidden');
+    }
+
+    function deleteGalleryImage(postId, imageId, btn) {
+        if (!confirm('Remove this image from the gallery?')) return;
+        var csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        fetch('{{ url("admin/blog") }}/' + postId + '/images/' + imageId, {
+            method: 'DELETE',
+            headers: { 'X-CSRF-TOKEN': csrf, 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+        }).then(function(r) {
+            if (r.ok) btn.closest('.relative.group').remove();
+        });
     }
 </script>
 @endpush

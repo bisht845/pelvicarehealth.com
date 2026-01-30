@@ -25,16 +25,27 @@
             margin-bottom: 30px;
         }
         .logo {
+            width: auto;
+            height: 60px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+        .logo img {
+            height: 60px;
+            width: auto;
+            max-width: 200px;
+        }
+        .logo-fallback {
             width: 60px;
             height: 60px;
             background: linear-gradient(135deg, #ec4899, #db2777);
             border-radius: 50%;
             margin: 0 auto 20px;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
         }
-        .logo svg {
+        .logo-fallback svg {
             width: 30px;
             height: 30px;
             color: white;
@@ -101,6 +112,9 @@
     <div class="container">
         <div class="header">
             <div class="logo">
+                <img src="{{ asset('images/pelvicarehealth_logo.png') }}" alt="Pelvicare Health" style="height: 60px; width: auto; max-width: 200px;">
+            </div>
+            <div class="logo-fallback">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                 </svg>

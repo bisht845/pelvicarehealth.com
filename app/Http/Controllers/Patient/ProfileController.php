@@ -7,6 +7,8 @@ use App\Models\PatientProfile;
 use App\Models\PatientDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class ProfileController extends Controller
 {
@@ -89,6 +91,30 @@ class ProfileController extends Controller
         $document->delete();
 
         return redirect()->back()->with('success', 'Document deleted successfully!');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = auth()->user();
+
+        // Verify current password
+        if (!Hash::check($request->current_password, $user->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => ['The current password is incorrect.'],
+            ]);
+        }
+
+        // Update password
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()->with('success', 'Password updated successfully!');
     }
 }
 

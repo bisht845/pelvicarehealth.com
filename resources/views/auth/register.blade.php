@@ -8,7 +8,11 @@
         <!-- Header -->
         <div class="text-center mb-8">
             <div class="flex justify-center mb-4">
-                <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center shadow-lg">
+                <img src="{{ asset('images/pelvicarehealth_logo.png') }}" 
+                     alt="Pelvicare Health" 
+                     class="h-20 w-auto object-contain"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="hidden w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full items-center justify-center shadow-lg">
                     <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                     </svg>
@@ -119,9 +123,20 @@
                                     <label for="password" class="block text-sm font-semibold text-gray-900 mb-2">
                                         Password <span class="text-red-500">*</span>
                                     </label>
-                                    <input id="password" name="password" type="password" required 
-                                           class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all text-gray-900 placeholder-gray-400 @error('password') border-red-500 @enderror" 
-                                           placeholder="Create a strong password">
+                                    <div class="relative">
+                                        <input id="password" name="password" type="password" required 
+                                               class="w-full px-4 py-3 pr-12 bg-white border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all text-gray-900 placeholder-gray-400 @error('password') border-red-500 @enderror" 
+                                               placeholder="Create a strong password">
+                                        <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none transition-colors">
+                                            <svg id="eyeIcon" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                            <svg id="eyeOffIcon" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
                                     @error('password')
                                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -131,9 +146,20 @@
                                     <label for="password_confirmation" class="block text-sm font-semibold text-gray-900 mb-2">
                                         Confirm Password <span class="text-red-500">*</span>
                                     </label>
-                                    <input id="password_confirmation" name="password_confirmation" type="password" required 
-                                           class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all text-gray-900 placeholder-gray-400" 
-                                           placeholder="Confirm your password">
+                                    <div class="relative">
+                                        <input id="password_confirmation" name="password_confirmation" type="password" required 
+                                               class="w-full px-4 py-3 pr-12 bg-white border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all text-gray-900 placeholder-gray-400" 
+                                               placeholder="Confirm your password">
+                                        <button type="button" id="togglePasswordConfirmation" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 focus:outline-none transition-colors">
+                                            <svg id="eyeIconConfirmation" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                            </svg>
+                                            <svg id="eyeOffIconConfirmation" class="h-5 w-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -263,6 +289,48 @@ document.addEventListener('DOMContentLoaded', function() {
     @else
         selectRole('patient');
     @endif
+    
+    // Password visibility toggle
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const eyeOffIcon = document.getElementById('eyeOffIcon');
+    
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            if (type === 'text') {
+                eyeIcon.classList.add('hidden');
+                eyeOffIcon.classList.remove('hidden');
+            } else {
+                eyeIcon.classList.remove('hidden');
+                eyeOffIcon.classList.add('hidden');
+            }
+        });
+    }
+    
+    // Password confirmation visibility toggle
+    const togglePasswordConfirmation = document.getElementById('togglePasswordConfirmation');
+    const passwordConfirmationInput = document.getElementById('password_confirmation');
+    const eyeIconConfirmation = document.getElementById('eyeIconConfirmation');
+    const eyeOffIconConfirmation = document.getElementById('eyeOffIconConfirmation');
+    
+    if (togglePasswordConfirmation && passwordConfirmationInput) {
+        togglePasswordConfirmation.addEventListener('click', function() {
+            const type = passwordConfirmationInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordConfirmationInput.setAttribute('type', type);
+            
+            if (type === 'text') {
+                eyeIconConfirmation.classList.add('hidden');
+                eyeOffIconConfirmation.classList.remove('hidden');
+            } else {
+                eyeIconConfirmation.classList.remove('hidden');
+                eyeOffIconConfirmation.classList.add('hidden');
+            }
+        });
+    }
 });
 </script>
 @endsection

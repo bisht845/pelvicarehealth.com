@@ -49,18 +49,12 @@
                         @enderror
                     </div>
 
-                    <!-- Content -->
+                    <!-- Content (TinyMCE) -->
                     <div class="group">
                         <label for="content" class="block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-pink-600 transition-colors">
                             Content <span class="text-pink-500">*</span>
                         </label>
-                        <x-quill-editor 
-                            name="content" 
-                            id="content" 
-                            :value="old('content')" 
-                            height="500px"
-                            placeholder="Write your blog post content here..."
-                        />
+                        <x-tinymce-editor name="content" id="content" :value="old('content')" height="500px" />
                         @error('content')
                             <p class="mt-2 text-sm text-red-600 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -197,7 +191,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-xs text-gray-400 text-center">Recommended: 1200x630px</p>
+                        <p class="text-xs text-gray-400 text-center">Recommended: 1200x630px for cards &amp; social</p>
                         
                         <button type="button" id="remove-image" onclick="removeImage()" class="w-full hidden text-sm text-red-600 hover:text-white border border-red-200 hover:bg-red-600 rounded-xl py-2.5 transition-all duration-200">
                             Remove Image
@@ -206,6 +200,56 @@
                         @error('featured_image')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
+                    </div>
+                </div>
+
+                <!-- Gallery Images (multiple) -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex items-center space-x-2 mb-6 border-b border-gray-50 pb-4">
+                        <div class="p-2 bg-amber-50 rounded-lg text-amber-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 16a2 2 0 002-2v-2a2 2 0 00-2-2h-2M6 12h12"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 heading-font">Gallery Images</h3>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Add extra photos for the article (optional). Multiple selection allowed.</p>
+                    <input type="file" name="gallery_images[]" id="gallery_images" accept="image/*" multiple
+                           class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100">
+                    @error('gallery_images.*')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                </div>
+
+                <!-- SEO -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex items-center space-x-2 mb-6 border-b border-gray-50 pb-4">
+                        <div class="p-2 bg-emerald-50 rounded-lg text-emerald-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-900 heading-font">SEO</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="meta_title" class="block text-sm font-semibold text-gray-700 mb-1">Meta title</label>
+                            <input type="text" name="meta_title" id="meta_title" value="{{ old('meta_title') }}" maxlength="255"
+                                   class="w-full rounded-xl border-gray-200 shadow-sm focus:border-pink-500 focus:ring-pink-500 p-3 text-sm"
+                                   placeholder="Leave blank to use post title">
+                        </div>
+                        <div>
+                            <label for="meta_description" class="block text-sm font-semibold text-gray-700 mb-1">Meta description</label>
+                            <textarea name="meta_description" id="meta_description" rows="2" maxlength="512"
+                                      class="w-full rounded-xl border-gray-200 shadow-sm focus:border-pink-500 focus:ring-pink-500 p-3 text-sm resize-none"
+                                      placeholder="155–160 chars for search results">{{ old('meta_description') }}</textarea>
+                        </div>
+                        <div>
+                            <label for="meta_keywords" class="block text-sm font-semibold text-gray-700 mb-1">Meta keywords (comma-separated)</label>
+                            <input type="text" name="meta_keywords" id="meta_keywords" value="{{ old('meta_keywords') }}" maxlength="255"
+                                   class="w-full rounded-xl border-gray-200 shadow-sm focus:border-pink-500 focus:ring-pink-500 p-3 text-sm"
+                                   placeholder="e.g. pelvic health, women health">
+                        </div>
+                        <div>
+                            <label for="og_image" class="block text-sm font-semibold text-gray-700 mb-1">OG image (social share)</label>
+                            <input type="file" name="og_image" id="og_image" accept="image/*"
+                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gray-100 file:text-gray-700">
+                            <p class="text-xs text-gray-500 mt-1">Optional. Falls back to featured image. 1200×630px.</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -7,10 +7,16 @@
     <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
         <div class="p-8 md:p-12">
             <div class="text-center mb-10">
-                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-pink-100 text-pink-600 mb-6 shadow-sm">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
-                    </svg>
+                <div class="flex justify-center mb-6">
+                    <img src="{{ asset('images/pelvicarehealth_logo.png') }}" 
+                         alt="Pelvicare Health" 
+                         class="h-16 w-auto object-contain"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hidden items-center justify-center w-16 h-16 rounded-full bg-pink-100 text-pink-600 shadow-sm">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+                        </svg>
+                    </div>
                 </div>
                 <h2 class="text-3xl font-bold heading-font text-gray-900">Forgot Password?</h2>
                 <p class="mt-2 text-sm text-gray-600">Enter your email address and we'll send you an OTP to reset your password</p>

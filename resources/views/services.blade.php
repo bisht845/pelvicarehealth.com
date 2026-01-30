@@ -15,216 +15,59 @@
         </div>
     </section>
 
-    <!-- Services Grid -->
+    <!-- Services Grid (Dynamic) -->
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            @if(isset($categories) && $categories->isNotEmpty())
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Pelvic Pain -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-pink-100 overflow-hidden group">
-                    <div class="h-48 overflow-hidden relative">
-                        <div class="absolute inset-0 bg-pink-900/10 group-hover:bg-pink-900/0 transition-colors z-10"></div>
-                        <img src="{{ asset('images/pelvic_pain_service.png') }}" alt="Pelvic Pain Relief" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold heading-font text-gray-900 mb-4 group-hover:text-pink-600 transition-colors">Pelvic Pain</h3>
-                        <ul class="space-y-3 text-gray-700">
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-pink-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Chronic pelvic pain management</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-pink-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Endometriosis support</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-pink-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Vulvodynia treatment</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-pink-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Dyspareunia care</span>
-                            </li>
-                        </ul>
-                    </div>
+                @foreach($categories as $category)
+                @php
+                    $colorMap = [
+                        'pink' => ['border' => 'border-pink-100', 'overlay' => 'bg-pink-900/10', 'hover' => 'group-hover:text-pink-600', 'icon' => 'text-pink-500'],
+                        'rose' => ['border' => 'border-rose-100', 'overlay' => 'bg-rose-900/10', 'hover' => 'group-hover:text-rose-500', 'icon' => 'text-rose-400'],
+                        'fuchsia' => ['border' => 'border-fuchsia-100', 'overlay' => 'bg-fuchsia-900/10', 'hover' => 'group-hover:text-fuchsia-500', 'icon' => 'text-fuchsia-400'],
+                        'teal' => ['border' => 'border-teal-100', 'overlay' => 'bg-teal-900/10', 'hover' => 'group-hover:text-teal-600', 'icon' => 'text-teal-400'],
+                        'purple' => ['border' => 'border-purple-100', 'overlay' => 'bg-purple-900/10', 'hover' => 'group-hover:text-purple-500', 'icon' => 'text-purple-400'],
+                    ];
+                    $theme = $colorMap[$category->card_color ?? 'pink'] ?? $colorMap['pink'];
+                @endphp
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 {{ $theme['border'] }} border overflow-hidden group">
+                    <a href="{{ route('services.show', $category->slug) }}" class="block">
+                        <div class="h-48 overflow-hidden relative">
+                            <div class="absolute inset-0 {{ $theme['overlay'] }} group-hover:bg-transparent transition-colors z-10"></div>
+                            @if($category->image)
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            @else
+                            <img src="{{ asset('images/pelvic_pain_service.png') }}" alt="{{ $category->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            @endif
+                        </div>
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold heading-font text-gray-900 mb-4 {{ $theme['hover'] }} transition-colors">{{ $category->name }}</h3>
+                            <ul class="space-y-3 text-gray-700">
+                                @foreach($category->activeSubcategories as $sub)
+                                <li class="flex items-start">
+                                    <svg class="w-5 h-5 {{ $theme['icon'] }} mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <a href="{{ route('services.subservice', [$category->slug, $sub->slug]) }}" class="hover:underline hover:text-pink-600 transition-colors">{{ $sub->name }}</a>
+                                </li>
+                                @endforeach
+                            </ul>
+                            @if($category->activeSubcategories->isEmpty())
+                            <p class="text-gray-500 text-sm italic">No treatments listed yet.</p>
+                            @endif
+                        </div>
+                    </a>
                 </div>
-
-                <!-- Incontinence (Blue -> Rose) -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-pink-100 overflow-hidden group">
-                    <div class="h-48 overflow-hidden relative">
-                        <div class="absolute inset-0 bg-rose-900/10 group-hover:bg-rose-900/0 transition-colors z-10"></div>
-                        <img src="{{ asset('images/incontinence_service.png') }}" alt="Incontinence Care" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold heading-font text-gray-900 mb-4 group-hover:text-rose-500 transition-colors">Incontinence</h3>
-                        <ul class="space-y-3 text-gray-700">
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-rose-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Stress incontinence</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-rose-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Urge incontinence</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-rose-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Mixed incontinence</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-rose-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Fecal incontinence</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Pregnancy & Postpartum (Purple -> Lavender/Fuchsia) -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-pink-100 overflow-hidden group">
-                    <div class="h-48 overflow-hidden relative">
-                        <div class="absolute inset-0 bg-fuchsia-900/10 group-hover:bg-fuchsia-900/0 transition-colors z-10"></div>
-                        <img src="{{ asset('images/pregnancy_service.png') }}" alt="Pregnancy & Postpartum" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold heading-font text-gray-900 mb-4 group-hover:text-fuchsia-500 transition-colors">Pregnancy & Postpartum</h3>
-                        <ul class="space-y-3 text-gray-700">
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-fuchsia-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Prenatal physiotherapy</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-fuchsia-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Postpartum recovery</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-fuchsia-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Diastasis recti treatment</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-fuchsia-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Pelvic floor rehabilitation</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Prolapse (Green -> Teal/Mint) -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-pink-100 overflow-hidden group">
-                    <div class="h-48 overflow-hidden relative">
-                        <div class="absolute inset-0 bg-teal-900/10 group-hover:bg-teal-900/0 transition-colors z-10"></div>
-                        <img src="{{ asset('images/wellness_service.png') }}" alt="Prolapse Care" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold heading-font text-gray-900 mb-4 group-hover:text-teal-600 transition-colors">Prolapse</h3>
-                        <ul class="space-y-3 text-gray-700">
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-teal-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Pelvic organ prolapse</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-teal-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Conservative management</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-teal-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Pessary fitting & care</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Sexual Health (Orange -> Peach/Coral) -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-pink-100 overflow-hidden group">
-                    <div class="h-48 overflow-hidden relative">
-                        <div class="absolute inset-0 bg-rose-900/10 group-hover:bg-rose-900/0 transition-colors z-10"></div>
-                        <img src="{{ asset('images/wellness_service.png') }}" alt="Sexual Health" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold heading-font text-gray-900 mb-4 group-hover:text-rose-400 transition-colors">Sexual Health</h3>
-                        <ul class="space-y-3 text-gray-700">
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-rose-300 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Dyspareunia treatment</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-rose-300 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Vaginismus therapy</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-rose-300 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Sexual function improvement</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Menopause Support (Indigo -> Violet/Purple) -->
-                <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all transform hover:-translate-y-2 border border-pink-100 overflow-hidden group">
-                    <div class="h-48 overflow-hidden relative">
-                        <div class="absolute inset-0 bg-purple-900/10 group-hover:bg-purple-900/0 transition-colors z-10"></div>
-                        <img src="{{ asset('images/wellness_service.png') }}" alt="Menopause Support" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
-                    <div class="p-8">
-                        <h3 class="text-2xl font-bold heading-font text-gray-900 mb-4 group-hover:text-purple-500 transition-colors">Menopause Support</h3>
-                        <ul class="space-y-3 text-gray-700">
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-purple-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Hormonal changes support</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-purple-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Pelvic floor strengthening</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-5 h-5 text-purple-400 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
-                                <span>Bone health management</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
+            @else
+            <!-- Fallback when no categories exist -->
+            <div class="text-center py-16 bg-gray-50 rounded-2xl border border-gray-200">
+                <p class="text-xl text-gray-600 mb-4">Service categories are being updated. Please check back soon.</p>
+                <a href="{{ route('contact') }}" class="inline-block bg-pink-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-700 transition">Contact Us</a>
+            </div>
+            @endif
         </div>
     </section>
 
@@ -243,4 +86,3 @@
         </div>
     </section>
 @endsection
-

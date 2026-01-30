@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class DoctorProfile extends Model
 {
     protected $fillable = [
         'user_id',
+        'slug',
         'years_of_experience',
         'rating',
         'specializations',
@@ -60,6 +62,38 @@ class DoctorProfile extends Model
     public function documents(): HasMany
     {
         return $this->hasMany(DoctorDocument::class, 'doctor_id', 'user_id');
+    }
+
+    public function faqs(): HasMany
+    {
+        return $this->hasMany(DoctorFaq::class)->orderBy('sort_order');
+    }
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(DoctorPhoto::class)->orderBy('sort_order');
+    }
+
+    public function galleryPhotos(): HasMany
+    {
+        return $this->hasMany(DoctorPhoto::class)->where('type', 'gallery')->orderBy('sort_order');
+    }
+
+    public function clinicPhotos(): HasMany
+    {
+        return $this->hasMany(DoctorPhoto::class)->where('type', 'clinic')->orderBy('sort_order');
+    }
+
+    public static function generateSlug(string $name): string
+    {
+        $base = Str::slug($name);
+        $slug = $base;
+        $count = 0;
+        while (static::where('slug', $slug)->exists()) {
+            $count++;
+            $slug = $base . '-' . $count;
+        }
+        return $slug;
     }
 
     public function isVerified(): bool

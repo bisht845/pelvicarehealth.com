@@ -14,6 +14,10 @@
     @else
     <title>Womens Health Physiotherapy India | Pain During Sex & Postpartum Care</title>
     @endif
+    @hasSection('meta_keywords')
+    <meta name="keywords" content="@yield('meta_keywords')">
+    @endif
+    @stack('meta')
     
     <!-- Schema Markup (JSON-LD) -->
     @php
@@ -68,6 +72,52 @@
             scroll-behavior: smooth;
         }
         
+        /* Global heading scale – uniform, professional, responsive (overrides inline text-* classes) */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+            color: inherit;
+        }
+        h1 { font-size: 1.5rem !important; }
+        h2 { font-size: 1.375rem !important; }
+        h3 { font-size: 1.25rem !important; }
+        h4 { font-size: 1.125rem !important; }
+        h5 { font-size: 1rem !important; }
+        h6 { font-size: 0.9375rem !important; }
+        @media (min-width: 640px) {
+            h1 { font-size: 1.75rem !important; }
+            h2 { font-size: 1.5rem !important; }
+            h3 { font-size: 1.375rem !important; }
+            h4 { font-size: 1.25rem !important; }
+            h5 { font-size: 1.125rem !important; }
+            h6 { font-size: 1rem !important; }
+        }
+        @media (min-width: 1024px) {
+            h1 { font-size: 2rem !important; }
+            h2 { font-size: 1.625rem !important; }
+            h3 { font-size: 1.5rem !important; }
+            h4 { font-size: 1.25rem !important; }
+            h5 { font-size: 1.125rem !important; }
+            h6 { font-size: 1rem !important; }
+        }
+        
+        /* Global paragraph and body text – reduced, professional, responsive */
+        body {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+        p, li, .prose p, .prose li, article p, article li {
+            font-size: inherit;
+            line-height: 1.6;
+        }
+        @media (min-width: 640px) {
+            body { font-size: 0.9375rem; }
+        }
+        @media (min-width: 1024px) {
+            body { font-size: 1rem; }
+        }
+        
         /* Remove global transition that causes conflicts */
         button, a, input, select, textarea {
             transition: all 0.2s ease;
@@ -112,15 +162,21 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
                 <div class="flex items-center flex-shrink-0">
-                    <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="text-xl font-bold heading-font text-gray-900">Pelvicare<sup class="text-xs text-red-600">®</sup></div>
-                            <div class="text-xs text-gray-600">Women's Health Physiotherapy</div>
+                    <a href="{{ route('home') }}" class="flex items-center">
+                        <img src="{{ asset('images/pelvicarehealth_logo.png') }}" 
+                             alt="Pelvicare Health - Women's Health Physiotherapy" 
+                             class="h-12 md:h-16 w-auto object-contain"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="hidden items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-xl font-bold heading-font text-gray-900">Pelvicare<sup class="text-xs text-red-600">®</sup></div>
+                                <div class="text-xs text-gray-600">Women's Health Physiotherapy</div>
+                            </div>
                         </div>
                     </a>
                 </div>
@@ -131,6 +187,7 @@
                     <a href="{{ route('doctors.index') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('doctors.*') ? 'text-pink-600' : '' }}">Doctors</a>
                     <a href="{{ route('services') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('services') ? 'text-pink-600' : '' }}">Services</a>
                     <a href="{{ route('treatments') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('treatments') ? 'text-pink-600' : '' }}">Treatments</a>
+                    <a href="{{ route('blog.index') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('blog.*') ? 'text-pink-600' : '' }}">Blog</a>
                     <a href="{{ route('about') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('about') ? 'text-pink-600' : '' }}">About</a>
                     
                     @auth
@@ -223,6 +280,7 @@
                 <a href="{{ route('doctors.index') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('doctors.*') ? 'bg-pink-50 text-pink-600' : '' }}">Doctors</a>
                 <a href="{{ route('services') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('services') ? 'bg-pink-50 text-pink-600' : '' }}">Services</a>
                 <a href="{{ route('treatments') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('treatments') ? 'bg-pink-50 text-pink-600' : '' }}">Treatments</a>
+                <a href="{{ route('blog.index') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('blog.*') ? 'bg-pink-50 text-pink-600' : '' }}">Blog</a>
                 <a href="{{ route('about') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('about') ? 'bg-pink-50 text-pink-600' : '' }}">About</a>
                 
                 @auth
@@ -271,6 +329,52 @@
             </div>
         </div>
     </nav>
+
+    <!-- Location-based search bar (full width, below navbar) -->
+    <section class="bg-white border-b border-gray-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <form action="{{ route('doctors.index') }}" method="GET" class="flex flex-col sm:flex-row gap-3 sm:gap-0">
+                <!-- Location -->
+                <div class="flex-1 sm:max-w-[220px] lg:max-w-[260px] sm:border-r sm:border-gray-200 sm:pr-4">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 12z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </span>
+                        <select name="city" id="nav-search-city" class="w-full pl-10 pr-10 py-3 sm:py-2.5 border border-gray-200 rounded-xl sm:rounded-r-none sm:rounded-l-xl text-gray-900 font-medium focus:ring-2 focus:ring-pink-500 focus:border-pink-500 bg-gray-50/50 sm:bg-white appearance-none cursor-pointer text-sm">
+                            <option value="">Select location</option>
+                            @foreach(config('pelvicare.locations', []) as $loc)
+                                <option value="{{ $loc }}" {{ request('city') === $loc ? 'selected' : '' }}>{{ $loc }}</option>
+                            @endforeach
+                        </select>
+                        <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </div>
+                </div>
+                <!-- Search doctors / specialists -->
+                <div class="flex-[2] min-w-0">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </span>
+                        <input type="text" name="search" id="nav-search-query" value="{{ request('search') }}"
+                               placeholder="Search doctors, specialists, or clinic..."
+                               class="w-full pl-10 pr-4 py-3 sm:py-2.5 border border-gray-200 rounded-xl sm:rounded-l-none sm:rounded-r-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm placeholder-gray-500">
+                    </div>
+                </div>
+                <div class="sm:flex-shrink-0">
+                    <button type="submit" class="w-full sm:w-auto bg-pink-600 hover:bg-pink-700 text-white font-semibold px-6 py-3 sm:py-2.5 rounded-xl transition-colors text-sm shadow-sm">
+                        Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
     
     <!-- Main Content -->
     <main>
@@ -282,15 +386,21 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div>
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="text-xl font-bold heading-font">Pelvicare<sup class="text-xs text-pink-400">®</sup></div>
-                            <div class="text-xs text-gray-400">Women's Health Physiotherapy</div>
+                    <div class="mb-4">
+                        <img src="{{ asset('images/pelvicarehealth_logo.png') }}" 
+                             alt="Pelvicare Health - Women's Health Physiotherapy" 
+                             class="h-16 w-auto object-contain"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="hidden items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-xl font-bold heading-font">Pelvicare<sup class="text-xs text-pink-400">®</sup></div>
+                                <div class="text-xs text-gray-400">Women's Health Physiotherapy</div>
+                            </div>
                         </div>
                     </div>
                     <p class="text-gray-400 text-sm mb-4">Expert care for pelvic health conditions. Empowering women through specialized physiotherapy.</p>

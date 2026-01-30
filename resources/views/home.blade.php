@@ -101,14 +101,14 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 <div class="inline-block bg-pink-50 border border-pink-100 text-pink-700 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold mb-6 w-fit shadow-sm">
                     ✨ Trusted by 5,000+ Women Across India
                 </div>
-                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold heading-font text-gray-900 mb-6 leading-tight">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-5 leading-tight">
                     Your Body Deserves <br>
-                    <span class="relative inline-block mt-2">
-                        <span class="relative z-10 bg-pink-100 text-pink-600 px-4 py-1 rounded-lg shadow-md border border-pink-200">Expert Care</span>
+                    <span class="relative inline-block mb-2">
+                        <span class="relative z-10 bg-pink-100 text-pink-600 px-3 py-1 rounded-lg shadow-md border border-pink-200 text-lg sm:text-xl md:text-2xl">Expert Care</span>
                         <span class="absolute -bottom-2 -right-2 w-full h-full bg-pink-50 rounded-lg -z-0"></span>
                     </span>
                 </h1>
-                <p class="text-lg text-gray-700 mb-8 leading-relaxed max-w-lg">
+                <p class="text-base sm:text-lg text-gray-700 mb-6 leading-relaxed max-w-lg">
                     Pain during sex? Leaking urine? Pelvic discomfort? You're not alone. Connect with verified women's health physiotherapists who understand your concerns.
                 </p>
                 
@@ -121,7 +121,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                             </svg>
                         </div>
                         <div>
-                            <div class="text-lg font-bold text-gray-900 leading-none">200+</div>
+                            <div class="text-base font-bold text-gray-900 leading-none">200+</div>
                             <div class="text-xs text-gray-500 font-medium mt-0.5">Specialists</div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                             </svg>
                         </div>
                         <div>
-                            <div class="text-lg font-bold text-gray-900 leading-none">100%</div>
+                            <div class="text-base font-bold text-gray-900 leading-none">100%</div>
                             <div class="text-xs text-gray-500 font-medium mt-0.5">Women-Only</div>
                         </div>
                     </div>
@@ -145,7 +145,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                             </svg>
                         </div>
                         <div>
-                            <div class="text-lg font-bold text-gray-900 leading-none">24/7</div>
+                            <div class="text-base font-bold text-gray-900 leading-none">24/7</div>
                             <div class="text-xs text-gray-500 font-medium mt-0.5">Available</div>
                         </div>
                     </div>
@@ -184,11 +184,11 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     <!-- Featured Physiotherapists Section -->
     <section class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
+            <div class="text-center mb-10">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold heading-font text-gray-900 mb-3">
                     Meet Our Expert Physiotherapists
                 </h2>
-                <p class="text-lg text-gray-600">Certified specialists dedicated to women's pelvic health</p>
+                <p class="text-base text-gray-600">Certified specialists dedicated to women's pelvic health</p>
             </div>
             
             @if($featuredDoctors->count() > 0)
@@ -201,38 +201,39 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                                 $profile = $doctor->doctorProfile;
                                 $specializations = is_array($profile->specializations) ? $profile->specializations : [];
                                 $rating = $profile->rating ?? 4.5;
-                                $city = $profile->city ?? 'Multiple Locations';
                                 $image = $profile->profile_image ? asset('storage/' . $profile->profile_image) : asset('images/physiotherapist_' . (($loop->index % 3) + 1) . '.png');
                             @endphp
                             <div class="swiper-slide">
-                                <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100 h-full">
-                                    <div class="relative mb-6">
-                                        <img src="{{ $image }}" alt="{{ $doctor->name }}" class="w-full h-64 object-cover rounded-xl">
+                                <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100 h-full flex flex-col">
+                                    <div class="relative mb-4">
+                                        <img src="{{ $image }}" alt="{{ $doctor->name }}" class="w-full h-52 object-cover rounded-xl">
                                         <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
                                             ⭐ {{ number_format($rating, 1) }}/5
                                         </div>
                                     </div>
-                                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-2">{{ $doctor->name }}</h3>
+                                    <h3 class="text-lg font-bold heading-font text-gray-900 mb-2">{{ $doctor->name }}</h3>
                                     @if(!empty($specializations))
-                                        <div class="flex flex-wrap gap-1.5 mb-3">
-                                            @foreach($specializations as $spec)
-                                                <span class="bg-pink-100 text-pink-700 px-2.5 py-1 rounded-full text-xs font-semibold border border-pink-200">
+                                        <div class="flex flex-wrap gap-1.5 mb-3 min-h-[3.25rem] overflow-hidden content-start" style="max-height: 3.25rem;">
+                                            @foreach(array_slice($specializations, 0, 4) as $spec)
+                                                <span class="bg-pink-100 text-pink-700 px-2.5 py-1 rounded-full text-xs font-semibold border border-pink-200 shrink-0">
                                                     {{ $spec }}
                                                 </span>
                                             @endforeach
                                         </div>
                                     @else
-                                        <p class="text-sm text-pink-600 font-semibold mb-3">Women's Health Specialist</p>
+                                        <div class="min-h-[3.25rem] flex items-center mb-3">
+                                            <p class="text-sm text-pink-600 font-semibold">Women's Health Specialist</p>
+                                        </div>
                                     @endif
-                                    <p class="text-sm text-gray-600 mb-4">
+                                    <p class="text-sm text-gray-600 mb-4 min-h-[2.5rem] line-clamp-2">
                                         {{ $profile->years_of_experience ?? 0 }}+ years experience
                                         @if($profile->bio)
                                             {{ Str::limit(strip_tags($profile->bio), 60) }}
                                         @endif
                                     </p>
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-xs text-gray-500">📍 {{ $city }}</span>
-                                        <a href="{{ route('doctors.show', $doctor->id) }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm">View Profile →</a>
+                                    <div class="mt-auto flex items-center justify-between gap-2">
+                                        <a href="{{ route('book-appointment', ['doctor_id' => $doctor->id]) }}" class="inline-block bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 font-semibold text-sm transition-colors">Book Now</a>
+                                        <a href="{{ route('doctors.show', $doctor->doctorProfile->slug) }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm whitespace-nowrap">View Profile →</a>
                                     </div>
                                 </div>
                             </div>
@@ -262,8 +263,8 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     <!-- Problem Discovery Section -->
     <section id="problems" class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
+            <div class="text-center mb-10">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold heading-font text-gray-900 mb-3">
                     Search Your Symptoms – Get Real Answers
                 </h2>
             </div>
@@ -276,7 +277,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-3">
+                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
                         "Why does sex hurt even when I want it?"
                     </h3>
                     <ul class="text-gray-700 space-y-2 mb-4 text-sm">
@@ -295,7 +296,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-3">
+                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
                         "Is pain months after delivery normal?"
                     </h3>
                     <ul class="text-gray-700 space-y-2 mb-4 text-sm">
@@ -314,7 +315,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-3">
+                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
                         "Why do I leak urine when I laugh or sneeze?"
                     </h3>
                     <ul class="text-gray-700 space-y-2 mb-4 text-sm">
@@ -333,7 +334,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-3">
+                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
                         "Pelvic pain but all tests are normal?"
                     </h3>
                     <ul class="text-gray-700 space-y-2 mb-4 text-sm">
@@ -352,7 +353,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-3">
+                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
                         "Severe back or pelvic pain during pregnancy?"
                     </h3>
                     <ul class="text-gray-700 space-y-2 mb-4 text-sm">
@@ -371,7 +372,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold heading-font text-gray-900 mb-3">
+                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
                         "I can't explain it, but something feels off"
                     </h3>
                     <ul class="text-gray-700 space-y-2 mb-4 text-sm">

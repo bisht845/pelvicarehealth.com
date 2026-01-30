@@ -2,19 +2,25 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PhysiotherapistController;
 use App\Http\Controllers\DoctorController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/services', [HomeController::class, 'services'])->name('services');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+Route::get('/services', [ServiceController::class, 'index'])->name('services');
+Route::get('/services/{categorySlug}/{subcategorySlug}', [ServiceController::class, 'showSubservice'])->name('services.subservice');
+Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
 Route::get('/treatments', [HomeController::class, 'treatments'])->name('treatments');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 // Doctors Routes
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
-Route::get('/doctors/{id}', [DoctorController::class, 'show'])->name('doctors.show');
+Route::get('/doctors/{slug}', [DoctorController::class, 'show'])->name('doctors.show');
 
 // Appointment Booking Routes
 Route::get('/book-appointment', [AppointmentController::class, 'showBookingForm'])->name('book-appointment');

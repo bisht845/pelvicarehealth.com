@@ -41,6 +41,24 @@ Route::middleware(['auth', 'role:super_admin'])->prefix('admin/content')->name('
     Route::delete('/{id}', [ContentController::class, 'destroy'])->name('destroy');
 });
 
+// Service Categories & Subcategories (Super Admin only)
+Route::middleware(['auth', 'role:super_admin'])->prefix('admin/service-categories')->name('admin.service-categories.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Admin\ServiceCategoryController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\Admin\ServiceCategoryController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\Admin\ServiceCategoryController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [App\Http\Controllers\Admin\ServiceCategoryController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [App\Http\Controllers\Admin\ServiceCategoryController::class, 'update'])->name('update');
+    Route::delete('/{id}', [App\Http\Controllers\Admin\ServiceCategoryController::class, 'destroy'])->name('destroy');
+});
+Route::middleware(['auth', 'role:super_admin'])->prefix('admin/service-subcategories')->name('admin.service-subcategories.')->group(function () {
+    Route::get('/', [App\Http\Controllers\Admin\ServiceSubcategoryController::class, 'index'])->name('index');
+    Route::get('/create', [App\Http\Controllers\Admin\ServiceSubcategoryController::class, 'create'])->name('create');
+    Route::post('/', [App\Http\Controllers\Admin\ServiceSubcategoryController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [App\Http\Controllers\Admin\ServiceSubcategoryController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [App\Http\Controllers\Admin\ServiceSubcategoryController::class, 'update'])->name('update');
+    Route::delete('/{id}', [App\Http\Controllers\Admin\ServiceSubcategoryController::class, 'destroy'])->name('destroy');
+});
+
 // Blog Management (Super Admin only)
 Route::middleware(['auth', 'role:super_admin'])->prefix('admin/blog')->name('admin.blog.')->group(function () {
     Route::get('/', [PostController::class, 'index'])->name('index');
@@ -51,6 +69,7 @@ Route::middleware(['auth', 'role:super_admin'])->prefix('admin/blog')->name('adm
     Route::get('/{id}/edit', [PostController::class, 'edit'])->name('edit');
     Route::put('/{id}', [PostController::class, 'update'])->name('update');
     Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
+    Route::delete('/{postId}/images/{imageId}', [PostController::class, 'destroyPostImage'])->name('images.destroy');
 });
 
 // Doctor/Admin Routes
@@ -64,6 +83,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin/doctor')->name('doctor.
     Route::get('/profile', [DoctorController::class, 'profile'])->name('profile');
     Route::post('/profile', [DoctorController::class, 'updateProfile'])->name('profile.update');
     Route::post('/profile/photo', [DoctorController::class, 'updateProfilePhoto'])->name('profile.photo.update');
+    Route::post('/profile/upload-image', [DoctorController::class, 'uploadImage'])->name('upload-image');
+    Route::post('/profile/faqs', [DoctorController::class, 'storeFaq'])->name('faqs.store');
+    Route::put('/profile/faqs/{id}', [DoctorController::class, 'updateFaq'])->name('faqs.update');
+    Route::delete('/profile/faqs/{id}', [DoctorController::class, 'destroyFaq'])->name('faqs.destroy');
+    Route::post('/profile/photos', [DoctorController::class, 'storePhotos'])->name('photos.store');
+    Route::delete('/profile/photos/{id}', [DoctorController::class, 'destroyPhoto'])->name('photos.destroy');
+    Route::put('/password', [DoctorController::class, 'updatePassword'])->name('password.update');
     Route::post('/profile/document/{id}/reupload', [DoctorController::class, 'reuploadDocument'])->name('profile.document.reupload');
 });
 
@@ -72,6 +98,7 @@ Route::middleware(['auth', 'role:patient'])->prefix('admin/patient')->name('pati
     Route::get('/dashboard', [PatientController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [App\Http\Controllers\Patient\ProfileController::class, 'edit'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\Patient\ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/password', [App\Http\Controllers\Patient\ProfileController::class, 'updatePassword'])->name('password.update');
     Route::post('/documents', [App\Http\Controllers\Patient\ProfileController::class, 'uploadDocument'])->name('documents.upload');
     Route::delete('/documents/{id}', [App\Http\Controllers\Patient\ProfileController::class, 'deleteDocument'])->name('documents.delete');
     Route::get('/appointments', [PatientController::class, 'appointments'])->name('appointments');

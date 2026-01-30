@@ -48,20 +48,8 @@ class DoctorController extends Controller
 
         $doctors = $query->paginate(9);
 
-        // Get unique cities and specializations for filters
-        $cities = User::where('role', 'admin')
-            ->whereHas('doctorProfile', function($q) {
-                $q->where('verification_status', 'approved')
-                  ->where('profile_completed', true)
-                  ->whereNotNull('city');
-            })
-            ->with('doctorProfile')
-            ->get()
-            ->pluck('doctorProfile.city')
-            ->filter()
-            ->unique()
-            ->sort()
-            ->values();
+        // Cities: use config locations (Pelvicare service areas) for consistent filters
+        $cities = collect(config('pelvicare.locations', []));
 
         $allSpecializations = User::where('role', 'admin')
             ->whereHas('doctorProfile', function($q) {
@@ -82,17 +70,18 @@ class DoctorController extends Controller
     }
 
     /**
-     * Display the specified doctor's profile
+     * Display the specified doctor's profile (by slug)
      */
-    public function show($id)
+    public function show(string $slug)
     {
         $doctor = User::where('role', 'admin')
-            ->whereHas('doctorProfile', function($q) {
+            ->whereHas('doctorProfile', function($q) use ($slug) {
                 $q->where('verification_status', 'approved')
-                  ->where('profile_completed', true);
+                  ->where('profile_completed', true)
+                  ->where('slug', $slug);
             })
-            ->with(['doctorProfile', 'availabilities'])
-            ->findOrFail($id);
+            ->with(['doctorProfile.faqs', 'doctorProfile.photos', 'availabilities'])
+            ->firstOrFail();
 
         return view('doctors.show', compact('doctor'));
     }
