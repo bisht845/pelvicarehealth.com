@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $subcategory->name . ' - ' . $category->name . ' | Pelvicare')
-@section('meta_description', Str::limit(strip_tags($subcategory->description ?? ''), 160))
+@section('title', $subcategory->meta_title ?? ($subcategory->name . ' - ' . $category->name . ' | Pelvicare'))
+@section('meta_description', $subcategory->meta_description ?? Str::limit(strip_tags($subcategory->description ?? ''), 160))
+@if($subcategory->meta_keywords ?? null)
+@section('meta_keywords', $subcategory->meta_keywords)
+@endif
 
 @section('content')
     <!-- Breadcrumb -->
@@ -48,8 +51,8 @@
     <section class="py-16 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             @if($subcategory->description)
-            <div class="prose prose-lg prose-pink max-w-none prose-headings:font-heading prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-pink-600 prose-a:no-underline hover:prose-a:underline">
-                {!! nl2br(e($subcategory->description)) !!}
+            <div class="prose prose-lg prose-pink max-w-none prose-headings:font-heading prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-pink-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl">
+                {!! $subcategory->description !!}
             </div>
             @else
             <p class="text-gray-600">Detailed information about this treatment is being updated. Please <a href="{{ route('contact') }}" class="text-pink-600 hover:underline">contact us</a> for more information or to book a consultation.</p>

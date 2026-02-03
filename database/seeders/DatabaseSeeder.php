@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
         // Create Super Admin
         $this->call(SuperAdminSeeder::class);
 
+        // Final service structure (10 categories + subcategories + SEO)
+        $this->call(ServiceStructureSeeder::class);
+
         // Create sample users for testing
         User::factory()->create([
             'name' => 'Test User',

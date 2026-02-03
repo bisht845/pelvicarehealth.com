@@ -31,8 +31,8 @@
 
             <div>
                 <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Description (optional)</label>
-                <textarea name="description" id="description" rows="5" class="w-full rounded-xl border-gray-200 shadow-sm focus:border-pink-500 focus:ring-pink-500 p-3 resize-none placeholder-gray-400"
-                          placeholder="Detail about this treatment or condition.">{{ old('description', $subcategory->description) }}</textarea>
+                <p class="text-xs text-gray-500 mb-2">Detail about this treatment or condition. Supports headings, lists, and images.</p>
+                <x-tinymce-editor name="description" id="description" :value="old('description', $subcategory->description)" height="320px" />
                 @error('description')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
             </div>
 

@@ -21,9 +21,16 @@
 
             <div>
                 <label for="short_description" class="block text-sm font-semibold text-gray-700 mb-2">Short description (optional)</label>
-                <textarea name="short_description" id="short_description" rows="2" class="w-full rounded-xl border-gray-200 shadow-sm focus:border-pink-500 focus:ring-pink-500 p-3 resize-none placeholder-gray-400"
-                          placeholder="Brief tagline for the category card.">{{ old('short_description', $category->short_description) }}</textarea>
+                <p class="text-xs text-gray-500 mb-2">Brief tagline for the category card. Supports formatting.</p>
+                <x-tinymce-editor name="short_description" id="short_description" :value="old('short_description', $category->short_description)" height="180px" />
                 @error('short_description')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+            </div>
+
+            <div>
+                <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Full description (optional)</label>
+                <p class="text-xs text-gray-500 mb-2">Detailed content for the category page. Shown below the hero.</p>
+                <x-tinymce-editor name="description" id="description" :value="old('description', $category->description)" height="320px" />
+                @error('description')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
             </div>
 
             <div>

@@ -52,7 +52,7 @@ class ServiceSubcategoryController extends Controller
         $request->validate([
             'service_category_id' => 'required|exists:service_categories,id',
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string', // HTML from TinyMCE
             'image' => 'nullable|image|max:2048',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
@@ -94,7 +94,7 @@ class ServiceSubcategoryController extends Controller
         $request->validate([
             'service_category_id' => 'required|exists:service_categories,id',
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string', // HTML from TinyMCE
             'image' => 'nullable|image|max:2048',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',

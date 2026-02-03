@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $category->name . ' - Pelvicare Services')
-@section('meta_description', $category->short_description ?? 'Pelvic health services and treatments at Pelvicare.')
+@section('title', $category->meta_title ?? ($category->name . ' - Pelvicare Women\'s Health Physiotherapy'))
+@section('meta_description', $category->meta_description ?? Str::limit(strip_tags($category->short_description ?? ''), 160))
+@if($category->meta_keywords)
+@section('meta_keywords', $category->meta_keywords)
+@endif
 
 @section('content')
     <!-- Breadcrumb -->
@@ -31,7 +34,9 @@
                 <div class="lg:w-1/2">
                     <h1 class="text-4xl md:text-5xl font-bold heading-font text-gray-900 mb-4">{{ $category->name }}</h1>
                     @if($category->short_description)
-                    <p class="text-xl text-gray-700 mb-6">{{ $category->short_description }}</p>
+                    <div class="text-xl text-gray-700 mb-6 prose prose-lg max-w-none prose-p:mb-2 prose-headings:font-heading prose-a:text-pink-600 prose-a:no-underline hover:prose-a:underline">
+                        {!! $category->short_description !!}
+                    </div>
                     @endif
                     <a href="{{ route('book-appointment') }}" class="inline-flex items-center px-6 py-3 bg-pink-600 text-white font-semibold rounded-full hover:bg-pink-700 transition shadow-lg">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
@@ -41,6 +46,17 @@
             </div>
         </div>
     </section>
+
+    @if($category->description)
+    <!-- Full description (rich text) -->
+    <section class="py-12 bg-white border-t border-gray-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="prose prose-lg prose-pink max-w-none prose-headings:font-heading prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-pink-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl">
+                {!! $category->description !!}
+            </div>
+        </div>
+    </section>
+    @endif
 
     <!-- Treatments / Subcategories -->
     <section class="py-16 bg-white">
@@ -57,7 +73,7 @@
                         <div>
                             <h3 class="text-lg font-bold text-gray-900 group-hover:text-pink-600 transition-colors">{{ $sub->name }}</h3>
                             @if($sub->description)
-                            <p class="mt-2 text-gray-600 text-sm line-clamp-2">{{ Str::limit(strip_tags($sub->description), 80) }}</p>
+                            <p class="mt-2 text-gray-600 text-sm line-clamp-2">{{ Str::limit(strip_tags($sub->description), 100) }}</p>
                             @endif
                             <span class="inline-flex items-center mt-3 text-pink-600 font-medium text-sm group-hover:underline">
                                 Learn more

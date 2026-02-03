@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Services - Pelvicare Women\'s Health Physiotherapy')
+@section('title', 'Our Services - Pelvicare Women\'s Health Physiotherapy Delhi NCR')
+
+@section('meta_description', 'Comprehensive pelvic health and women\'s health physiotherapy services in Delhi NCR. Pelvic floor rehab, pregnancy care, postpartum recovery, pelvic pain management, intimate health & more.')
 
 @section('content')
     <!-- Page Header -->
@@ -12,6 +14,21 @@
             <p class="text-xl text-gray-700 text-center max-w-3xl mx-auto">
                 Comprehensive pelvic health solutions for women at every stage of life
             </p>
+
+            @if(isset($specializations) && $specializations !== [] && count($specializations) > 0)
+            <div class="mt-8 flex flex-wrap justify-center gap-3">
+                <form method="get" action="{{ route('services') }}" class="flex flex-wrap items-center justify-center gap-2">
+                    <label for="specialization" class="text-sm font-medium text-gray-700 sr-only">Filter by specialization</label>
+                    <select name="specialization" id="specialization" onchange="this.form.submit()" class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm focus:border-pink-500 focus:ring-pink-500">
+                        <option value="all" {{ (isset($specialization) && $specialization === 'all') || !isset($specialization) ? 'selected' : '' }}>All Specializations</option>
+                        @foreach($specializations as $spec)
+                            <option value="{{ $spec }}" {{ (isset($specialization) && $specialization === $spec) ? 'selected' : '' }}>{{ $spec }}</option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="rounded-lg bg-pink-600 px-4 py-2 text-sm font-medium text-white hover:bg-pink-700 transition">Filter</button>
+                </form>
+            </div>
+            @endif
         </div>
     </section>
 

@@ -15,6 +15,9 @@ class ServiceSubcategory extends Model
         'image',
         'sort_order',
         'is_active',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
     ];
 
     protected $casts = [

@@ -11,15 +11,21 @@ class ServiceCategory extends Model
         'name',
         'slug',
         'short_description',
+        'description',
         'image',
         'card_color',
         'sort_order',
         'is_active',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
+        'backend_tags',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
         'sort_order' => 'integer',
+        'backend_tags' => 'array',
     ];
 
     public function subcategories(): HasMany

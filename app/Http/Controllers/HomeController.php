@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,7 +22,14 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
-        return view('home', compact('featuredDoctors'));
+        // Service categories for dynamic "Search Your Symptoms" / services section (limit 6 for home)
+        $serviceCategories = ServiceCategory::active()
+            ->with(['activeSubcategories'])
+            ->ordered()
+            ->limit(6)
+            ->get();
+
+        return view('home', compact('featuredDoctors', 'serviceCategories'));
     }
     
     public function services()

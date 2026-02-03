@@ -44,7 +44,8 @@ class ServiceCategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'short_description' => 'nullable|string|max:500',
+            'short_description' => 'nullable|string',
+            'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'card_color' => 'nullable|in:pink,rose,fuchsia,teal,purple',
             'sort_order' => 'nullable|integer|min:0',
@@ -55,6 +56,7 @@ class ServiceCategoryController extends Controller
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'short_description' => $request->short_description,
+            'description' => $request->description,
             'card_color' => $request->card_color ?? 'pink',
             'sort_order' => (int) ($request->sort_order ?? 0),
             'is_active' => $request->boolean('is_active'),
@@ -82,7 +84,8 @@ class ServiceCategoryController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'short_description' => 'nullable|string|max:500',
+            'short_description' => 'nullable|string',
+            'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'card_color' => 'nullable|in:pink,rose,fuchsia,teal,purple',
             'sort_order' => 'nullable|integer|min:0',
@@ -93,6 +96,7 @@ class ServiceCategoryController extends Controller
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'short_description' => $request->short_description,
+            'description' => $request->description,
             'card_color' => $request->card_color ?? 'pink',
             'sort_order' => (int) ($request->sort_order ?? 0),
             'is_active' => $request->boolean('is_active'),

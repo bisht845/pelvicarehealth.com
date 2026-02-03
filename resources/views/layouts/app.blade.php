@@ -79,10 +79,10 @@
             line-height: 1.3;
             color: inherit;
         }
-        h1 { font-size: 1.5rem !important; }
-        h2 { font-size: 1.375rem !important; }
-        h3 { font-size: 1.25rem !important; }
-        h4 { font-size: 1.125rem !important; }
+        h1 { font-size: 2.3rem !important; }
+        h2 { font-size: 1.9rem !important; }
+        h3 { font-size: 1.5rem !important; }
+        h4 { font-size: 1.25rem !important; }
         h5 { font-size: 1rem !important; }
         h6 { font-size: 0.9375rem !important; }
         @media (min-width: 640px) {
@@ -94,12 +94,12 @@
             h6 { font-size: 1rem !important; }
         }
         @media (min-width: 1024px) {
-            h1 { font-size: 2rem !important; }
-            h2 { font-size: 1.625rem !important; }
+            h1 { font-size: 2.3rem !important; }
+            h2 { font-size: 1.9rem !important; }
             h3 { font-size: 1.5rem !important; }
             h4 { font-size: 1.25rem !important; }
-            h5 { font-size: 1.125rem !important; }
-            h6 { font-size: 1rem !important; }
+            h5 { font-size: 1rem !important; }
+            h6 { font-size: 0.9375rem !important; }
         }
         
         /* Global paragraph and body text – reduced, professional, responsive */
@@ -335,7 +335,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <form action="{{ route('doctors.index') }}" method="GET" class="flex flex-col sm:flex-row gap-3 sm:gap-0">
                 <!-- Location -->
-                <div class="flex-1 sm:max-w-[220px] lg:max-w-[260px] sm:border-r sm:border-gray-200 sm:pr-4">
+                <div class="flex-1 sm:max-w-[200px] lg:max-w-[220px] sm:border-r sm:border-gray-200 sm:pr-3">
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -347,6 +347,25 @@
                             <option value="">Select location</option>
                             @foreach(config('pelvicare.locations', []) as $loc)
                                 <option value="{{ $loc }}" {{ request('city') === $loc ? 'selected' : '' }}>{{ $loc }}</option>
+                            @endforeach
+                        </select>
+                        <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </div>
+                </div>
+                <!-- Specialization -->
+                <div class="flex-1 sm:max-w-[200px] lg:max-w-[220px] sm:border-r sm:border-gray-200 sm:pr-3">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                            </svg>
+                        </span>
+                        <select name="specialization" id="nav-search-specialization" class="w-full pl-10 pr-10 py-3 sm:py-2.5 border border-gray-200 rounded-xl sm:rounded-r-none sm:rounded-l-none text-gray-900 font-medium focus:ring-2 focus:ring-pink-500 focus:border-pink-500 bg-gray-50/50 sm:bg-white appearance-none cursor-pointer text-sm">
+                            <option value="">Specialization</option>
+                            @foreach($navSpecializations ?? [] as $spec)
+                                <option value="{{ $spec }}" {{ request('specialization') === $spec ? 'selected' : '' }}>{{ $spec }}</option>
                             @endforeach
                         </select>
                         <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">

@@ -4,17 +4,37 @@ namespace App\Http\Controllers;
 
 use App\Models\ServiceCategory;
 use App\Models\ServiceSubcategory;
+use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = ServiceCategory::active()
-            ->with(['activeSubcategories'])
-            ->ordered()
-            ->get();
+        $query = ServiceCategory::active()->with(['activeSubcategories'])->ordered();
 
-        return view('services', compact('categories'));
+        // Filter by specialization (backend_tags) when provided
+        $specialization = $request->get('specialization');
+        if ($specialization && $specialization !== 'all') {
+            $query->whereJsonContains('backend_tags', $specialization);
+        }
+
+        $categories = $query->get();
+
+        // Build unique specializations list for filter dropdown (from all active categories)
+        $allCategories = ServiceCategory::active()->get();
+        $specializations = [];
+        foreach ($allCategories as $cat) {
+            if (is_array($cat->backend_tags)) {
+                foreach ($cat->backend_tags as $tag) {
+                    if ($tag && !in_array($tag, $specializations, true)) {
+                        $specializations[] = $tag;
+                    }
+                }
+            }
+        }
+        sort($specializations);
+
+        return view('services', compact('categories', 'specializations', 'specialization'));
     }
 
     public function show(string $slug)

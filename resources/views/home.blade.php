@@ -88,6 +88,23 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             padding: 20px 30px 60px 30px !important;
         }
     }
+    
+    /* Blob Animation */
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
 </style>
 @endpush
 
@@ -108,8 +125,22 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                         <span class="absolute -bottom-2 -right-2 w-full h-full bg-pink-50 rounded-lg -z-0"></span>
                     </span>
                 </h1>
+                <ul class="space-y-2.5 sm:space-y-3 mb-6 max-w-lg list-none pl-0" role="list">
+                    <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base leading-relaxed font-bold py-0.5">
+                        <span class="flex-shrink-0 w-2 h-2 rounded-full bg-pink-500 ring-4 ring-pink-100" aria-hidden="true"></span>
+                        <span>Pain during sex?</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base leading-relaxed font-bold py-0.5">
+                        <span class="flex-shrink-0 w-2 h-2 rounded-full bg-pink-500 ring-4 ring-pink-100" aria-hidden="true"></span>
+                        <span>Leaking urine?</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base leading-relaxed font-bold py-0.5">
+                        <span class="flex-shrink-0 w-2 h-2 rounded-full bg-pink-500 ring-4 ring-pink-100" aria-hidden="true"></span>
+                        <span>Pelvic discomfort?</span>
+                    </li>
+                </ul>
                 <p class="text-base sm:text-lg text-gray-700 mb-6 leading-relaxed max-w-lg">
-                    Pain during sex? Leaking urine? Pelvic discomfort? You're not alone. Connect with verified women's health physiotherapists who understand your concerns.
+                    You're not alone. Connect with verified women's health physiotherapists who understand your concerns.
                 </p>
                 
                 <!-- Trust Signals - One Line with Icons -->
@@ -186,9 +217,9 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
                 <h2 class="text-xl sm:text-2xl md:text-3xl font-bold heading-font text-gray-900 mb-3">
-                    Meet Our Expert Physiotherapists
+                    Meet Pelvicare's Verified Women's Health Physiotherapists
                 </h2>
-                <p class="text-base text-gray-600">Certified specialists dedicated to women's pelvic health</p>
+                <p class="text-base text-gray-600">Trained Specialists in Pelvic floor, Pregnancy, Postpartum, and Intemate Health Care</p>
             </div>
             
             @if($featuredDoctors->count() > 0)
@@ -260,7 +291,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
         </div>
     </section>
 
-    <!-- Problem Discovery Section -->
+    <!-- Problem Discovery / Our Services Section (Dynamic) -->
     <section id="problems" class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
@@ -268,156 +299,282 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     Search Your Symptoms – Get Real Answers
                 </h2>
             </div>
-            
+
+            @php
+                $problemColors = [
+                    'pink' => ['from' => 'from-pink-50', 'to' => 'to-pink-100', 'border' => 'border-pink-200', 'icon' => 'from-pink-500 to-pink-600', 'link' => 'text-pink-600 hover:text-pink-700'],
+                    'rose' => ['from' => 'from-rose-50', 'to' => 'to-rose-100', 'border' => 'border-rose-200', 'icon' => 'from-rose-500 to-rose-600', 'link' => 'text-rose-600 hover:text-rose-700'],
+                    'fuchsia' => ['from' => 'from-fuchsia-50', 'to' => 'to-fuchsia-100', 'border' => 'border-fuchsia-200', 'icon' => 'from-fuchsia-500 to-fuchsia-600', 'link' => 'text-fuchsia-600 hover:text-fuchsia-700'],
+                    'teal' => ['from' => 'from-teal-50', 'to' => 'to-teal-100', 'border' => 'border-teal-200', 'icon' => 'from-teal-500 to-teal-600', 'link' => 'text-teal-600 hover:text-teal-700'],
+                    'purple' => ['from' => 'from-purple-50', 'to' => 'to-purple-100', 'border' => 'border-purple-200', 'icon' => 'from-purple-500 to-purple-600', 'link' => 'text-purple-600 hover:text-purple-700'],
+                ];
+            @endphp
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Card 1: Pain During Sex -->
-                <div class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-200">
-                    <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+                @if(isset($serviceCategories) && $serviceCategories->isNotEmpty())
+                    @foreach($serviceCategories as $category)
+                        @php $theme = $problemColors[$category->card_color ?? 'pink'] ?? $problemColors['pink']; @endphp
+                        <div class="bg-gradient-to-br {{ $theme['from'] }} {{ $theme['to'] }} rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 border {{ $theme['border'] }}">
+                            <div class="w-12 h-12 bg-gradient-to-br {{ $theme['icon'] }} rounded-xl flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
+                                {{ $category->name }}
+                            </h3>
+                            <p class="text-gray-700 text-sm mb-4 line-clamp-2">{{ Str::limit(strip_tags($category->short_description), 120) }}</p>
+                            @if($category->activeSubcategories->isNotEmpty())
+                                <ul class="text-gray-700 space-y-1 mb-4 text-sm">
+                                    @foreach($category->activeSubcategories->take(3) as $sub)
+                                        <li>• {{ $sub->name }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                            <a href="{{ route('services.show', $category->slug) }}" class="{{ $theme['link'] }} font-semibold inline-flex items-center">
+                                Learn More →
+                            </a>
+                        </div>
+                    @endforeach
+                    {{-- Optional: "Something feels off" / Contact card --}}
+                    <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 border border-indigo-200">
+                        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
+                            "I can't explain it, but something feels off"
+                        </h3>
+                        <ul class="text-gray-700 space-y-2 mb-4 text-sm">
+                            <li>• You don't need a diagnosis to ask for help</li>
+                            <li>• Start with a private conversation</li>
+                        </ul>
+                        <a href="{{ route('contact') }}" class="text-indigo-600 font-semibold hover:text-indigo-700 inline-flex items-center">
+                            Talk to Someone →
+                        </a>
                     </div>
-                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
-                        "Why does sex hurt even when I want it?"
-                    </h3>
-                    <ul class="text-gray-700 space-y-2 mb-4 text-sm">
-                        <li>• 33% of Indian women experience painful intercourse</li>
-                        <li>• Most cases are treatable with physiotherapy</li>
-                    </ul>
-                    <a href="{{ route('services') }}" class="text-pink-600 font-semibold hover:text-pink-700 inline-flex items-center">
-                        Learn More →
-                    </a>
-                </div>
-                
-                <!-- Card 2: Pain After Childbirth -->
-                <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 border border-blue-200">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+                @else
+                    <div class="md:col-span-2 lg:col-span-3 text-center py-8">
+                        <p class="text-gray-600 mb-4">Explore our services for women's pelvic health.</p>
+                        <a href="{{ route('services') }}" class="inline-block bg-pink-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-700 transition">View All Services</a>
                     </div>
-                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
-                        "Is pain months after delivery normal?"
-                    </h3>
-                    <ul class="text-gray-700 space-y-2 mb-4 text-sm">
-                        <li>• Pain after episiotomy, C-section, or vaginal delivery</li>
-                        <li>• You don't have to live with this</li>
-                    </ul>
-                    <a href="{{ route('services') }}" class="text-blue-600 font-semibold hover:text-blue-700 inline-flex items-center">
-                        Learn More →
-                    </a>
-                </div>
-                
-                <!-- Card 3: Leaking Urine -->
-                <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 border border-purple-200">
-                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
-                        "Why do I leak urine when I laugh or sneeze?"
-                    </h3>
-                    <ul class="text-gray-700 space-y-2 mb-4 text-sm">
-                        <li>• 45% of postpartum women experience this</li>
-                        <li>• Pelvic floor physiotherapy helps 8 out of 10 women</li>
-                    </ul>
-                    <a href="{{ route('services') }}" class="text-purple-600 font-semibold hover:text-purple-700 inline-flex items-center">
-                        Learn More →
-                    </a>
-                </div>
-                
-                <!-- Card 4: Pelvic Pain -->
-                <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 border border-red-200">
-                    <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
-                        "Pelvic pain but all tests are normal?"
-                    </h3>
-                    <ul class="text-gray-700 space-y-2 mb-4 text-sm">
-                        <li>• When doctors can't explain your pain</li>
-                        <li>• Women's health physios specialize in chronic pelvic pain</li>
-                    </ul>
-                    <a href="{{ route('services') }}" class="text-red-600 font-semibold hover:text-red-700 inline-flex items-center">
-                        Learn More →
-                    </a>
-                </div>
-                
-                <!-- Card 5: Pregnancy Pain -->
-                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 border border-green-200">
-                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
-                        "Severe back or pelvic pain during pregnancy?"
-                    </h3>
-                    <ul class="text-gray-700 space-y-2 mb-4 text-sm">
-                        <li>• Pregnancy-safe physiotherapy options</li>
-                        <li>• Relief without medication</li>
-                    </ul>
-                    <a href="{{ route('services') }}" class="text-green-600 font-semibold hover:text-green-700 inline-flex items-center">
-                        Learn More →
-                    </a>
-                </div>
-                
-                <!-- Card 6: Something Feels Wrong -->
-                <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 border border-indigo-200">
-                    <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
-                        "I can't explain it, but something feels off"
-                    </h3>
-                    <ul class="text-gray-700 space-y-2 mb-4 text-sm">
-                        <li>• You don't need a diagnosis to ask for help</li>
-                        <li>• Start with a private conversation</li>
-                    </ul>
-                    <a href="{{ route('contact') }}" class="text-indigo-600 font-semibold hover:text-indigo-700 inline-flex items-center">
-                        Talk to Someone →
-                    </a>
-                </div>
+                @endif
             </div>
         </div>
     </section>
 
-    <!-- Validation Section -->
-    <section class="py-8 bg-gradient-to-br from-pink-50 to-blue-50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-6">
-                "Doctors Said Everything Is Normal. So Why Does It Still Hurt?"
-            </h2>
-            <p class="text-xl text-gray-700 mb-8 leading-relaxed">
-                If you've heard: <em>"Just relax,"</em> <em>"It's stress,"</em> <em>"Give it more time,"</em> or <em>"This is normal after childbirth"</em>... but the pain continues, <strong>you're not imagining it.</strong>
-            </p>
-            
-            <div class="bg-white rounded-2xl p-8 shadow-lg mb-8 text-left">
-                <h3 class="font-bold text-gray-900 mb-4 text-lg">Supporting Research:</h3>
-                <ul class="space-y-3 text-gray-700">
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 text-pink-600 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <span>Studies show <strong>82% of Indian women</strong> experience sexual dysfunction, yet <strong>64% can't talk about it</strong> with partners.</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 text-pink-600 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <span>Research from India found <strong>painful intercourse affects 33% of women</strong>, yet <strong>88.9% of doctors rarely see these issues</strong> because it is underreported.</span>
-                    </li>
-                </ul>
+    <!-- Meet Pelvicare-Verified Physiotherapists -->
+    <section class="relative py-16 sm:py-24 bg-gradient-to-r from-pink-50 via-pink-50/50 to-white overflow-hidden">
+        <!-- Background Pattern/Texture (Optional subtle noise or pattern can be added here) -->
+        <div class="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-fixed"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-center">
+                
+                <!-- Left: Text Content -->
+                <div class="order-2 lg:order-1 lg:pr-12 py-8">
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold heading-font text-slate-900 mb-6 leading-tight">
+                        Meet Pelvicare-Verified <br class="hidden lg:block">
+                        Women's Health Physiotherapists
+                    </h2>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg">
+                        Certified specialists dedicated to pelvic floor, pregnancy, postpartum, and intimate health care.
+                    </p>
+
+                    <ul class="space-y-6 mb-10">
+                        <!-- Item 1 -->
+                        <li class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 mt-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-slate-800 text-lg text-center">Women-only care</h5>
+                            </div>
+                        </li>
+
+                        <!-- Item 2 -->
+                        <li class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 mt-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-slate-800 text-lg text-center">Consent-based assessment</h5>
+                            </div>
+                        </li>
+
+                        <!-- Item 3 -->
+                        <li class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 mt-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-slate-800 text-lg text-center">Online & in-person options</h5>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- Divider Line -->
+                    <div class="w-24 h-1 bg-pink-500 rounded-full mb-8"></div>
+                </div>
+
+                <!-- Right: Image with Horizontal Fade -->
+                <!-- We want the image to span fully to the right edge if possible, or visually blend. 
+                     On mobile (order-1), it acts as a header image. On Desktop (order-2), it blends from the right. -->
+                <div class="order-1 lg:order-2 relative lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-1/2 h-full min-h-[400px] lg:min-h-auto w-full">
+                    <div class="relative w-full h-full">
+                        <!-- The Image -->
+                        <!-- mask-image creates the fade from transparent (left) to black/opaque (right) -->
+                        <img src="{{ asset('images/hero_woman_consultation.png') }}" 
+                             alt="Pelvicare verified specialist consultation" 
+                             class="w-full h-full object-cover object-center lg:object-left-top"
+                             style="-webkit-mask-image: linear-gradient(to right, transparent, black 15%); mask-image: linear-gradient(to right, transparent, black 15%);">
+                        
+                        <!-- Gradient Overlay (Optional, for smoother blend if mask isn't enough on some browsers) -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-pink-50 via-transparent to-transparent opacity-50 lg:hidden"></div>
+                    </div>
+                </div>
+
             </div>
-            
-            <a href="{{ route('contact') }}" class="inline-block bg-gradient-to-r from-pink-500 to-pink-600 text-white px-8 py-4 rounded-full font-semibold hover:from-pink-600 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg">
-                Talk to a Women's Health Specialist →
-            </a>
+        </div>
+    </section>
+
+    <!-- When Tests Are Normal – Stats & How It Works -->
+    <section class="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-pink-50 via-white to-indigo-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-10 sm:mb-14 max-w-3xl mx-auto">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold heading-font text-gray-900 mb-5 leading-tight">
+                    When Tests Are Normal, But the Pain Is Still Real
+                </h2>
+                <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-2">
+                    If you've been told <em>"just relax,"</em> <em>"it's stress,"</em> <em>"give it more time,"</em> or <em>"this is normal after childbirth"</em> — or <em>"this happens to many women"</em> — but the pain or leakage continues —
+                </p>
+                <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mt-8 mb-2">
+                    How Common Are These Problems for Women?
+                </h3>
+                <p class="text-gray-700 text-sm sm:text-base">
+                    • These conditions are common — but they are treatable.
+                </p>
+            </div>
+
+            <!-- 5 Stats Cards – subtle gradient per card, soft shadow -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-6 mb-8 sm:mb-10">
+                <!-- Card 1: Urine Leakage -->
+                <div class="bg-gradient-to-br from-pink-50 to-pink-100/80 rounded-2xl p-5 sm:p-6 shadow-sm border border-pink-100/80">
+                    <div class="w-11 h-11 rounded-xl bg-pink-500 flex items-center justify-center mb-4 shadow-sm">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69C12 2.69 6 10 6 14c0 3.31 2.69 6 6 6s6-2.69 6-6c0-4-6-11.31-6-11.31z"/></svg>
+                    </div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base mb-2">Urine Leakage</h4>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">25–45%</p>
+                    <p class="text-gray-600 text-xs sm:text-sm leading-snug">of women experience urine leakage</p>
+                    <p class="text-gray-700 text-xs sm:text-sm mt-1.5 leading-snug">Common, but not something you have to live with</p>
+                </div>
+                <!-- Card 2: Pain During Sex -->
+                <div class="bg-gradient-to-br from-rose-50 to-red-50 rounded-2xl p-5 sm:p-6 shadow-sm border border-red-100/80">
+                    <div class="w-11 h-11 rounded-xl bg-red-500 flex items-center justify-center mb-4 shadow-sm">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base mb-2">Pain During Sex</h4>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">20–40%</p>
+                    <p class="text-gray-600 text-xs sm:text-sm leading-snug">of women report sexual pain</p>
+                    <p class="text-gray-700 text-xs sm:text-sm mt-1.5 leading-snug">Pain is common — but not normal to ignore</p>
+                </div>
+                <!-- Card 3: Pelvic Organ Prolapse -->
+                <div class="bg-gradient-to-br from-purple-50 to-purple-100/70 rounded-2xl p-5 sm:p-6 shadow-sm border border-purple-100/80">
+                    <div class="w-11 h-11 rounded-xl bg-purple-500 flex items-center justify-center mb-4 shadow-sm">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base mb-2">Pelvic Organ Prolapse</h4>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">30–50%</p>
+                    <p class="text-gray-600 text-xs sm:text-sm leading-snug">of women show symptoms of prolapse</p>
+                    <p class="text-gray-700 text-xs sm:text-sm mt-1.5 leading-snug">Often managed with pelvic rehabilitation</p>
+                </div>
+                <!-- Card 4: Back or Pelvic Pain -->
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 sm:p-6 shadow-sm border border-green-100/80">
+                    <div class="w-11 h-11 rounded-xl bg-green-500 flex items-center justify-center mb-4 shadow-sm">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    </div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base mb-2">Back or Pelvic Pain</h4>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">50–70%</p>
+                    <p class="text-gray-600 text-xs sm:text-sm leading-snug">of women experience back or pelvic pain</p>
+                    <p class="text-gray-700 text-xs sm:text-sm mt-1.5 leading-snug">Pain is common — persistent pain deserves care</p>
+                </div>
+                <!-- Card 5: Diastasis Recti -->
+                <div class="bg-gradient-to-br from-indigo-50 to-sky-50 rounded-2xl p-5 sm:p-6 shadow-sm border border-indigo-100/80">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-500 flex items-center justify-center mb-4 shadow-sm">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16M6 6v12M18 6v12"></path></svg>
+                    </div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base mb-2">Diastasis Recti</h4>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">60–70%</p>
+                    <p class="text-gray-600 text-xs sm:text-sm leading-snug">of postpartum women have diastasis</p>
+                    <p class="text-gray-700 text-xs sm:text-sm mt-1.5 leading-snug">Abdominal changes are common — recovery is possible</p>
+                </div>
+            </div>
+
+            <p class="text-center text-gray-700 text-sm sm:text-base mb-12 sm:mb-14">
+                • Common does not mean normal to live with. Help is available.
+            </p>
+
+            <!-- Two columns: Important to Know + How It Works -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 mb-12 sm:mb-14">
+                <!-- Left: Important to know -->
+                <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100">
+                    <h3 class="font-bold heading-font text-gray-900 text-lg sm:text-xl mb-5">Important to know</h3>
+                    <ul class="space-y-5 list-none pl-0">
+                        <li class="flex items-start gap-4">
+                            <span class="flex-shrink-0 w-9 h-9 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center mt-0.5">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69C12 2.69 6 10 6 14c0 3.31 2.69 6 6 6s6-2.69 6-6c0-4-6-11.31-6-11.31z"/></svg>
+                            </span>
+                            <span class="text-gray-700 text-sm sm:text-base leading-relaxed pt-0.5">Urine leakage is common — but it is <strong>not</strong> something you have to live with.</span>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <span class="flex-shrink-0 w-9 h-9 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center mt-0.5">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            </span>
+                            <span class="text-gray-700 text-sm sm:text-base leading-relaxed pt-0.5">Pain during sex is common — but it is <strong>not</strong> something you should ignore or accept.</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Right: How It Works -->
+                <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100">
+                    <h3 class="font-bold heading-font text-gray-900 text-lg sm:text-xl mb-6">Private, Respectful Care — Here's How It Works</h3>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <span class="flex-shrink-0 w-11 h-11 rounded-full bg-pink-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">1</span>
+                            <div class="pt-0.5">
+                                <h4 class="font-bold text-gray-900 text-base mb-1">Choose What Feels Right</h4>
+                                <p class="text-gray-700 text-sm sm:text-base leading-relaxed">Explore symptoms privately. No pressure. No judgement.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <span class="flex-shrink-0 w-11 h-11 rounded-full bg-sky-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">2</span>
+                            <div class="pt-0.5">
+                                <h4 class="font-bold text-gray-900 text-base mb-1">Talk to a Specialist</h4>
+                                <p class="text-gray-700 text-sm sm:text-base leading-relaxed">Connect with trained, women-only pelvic health physiotherapists.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <span class="flex-shrink-0 w-11 h-11 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">3</span>
+                            <div class="pt-0.5">
+                                <h4 class="font-bold text-gray-900 text-base mb-1">Get a Personalised Plan</h4>
+                                <p class="text-gray-700 text-sm sm:text-base leading-relaxed">Gentle, respectful care designed around your comfort and goals.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-center text-pink-400/90 text-sm sm:text-base mb-10 font-medium">
+                Private. Respectful. Women-only care.
+            </p>
+
+            <div class="text-center">
+                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-semibold hover:from-pink-600 hover:to-pink-700 transition-all shadow-md hover:shadow-lg text-sm sm:text-base">
+                    Talk to a Women's Health Specialist
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
         </div>
     </section>
 
