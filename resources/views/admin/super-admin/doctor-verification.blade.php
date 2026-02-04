@@ -160,11 +160,13 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    @if(request('status') != 'approved')
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-12">
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase w-12">
+                        @if(request('status') != 'approved')
                             <input type="checkbox" id="select-all-header" class="rounded border-gray-300" onchange="toggleSelectAll(this)">
-                        </th>
-                    @endif
+                        @else
+                            <span class="text-gray-500">Select</span>
+                        @endif
+                    </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Profile + Name</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Specializations</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Documents Status</th>
@@ -185,11 +187,13 @@
                     $approvedCount = $documents->where('status', 'approved')->count();
                 @endphp
                 <tr class="doctor-row" data-name="{{ strtolower($doctor->name) }}" data-email="{{ strtolower($doctor->email) }}" onclick="event.stopPropagation();">
-                    @if(request('status') != 'approved')
-                        <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        @if(request('status') != 'approved')
                             <input type="checkbox" name="doctor_ids[]" value="{{ $doctor->id }}" class="doctor-checkbox rounded border-gray-300" onchange="updateSelectedCount()">
-                        </td>
-                    @endif
+                        @else
+                            <input type="checkbox" name="approved_doctor_ids[]" value="{{ $doctor->id }}" class="doctor-checkbox-approved rounded border-gray-300" aria-label="Select doctor">
+                        @endif
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
                             @if($profile && $profile->profile_image)
@@ -274,16 +278,20 @@
                             @endif
                         </td>
                     @endif
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-3">
                         <a href="{{ route('super-admin.doctor-verification.show', $doctor->id) }}" 
                            class="text-pink-600 hover:text-pink-900 font-medium">View Details</a>
+                        @if($doctor->id !== auth()->id())
+                            <form action="{{ route('super-admin.doctor-verification.soft-delete', $doctor->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this doctor?');">
+                                @csrf
+                                <button type="submit" class="text-red-600 hover:text-red-800 font-medium">Delete</button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    @php
-                        $colspan = request('status') == 'approved' ? 7 : 6; // Approved: 7 columns (no checkbox, but has Featured column), Pending: 6 columns (has checkbox)
-                    @endphp
+                    @php $colspan = request('status') == 'approved' ? 8 : 7; @endphp
                     <td colspan="{{ $colspan }}" class="px-6 py-4 text-center text-sm text-gray-500">
                         @if(request('status') == 'approved')
                             No approved doctors found
@@ -399,7 +407,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Bulk approve form submission
+// Bulk approve form submission (only applies on Pending/Rejected tab where Approve Selected button exists)
 document.getElementById('bulkActionForm').addEventListener('submit', function(e) {
     // Don't submit if the event came from a featured toggle
     if (e.target.closest('.featured-toggle-container')) {
@@ -407,14 +415,18 @@ document.getElementById('bulkActionForm').addEventListener('submit', function(e)
         e.stopPropagation();
         return false;
     }
-    
+    // On Approved tab there is no Approve Selected button - prevent submit and do not show alert
+    const approveBtn = document.getElementById('approveSelectedBtn');
+    if (!approveBtn) {
+        e.preventDefault();
+        return false;
+    }
     const checked = document.querySelectorAll('.doctor-checkbox:checked');
     if (checked.length === 0) {
         e.preventDefault();
         alert('Please select at least one doctor to approve.');
         return false;
     }
-    
     if (!confirm(`Are you sure you want to approve ${checked.length} doctor(s)?`)) {
         e.preventDefault();
         return false;

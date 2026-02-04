@@ -211,53 +211,129 @@
     </section>
 
     <!-- Treatment Process -->
-    <section class="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section class="py-20 relative overflow-hidden">
+        <!-- Background Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-b from-purple-50 via-pink-50 to-white -z-10"></div>
+        
+        <!-- Decorative blobs -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30 pointer-events-none">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+            <div class="absolute top-20 right-10 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-32 left-1/2 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+        </div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
+            <div class="text-center mb-16 relative">
+                <h2 class="text-3xl md:text-5xl font-bold heading-font text-gray-900 mb-6 tracking-tight">
                     Our Treatment Process
                 </h2>
+                <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    A caring and structured approach to help you recover and regain confidence in your body.
+                </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">1</div>
-                    <h3 class="font-semibold text-lg mb-2">Initial Assessment</h3>
-                    <p class="text-gray-600 text-sm">Comprehensive evaluation of your condition and needs</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <!-- Step 1 -->
+                <div class="relative group h-full">
+                    <div class="absolute inset-0 bg-gradient-to-br from-pink-400 to-pink-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <div class="relative bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl p-6 h-full shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col transform group-hover:-translate-y-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            1
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 heading-font">Initial Assessment</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
+                            Comprehensive evaluation of your condition and unique needs.
+                        </p>
+                        <p class="text-xs text-pink-700/80 font-medium italic mt-auto pt-4 border-t border-pink-100">
+                            Used for pelvic pain, pain during sex, post-surgery recovery, back pain.
+                        </p>
+                    </div>
                 </div>
                 
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">2</div>
-                    <h3 class="font-semibold text-lg mb-2">Treatment Plan</h3>
-                    <p class="text-gray-600 text-sm">Personalized plan tailored to your specific goals</p>
+                <!-- Step 2 -->
+                <div class="relative group h-full">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <div class="relative bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl p-6 h-full shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col transform group-hover:-translate-y-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            2
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 heading-font">Treatment Plan</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
+                            Personalised plan tailored to your specific goals and life stage.
+                        </p>
+                        <p class="text-xs text-blue-700/80 font-medium italic mt-auto pt-4 border-t border-blue-100">
+                            Not all pelvic issues need strengthening — we assess before prescribing exercises.
+                        </p>
+                    </div>
                 </div>
                 
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">3</div>
-                    <h3 class="font-semibold text-lg mb-2">Active Treatment</h3>
-                    <p class="text-gray-600 text-sm">Regular sessions with hands-on therapy and exercises</p>
+                <!-- Step 3 -->
+                <div class="relative group h-full">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <div class="relative bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl p-6 h-full shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col transform group-hover:-translate-y-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            3
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 heading-font">Active Treatment</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
+                            Regular sessions with hands-on therapy, exercises, and education.
+                        </p>
+                        <p class="text-xs text-purple-700/80 font-medium italic mt-auto pt-4 border-t border-purple-100">
+                            Used for diastasis recti, back pain, pelvic instability, and postnatal recovery.
+                        </p>
+                    </div>
                 </div>
                 
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">4</div>
-                    <h3 class="font-semibold text-lg mb-2">Ongoing Support</h3>
-                    <p class="text-gray-600 text-sm">Continued guidance and progress monitoring</p>
+                <!-- Step 4 -->
+                <div class="relative group h-full">
+                    <div class="absolute inset-0 bg-gradient-to-br from-teal-400 to-teal-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <div class="relative bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl p-6 h-full shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col transform group-hover:-translate-y-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            4
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 heading-font">Ongoing Support</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
+                            Continued guidance, progress monitoring & adjustments as you improve.
+                        </p>
+                        <p class="text-xs text-teal-700/80 font-medium italic mt-auto pt-4 border-t border-teal-100">
+                            Education is a core part of long-term recovery.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="relative group h-full">
+                    <div class="absolute inset-0 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <div class="relative bg-white/60 backdrop-blur-xl border border-white/50 rounded-2xl p-6 h-full shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col transform group-hover:-translate-y-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            5
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 heading-font">Gradual Independence</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-grow">
+                            Empowering you with the tools & confidence to maintain results long-term.
+                        </p>
+                        <p class="text-xs text-orange-700/80 font-medium italic mt-auto pt-4 border-t border-orange-100">
+                            Especially helpful for chronic pelvic pain, endometriosis-related pain, and sexual pain.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-r from-pink-500 to-pink-600">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold heading-font text-white mb-6">
+    <section class="py-24 bg-gradient-to-r from-pink-600 to-pink-500 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-bold heading-font text-white mb-6 leading-tight">
                 Ready to Begin Treatment?
             </h2>
-            <p class="text-xl text-pink-100 mb-8">
+            <p class="text-xl text-pink-100 mb-10 max-w-2xl mx-auto font-medium">
                 Schedule a consultation to discuss which treatment approach is right for you.
             </p>
-            <a href="{{ route('contact') }}" class="inline-block bg-white text-pink-600 px-8 py-4 rounded-full font-semibold hover:bg-pink-50 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
-                Book Consultation
+            <a href="{{ route('contact') }}" class="inline-flex items-center justify-center bg-white text-pink-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-pink-50 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105 duration-300">
+                <span>Book Consultation</span>
+                <svg class="w-5 h-5 ml-2 -mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </a>
         </div>
     </section>

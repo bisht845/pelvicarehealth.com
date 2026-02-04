@@ -16,6 +16,10 @@ class DoctorVerificationController extends Controller
         $query = User::where('role', 'admin')
             ->with(['doctorProfile', 'doctorDocuments']);
 
+        if ($request->boolean('include_deleted')) {
+            $query->withTrashed();
+        }
+
         // Filter by verification status
         if ($request->has('status') && $request->status) {
             if ($request->status === 'pending') {
@@ -65,8 +69,8 @@ class DoctorVerificationController extends Controller
 
     public function show($id)
     {
-        $doctor = User::with(['doctorProfile', 'doctorDocuments'])->findOrFail($id);
-        
+        $doctor = User::withTrashed()->with(['doctorProfile', 'doctorDocuments'])->findOrFail($id);
+
         if (!$doctor->isAdmin()) {
             abort(404);
         }
@@ -231,8 +235,29 @@ class DoctorVerificationController extends Controller
                 'status_text' => $profile->is_featured ? 'Premium' : 'Normal'
             ]);
         }
-        
+
         return redirect()->back()->with('success', "Doctor marked as {$status} successfully!");
+    }
+
+    public function softDeleteDoctor($id)
+    {
+        $doctor = User::where('role', 'admin')->findOrFail($id);
+
+        if ($doctor->id === Auth::id()) {
+            return redirect()->back()->with('error', 'You cannot delete your own account.');
+        }
+
+        $doctor->delete();
+
+        return redirect()->back()->with('success', 'Doctor has been deleted.');
+    }
+
+    public function restoreDoctor($id)
+    {
+        $doctor = User::onlyTrashed()->where('role', 'admin')->findOrFail($id);
+        $doctor->restore();
+
+        return redirect()->back()->with('success', 'Doctor has been restored.');
     }
 }
 

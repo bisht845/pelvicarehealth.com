@@ -79,14 +79,20 @@
             line-height: 1.3;
             color: inherit;
         }
-        h1 { font-size: 2.3rem !important; }
+        h1 { font-size: 3rem !important; }
         h2 { font-size: 1.9rem !important; }
         h3 { font-size: 1.5rem !important; }
         h4 { font-size: 1.25rem !important; }
         h5 { font-size: 1rem !important; }
         h6 { font-size: 0.9375rem !important; }
+        p { font-size: 14px !important; }
+        li { font-size: 13px !important; }
+        .prose p { font-size: 14px !important; }
+        .prose li { font-size: 13px !important; }
+        article p { font-size: 13px !important; }
+        article li { font-size: 13px !important; }
         @media (min-width: 640px) {
-            h1 { font-size: 1.75rem !important; }
+            h1 { font-size: 2.5rem !important; }
             h2 { font-size: 1.5rem !important; }
             h3 { font-size: 1.375rem !important; }
             h4 { font-size: 1.25rem !important; }
@@ -94,9 +100,9 @@
             h6 { font-size: 1rem !important; }
         }
         @media (min-width: 1024px) {
-            h1 { font-size: 2.3rem !important; }
-            h2 { font-size: 1.9rem !important; }
-            h3 { font-size: 1.5rem !important; }
+            h1 { font-size: 3rem !important; }
+            h2 { font-size: 1.5rem !important; }
+            h3 { font-size: 1.2rem !important; }
             h4 { font-size: 1.25rem !important; }
             h5 { font-size: 1rem !important; }
             h6 { font-size: 0.9375rem !important; }
@@ -189,6 +195,7 @@
                     <a href="{{ route('treatments') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('treatments') ? 'text-pink-600' : '' }}">Treatments</a>
                     <a href="{{ route('blog.index') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('blog.*') ? 'text-pink-600' : '' }}">Blog</a>
                     <a href="{{ route('about') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('about') ? 'text-pink-600' : '' }}">About</a>
+                    <a href="{{ route('faq') }}" class="nav-link text-gray-700 hover:text-pink-600 font-medium text-sm {{ request()->routeIs('faq') ? 'text-pink-600' : '' }}">FAQ</a>
                     
                     @auth
                         <!-- Authenticated User Menu -->
@@ -282,6 +289,7 @@
                 <a href="{{ route('treatments') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('treatments') ? 'bg-pink-50 text-pink-600' : '' }}">Treatments</a>
                 <a href="{{ route('blog.index') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('blog.*') ? 'bg-pink-50 text-pink-600' : '' }}">Blog</a>
                 <a href="{{ route('about') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('about') ? 'bg-pink-50 text-pink-600' : '' }}">About</a>
+                <a href="{{ route('faq') }}" class="block px-4 py-3 text-gray-700 hover:bg-pink-50 rounded-lg font-medium {{ request()->routeIs('faq') ? 'bg-pink-50 text-pink-600' : '' }}">FAQ</a>
                 
                 @auth
                     <div class="border-t border-gray-200 pt-3 mt-3">
@@ -446,6 +454,7 @@
                     <ul class="space-y-2 text-gray-400 text-sm">
                         <li><a href="{{ route('home') }}#problems" class="hover:text-pink-400 transition-colors">Is This Normal?</a></li>
                         <li><a href="{{ route('about') }}" class="hover:text-pink-400 transition-colors">What to Expect</a></li>
+                        <li><a href="{{ route('faq') }}" class="hover:text-pink-400 transition-colors">FAQs</a></li>
                         <li><a href="{{ route('home') }}#testimonials" class="hover:text-pink-400 transition-colors">Success Stories</a></li>
                         <li><a href="{{ route('doctors.index') }}" class="hover:text-pink-400 transition-colors">Our Specialists</a></li>
                         <li><a href="#" class="hover:text-pink-400 transition-colors">Blog</a></li>

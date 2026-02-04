@@ -118,10 +118,10 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 <div class="inline-block bg-pink-50 border border-pink-100 text-pink-700 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold mb-6 w-fit shadow-sm">
                     ✨ Trusted by 5,000+ Women Across India
                 </div>
-                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-5 leading-tight">
+                <h1 class="text-5xl sm:text-5xl md:text-5xl font-bold heading-font text-gray-900 mb-5 leading-tight">
                     Your Body Deserves <br>
                     <span class="relative inline-block mb-2">
-                        <span class="relative z-10 bg-pink-100 text-pink-600 px-3 py-1 rounded-lg shadow-md border border-pink-200 text-lg sm:text-xl md:text-2xl">Expert Care</span>
+                        <span class="relative z-10 bg-pink-100 text-pink-600 px-3 py-1 rounded-lg shadow-md border border-pink-200 text-lg sm:text-xl md:text-4xl">Expert Care</span>
                         <span class="absolute -bottom-2 -right-2 w-full h-full bg-pink-50 rounded-lg -z-0"></span>
                     </span>
                 </h1>
@@ -244,7 +244,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                                     </div>
                                     <h3 class="text-lg font-bold heading-font text-gray-900 mb-2">{{ $doctor->name }}</h3>
                                     @if(!empty($specializations))
-                                        <div class="flex flex-wrap gap-1.5 mb-3 min-h-[3.25rem] overflow-hidden content-start" style="max-height: 3.25rem;">
+                                        <div class="flex flex-wrap gap-1.5 mb-3 min-h-[3.25rem] overflow-hidden content-start" style="max-height: 3.53rem;">
                                             @foreach(array_slice($specializations, 0, 4) as $spec)
                                                 <span class="bg-pink-100 text-pink-700 px-2.5 py-1 rounded-full text-xs font-semibold border border-pink-200 shrink-0">
                                                     {{ $spec }}
@@ -336,24 +336,6 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                             </a>
                         </div>
                     @endforeach
-                    {{-- Optional: "Something feels off" / Contact card --}}
-                    <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 border border-indigo-200">
-                        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mb-3">
-                            "I can't explain it, but something feels off"
-                        </h3>
-                        <ul class="text-gray-700 space-y-2 mb-4 text-sm">
-                            <li>• You don't need a diagnosis to ask for help</li>
-                            <li>• Start with a private conversation</li>
-                        </ul>
-                        <a href="{{ route('contact') }}" class="text-indigo-600 font-semibold hover:text-indigo-700 inline-flex items-center">
-                            Talk to Someone →
-                        </a>
-                    </div>
                 @else
                     <div class="md:col-span-2 lg:col-span-3 text-center py-8">
                         <p class="text-gray-600 mb-4">Explore our services for women's pelvic health.</p>
@@ -361,86 +343,77 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     </div>
                 @endif
             </div>
+
+            <div class="text-center mt-8">
+                <a href="{{ route('services') }}" class="inline-flex items-center gap-2 bg-pink-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-700 transition-all shadow-lg hover:shadow-xl">
+                    View All Services
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- Meet Pelvicare-Verified Physiotherapists -->
-    <section class="relative py-16 sm:py-24 bg-gradient-to-r from-pink-50 via-pink-50/50 to-white overflow-hidden">
-        <!-- Background Pattern/Texture (Optional subtle noise or pattern can be added here) -->
+    <section class="relative py-10 sm:py-16 bg-gradient-to-r from-pink-50 via-pink-50/50 to-white overflow-hidden">
         <div class="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-fixed"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0 items-center">
-                
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 items-center">
                 <!-- Left: Text Content -->
-                <div class="order-2 lg:order-1 lg:pr-12 py-8">
-                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold heading-font text-slate-900 mb-6 leading-tight">
+                <div class="order-2 lg:order-1 lg:pr-10 py-4">
+                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold heading-font text-slate-900 mb-4 leading-tight">
                         Meet Pelvicare-Verified <br class="hidden lg:block">
                         Women's Health Physiotherapists
                     </h2>
-                    <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg">
+                    <p class="text-base text-slate-600 mb-6 leading-relaxed max-w-lg">
                         Certified specialists dedicated to pelvic floor, pregnancy, postpartum, and intimate health care.
                     </p>
 
-                    <ul class="space-y-6 mb-10">
-                        <!-- Item 1 -->
-                        <li class="flex items-start gap-4">
-                            <div class="flex-shrink-0 w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 mt-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <ul class="space-y-4 mb-6">
+                        <li class="flex items-start gap-3">
+                            <div class="shrink-0 w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 mt-0.5">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             </div>
-                            <div>
-                                <h5 class="font-semibold text-slate-800 text-lg text-center">Women-only care</h5>
-                            </div>
+                            <h5 class="font-semibold text-slate-800 text-base">Women-only care</h5>
                         </li>
-
-                        <!-- Item 2 -->
-                        <li class="flex items-start gap-4">
-                            <div class="flex-shrink-0 w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 mt-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <li class="flex items-start gap-3">
+                            <div class="shrink-0 w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 mt-0.5">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             </div>
-                            <div>
-                                <h5 class="font-semibold text-slate-800 text-lg text-center">Consent-based assessment</h5>
-                            </div>
+                            <h5 class="font-semibold text-slate-800 text-base">Consent-based assessment</h5>
                         </li>
-
-                        <!-- Item 3 -->
-                        <li class="flex items-start gap-4">
-                            <div class="flex-shrink-0 w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 mt-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <li class="flex items-start gap-3">
+                            <div class="shrink-0 w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 mt-0.5">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             </div>
-                            <div>
-                                <h5 class="font-semibold text-slate-800 text-lg text-center">Online & in-person options</h5>
-                            </div>
+                            <h5 class="font-semibold text-slate-800 text-base">Online & in-person options</h5>
                         </li>
                     </ul>
 
-                    <!-- Divider Line -->
-                    <div class="w-24 h-1 bg-pink-500 rounded-full mb-8"></div>
+                    <div class="w-20 h-0.5 bg-pink-500 rounded-full mb-6"></div>
+
+                    <a href="{{ route('doctors.index') }}" class="inline-flex items-center gap-2 bg-pink-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-700 transition-all shadow-lg hover:shadow-xl">
+                        Talk to a Specialist
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
                 </div>
 
                 <!-- Right: Image with Horizontal Fade -->
-                <!-- We want the image to span fully to the right edge if possible, or visually blend. 
-                     On mobile (order-1), it acts as a header image. On Desktop (order-2), it blends from the right. -->
-                <div class="order-1 lg:order-2 relative lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-1/2 h-full min-h-[400px] lg:min-h-auto w-full">
+                <div class="order-1 lg:order-2 relative lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-1/2 h-full min-h-[320px] lg:min-h-auto w-full">
                     <div class="relative w-full h-full">
-                        <!-- The Image -->
-                        <!-- mask-image creates the fade from transparent (left) to black/opaque (right) -->
                         <img src="{{ asset('images/hero_woman_consultation.png') }}" 
                              alt="Pelvicare verified specialist consultation" 
-                             class="w-full h-full object-cover object-center lg:object-left-top"
-                             style="-webkit-mask-image: linear-gradient(to right, transparent, black 15%); mask-image: linear-gradient(to right, transparent, black 15%);">
-                        
-                        <!-- Gradient Overlay (Optional, for smoother blend if mask isn't enough on some browsers) -->
+                             class="w-full h-full object-cover object-bottom lg:object-left-bottom"
+                             style="-webkit-mask-image: linear-gradient(to right, transparent, black 25%); mask-image: linear-gradient(to right, transparent, black 15%);">
                         <div class="absolute inset-0 bg-gradient-to-r from-pink-50 via-transparent to-transparent opacity-50 lg:hidden"></div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
     <!-- When Tests Are Normal – Stats & How It Works -->
-    <section class="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-pink-50 via-white to-indigo-50">
+    <section class="py-4 sm:py-6 lg:py-6 bg-gradient-to-b from-pink-50 via-white to-indigo-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="text-center mb-10 sm:mb-14 max-w-3xl mx-auto">
@@ -448,14 +421,8 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     When Tests Are Normal, But the Pain Is Still Real
                 </h2>
                 <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-2">
-                    If you've been told <em>"just relax,"</em> <em>"it's stress,"</em> <em>"give it more time,"</em> or <em>"this is normal after childbirth"</em> — or <em>"this happens to many women"</em> — but the pain or leakage continues —
-                </p>
-                <h3 class="text-base sm:text-lg font-bold heading-font text-gray-900 mt-8 mb-2">
-                    How Common Are These Problems for Women?
-                </h3>
-                <p class="text-gray-700 text-sm sm:text-base">
-                    • These conditions are common — but they are treatable.
-                </p>
+                    If you've been told <em>"just relax,"</em> <em>"it's stress,"</em> <em>"give it more time,"</em> or <em>"this is normal after childbirth"</em> — or <em>"this happens to many women"</em> — but the pain or leakage continues — <em>These conditions are common — but they are treatable.</em>
+               </p>
             </div>
 
             <!-- 5 Stats Cards – subtle gradient per card, soft shadow -->
@@ -512,12 +479,9 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 </div>
             </div>
 
-            <p class="text-center text-gray-700 text-sm sm:text-base mb-12 sm:mb-14">
-                • Common does not mean normal to live with. Help is available.
-            </p>
-
+            
             <!-- Two columns: Important to Know + How It Works -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 mb-12 sm:mb-14">
+            {{-- <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 mb-12 sm:mb-14">
                 <!-- Left: Important to know -->
                 <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-sm border border-gray-100">
                     <h3 class="font-bold heading-font text-gray-900 text-lg sm:text-xl mb-5">Important to know</h3>
@@ -563,9 +527,9 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <p class="text-center text-pink-400/90 text-sm sm:text-base mb-10 font-medium">
+            <p class="text-center text-pink-400/90 text-sm sm:text-base mb-10 font-medium font-weight-bold">
                 Private. Respectful. Women-only care.
             </p>
 
@@ -647,8 +611,8 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     <div class="text-gray-700">verified women's health specialists</div>
                 </div>
                 <div class="bg-white rounded-xl p-6 text-center shadow-md">
-                    <div class="text-4xl font-bold text-pink-600 mb-2">3</div>
-                    <div class="text-gray-700">Cities: Delhi NCR | Mumbai | Bangalore</div>
+                    <div class="text-4xl font-bold text-pink-600 mb-2">10+</div>
+                    <div class="text-gray-700">Cities: Delhi NCR | Mumbai | Bangalore ...</div>
                 </div>
             </div>
             
@@ -682,7 +646,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     </section>
 
     <!-- What We Treat Section -->
-    <section class="py-8 bg-white">
+    {{-- <section class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
@@ -740,10 +704,10 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 </a>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Who You'll Meet Section -->
-    <section class="py-8 bg-gradient-to-br from-pink-50 to-blue-50">
+    {{-- <section class="py-8 bg-gradient-to-br from-pink-50 to-blue-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
@@ -794,52 +758,65 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
-    <!-- Questions Section -->
-    <section class="py-8 bg-white">
+    <!-- Questions Section (4 FAQs + CTA to FAQ page) -->
+    <section class="py-12 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
+            <div class="text-center mb-10">
                 <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
                     The Questions You've Been Googling
                 </h2>
-                <p class="text-xl text-gray-600">Written like a friend explaining, not a doctor.</p>
+                {{-- <p class="text-xl text-gray-600">Written like a friend explaining, not a doctor.</p> --}}
             </div>
-            
+            @php
+                $homeFaqs = [
+                    ['q' => 'Why does sex hurt even when I want it?', 'a' => 'It\'s often due to pelvic floor muscle tightness or overactivity, not just "in your head." Your body might be protecting itself, but physical therapy can help retrain these muscles to relax.'],
+                    ['q' => 'Is pain during sex normal?', 'a' => 'Common? Yes. Normal? No. Sex should never be painful. Pain is your body\'s signal that something needs attention, and treatable causes like muscle tension or hormonal changes are often to blame.'],
+                    ['q' => 'Why do I leak urine when I laugh?', 'a' => 'This is often "stress incontinence" caused by weak or uncoordinated pelvic floor muscles unable to handle the extra pressure. Specialized exercises can often improve bladder control.'],
+                    ['q' => 'Can physiotherapy really help with sexual pain?', 'a' => 'Absolutely. We treat the physical root cause—tight muscles, scar tissue, or nerve sensitivity—using hands-on techniques and dilation therapy to make intimacy comfortable again.']
+                ];
+            @endphp
             <div class="space-y-4">
-                @php
-                    $questions = array(
-                        'Why does sex hurt even when I want it?',
-                        'Is pain during sex normal?',
-                        'Why do I leak urine when I laugh?',
-                        'Is pain after childbirth normal or should I see someone?',
-                        'Pelvic pain but all reports are normal what\'s wrong?',
-                        'Why does my body tense up during sex?',
-                        'Can physiotherapy really help with sexual pain?',
-                        'What happens in a women\'s health physio session?',
-                        'Is it normal to fear sex after childbirth?',
-                        'When should I worry about pelvic pain during pregnancy?'
-                    );
-                @endphp
-                
-                @foreach($questions as $index => $question)
-                <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-6 hover:shadow-md transition-all border border-gray-200">
-                    <div class="flex items-start">
-                        <span class="text-pink-600 font-bold mr-4 text-lg">{{ $index + 1 }}.</span>
-                        <a href="{{ route('contact') }}" class="text-gray-900 hover:text-pink-600 font-medium text-lg flex-1">
-                            {{ $question }}
-                        </a>
+                @foreach($homeFaqs as $index => $item)
+                <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md group">
+                    <button class="w-full flex items-start text-left p-6 focus:outline-none" onclick="toggleFaq(this)">
+                        <span class="text-pink-600 font-bold mr-4 text-lg shrink-0 mt-0.5">{{ $index + 1 }}.</span>
+                        <span class="text-gray-900 font-bold text-lg flex-1 group-hover:text-pink-600 transition-colors">{{ $item['q'] }}</span>
+                        <span class="ml-4 shrink-0 text-gray-400 transform transition-transform duration-200">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </span>
+                    </button>
+                    <div class="text-gray-600 text-base leading-relaxed px-6 pb-6 pl-12 hidden transition-all duration-300 ease-in-out border-t border-gray-100 mt-2 pt-4">
+                        {{ $item['a'] }}
                     </div>
                 </div>
                 @endforeach
             </div>
-            
-            <div class="text-center mt-12">
-                <a href="{{ route('contact') }}" class="inline-block text-pink-600 font-semibold hover:text-pink-700 transition-colors text-lg">
-                    → See all answered questions
+            <div class="text-center mt-10">
+                <a href="{{ route('faq') }}" class="inline-flex items-center gap-2 bg-pink-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-700 transition-colors shadow-md hover:shadow-lg">
+                    View All Answers
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
             </div>
         </div>
+        <script>
+            function toggleFaq(button) {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('svg');
+                if (content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                    icon.parentElement.classList.add('rotate-180');
+                    button.parentElement.classList.add('shadow-md', 'bg-white');
+                    button.parentElement.classList.remove('bg-gradient-to-r');
+                } else {
+                    content.classList.add('hidden');
+                    icon.parentElement.classList.remove('rotate-180');
+                    button.parentElement.classList.remove('shadow-md', 'bg-white');
+                    button.parentElement.classList.add('bg-gradient-to-r');
+                }
+            }
+        </script>
     </section>
 
     <!-- Privacy Promise Section -->
@@ -892,21 +869,21 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     <!-- Final Conversion Push -->
     <section class="py-8 bg-gradient-to-r from-pink-500 to-pink-600">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold heading-font text-white mb-6">
-                If You've Been Carrying This Silently - Put It Down Here
+            <h2 class="text-xl md:text-2xl font-bold heading-font text-gray-900 mb-4">
+                If You've Been Carrying This Silently – Put It Down Here
             </h2>
-            <p class="text-xl text-pink-100 mb-10 leading-relaxed">
+            <p class="text-sm md:text-base text-pink-100 mb-8 leading-relaxed max-w-2xl mx-auto">
                 You don't have to explain perfectly, be brave, or know what's wrong—you just have to be tired of the pain.
             </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ route('contact') }}" class="bg-white text-pink-600 px-8 py-4 rounded-full font-semibold hover:bg-pink-50 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-lg">
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-center items-center flex-wrap">
+                <a href="{{ route('doctors.index') }}" class="inline-flex items-center justify-center bg-white text-pink-600 px-5 py-2.5 rounded-full font-semibold hover:bg-pink-50 transition-all shadow-lg hover:shadow-xl text-sm whitespace-nowrap border border-pink-200">
                     Find a Specialist Now →
                 </a>
-                <a href="#problems" class="bg-pink-400/20 text-white px-8 py-4 rounded-full font-semibold hover:bg-pink-400/30 transition-all border-2 border-white/50 text-lg">
+                <a href="#problems" class="inline-flex items-center justify-center bg-pink-400/20 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-pink-400/30 transition-all border border-white/50 text-sm whitespace-nowrap">
                     Read About Common Issues First →
                 </a>
-                <a href="{{ route('contact') }}" class="bg-pink-400/20 text-white px-8 py-4 rounded-full font-semibold hover:bg-pink-400/30 transition-all border-2 border-white/50 text-lg">
+                <a href="{{ route('contact') }}" class="inline-flex items-center justify-center bg-pink-400/20 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-pink-400/30 transition-all border border-white/50 text-sm whitespace-nowrap">
                     Ask a Question Anonymously →
                 </a>
             </div>

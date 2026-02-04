@@ -50,9 +50,18 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
-            $request->session()->regenerate();
-
             $user = Auth::user();
+
+            if ($user->trashed()) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                throw ValidationException::withMessages([
+                    'email' => ['This account is no longer active. Please contact support.'],
+                ]);
+            }
+
+            $request->session()->regenerate();
             
             // For doctors, check registration completion before redirecting
             if ($user->isAdmin()) {

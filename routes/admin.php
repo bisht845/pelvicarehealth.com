@@ -16,6 +16,10 @@ Route::middleware(['auth', 'role:super_admin'])->prefix('admin/super-admin')->na
     Route::get('/dashboard', [SuperAdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/users', [SuperAdminController::class, 'manageUsers'])->name('users');
     Route::post('/users/{id}/role', [SuperAdminController::class, 'updateUserRole'])->name('users.update-role');
+    Route::post('/users/{id}/soft-delete', [SuperAdminController::class, 'softDeleteUser'])->name('users.soft-delete');
+    Route::post('/users/{id}/restore', [SuperAdminController::class, 'restoreUser'])->name('users.restore');
+    // Developer-only: restore deleted users/doctors (no link in panel)
+    Route::get('/developer/restore', [SuperAdminController::class, 'developerRestore'])->name('developer.restore');
     
     // Appointments Management
     Route::get('/appointments', [SuperAdminController::class, 'appointments'])->name('appointments');
@@ -27,6 +31,8 @@ Route::middleware(['auth', 'role:super_admin'])->prefix('admin/super-admin')->na
     Route::post('/doctor-verification/{id}/approve', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'approveDoctor'])->name('doctor-verification.approve');
     Route::post('/doctor-verification/{id}/reject', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'rejectDoctor'])->name('doctor-verification.reject');
     Route::post('/doctor-verification/{id}/toggle-featured', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'toggleFeatured'])->name('doctor-verification.toggle-featured');
+    Route::post('/doctor-verification/{id}/soft-delete', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'softDeleteDoctor'])->name('doctor-verification.soft-delete');
+    Route::post('/doctor-verification/{id}/restore', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'restoreDoctor'])->name('doctor-verification.restore');
     Route::post('/doctor-verification/document/{id}/approve', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'approveDocument'])->name('doctor-verification.document.approve');
     Route::post('/doctor-verification/document/{id}/reject', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'rejectDocument'])->name('doctor-verification.document.reject');
 });

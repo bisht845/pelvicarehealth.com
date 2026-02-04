@@ -17,6 +17,7 @@ Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('servic
 Route::get('/treatments', [HomeController::class, 'treatments'])->name('treatments');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 
 // Doctors Routes
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');

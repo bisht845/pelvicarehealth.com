@@ -104,38 +104,37 @@ class RegistrationController extends Controller
     {
         $user = Auth::user();
         
-        // Check which documents are already uploaded
+        // Check which documents are already uploaded (only degree and government_id are required)
         $existingDocs = $user->doctorDocuments;
         $hasDegreeCert = $existingDocs->where('document_type', 'degree_certificate')->first();
-        $hasCouncilReg = $existingDocs->where('document_type', 'council_registration')->first();
         $hasGovId = $existingDocs->where('document_type', 'government_id')->first();
-        
-        // Validate - only require if not already uploaded
+
+        // Validate - only degree_certificate and government_id are required; council_registration and certifications are optional
         $rules = [
             'profile_image' => 'nullable|image|mimes:jpeg,jpg,png|max:1024', // 1MB max
             'profile_image_cropped' => 'nullable|string',
+            'council_registration' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
             'iap_membership' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
             'clinic_proof' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'certified_womens_health_physiotherapy' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'certified_reproductive_health_therapist' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'certified_pelvic_floor_rehab_therapist' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'certified_pregnancy_postnatal_rehab_therapist' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'certified_lactation_counselor' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ];
-        
+
         if (!$hasDegreeCert) {
             $rules['degree_certificate'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:5120';
         } else {
             $rules['degree_certificate'] = 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120';
         }
-        
-        if (!$hasCouncilReg) {
-            $rules['council_registration'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:5120';
-        } else {
-            $rules['council_registration'] = 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120';
-        }
-        
+
         if (!$hasGovId) {
             $rules['government_id'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:5120';
         } else {
             $rules['government_id'] = 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120';
         }
-        
+
         $request->validate($rules);
 
         // Upload documents (only if new files are provided)
@@ -145,6 +144,11 @@ class RegistrationController extends Controller
             'government_id' => $request->file('government_id'),
             'iap_membership' => $request->file('iap_membership'),
             'clinic_proof' => $request->file('clinic_proof'),
+            'certified_womens_health_physiotherapy' => $request->file('certified_womens_health_physiotherapy'),
+            'certified_reproductive_health_therapist' => $request->file('certified_reproductive_health_therapist'),
+            'certified_pelvic_floor_rehab_therapist' => $request->file('certified_pelvic_floor_rehab_therapist'),
+            'certified_pregnancy_postnatal_rehab_therapist' => $request->file('certified_pregnancy_postnatal_rehab_therapist'),
+            'certified_lactation_counselor' => $request->file('certified_lactation_counselor'),
         ];
 
         foreach ($documents as $type => $file) {
@@ -189,18 +193,18 @@ class RegistrationController extends Controller
 
         $user = Auth::user();
         
-        // Check if documents are uploaded (step2 completed)
+        // Check if required documents are uploaded (step2 completed) – only degree and government_id required
         $documents = $user->doctorDocuments;
-        $requiredDocs = ['degree_certificate', 'council_registration', 'government_id'];
+        $requiredDocs = ['degree_certificate', 'government_id'];
         $hasRequiredDocs = true;
-        
+
         foreach ($requiredDocs as $docType) {
             if (!$documents->where('document_type', $docType)->first()) {
                 $hasRequiredDocs = false;
                 break;
             }
         }
-        
+
         if (!$hasRequiredDocs) {
             return redirect()->route('doctor.registration.step2')
                 ->with('error', 'Please upload all required documents first.');

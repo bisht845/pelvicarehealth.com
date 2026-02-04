@@ -130,16 +130,16 @@
                                 <div class="flex items-center justify-between mb-2">
                                     <div>
                                         <span class="block text-sm font-semibold text-gray-900">Council Registration</span>
-                                        <span class="text-xs text-gray-500">Required document</span>
+                                        <span class="text-xs text-gray-500">Optional document</span>
                                         @if(isset($uploadedDocs['council_registration']))
                                             <span class="text-xs text-green-600 font-medium block mt-1">✓ Uploaded: {{ $uploadedDocs['council_registration']->file_name }}</span>
                                         @endif
                                     </div>
-                                    <span class="px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded">Required</span>
+                                    <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded">Optional</span>
                                 </div>
                                 <p class="text-xs text-gray-500 mb-3">Supported: PDF, JPG, PNG (Max 5MB)</p>
-                                <input type="file" name="council_registration" {{ !isset($uploadedDocs['council_registration']) ? 'required' : '' }} accept=".pdf,.jpg,.jpeg,.png" 
-                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 @error('council_registration') border-red-500 @enderror">
+                                <input type="file" name="council_registration" accept=".pdf,.jpg,.jpeg,.png"
+                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100 @error('council_registration') border-red-500 @enderror">
                                 @if(isset($uploadedDocs['council_registration']))
                                     <p class="text-xs text-gray-600 mt-2">Leave empty to keep current file, or upload a new one to replace.</p>
                                 @endif
@@ -207,13 +207,46 @@
                                     <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded">Optional</span>
                                 </div>
                                 <p class="text-xs text-gray-500 mb-3">Supported: PDF, JPG, PNG (Max 5MB)</p>
-                                <input type="file" name="clinic_proof" accept=".pdf,.jpg,.jpeg,.png" 
+                                <input type="file" name="clinic_proof" accept=".pdf,.jpg,.jpeg,.png"
                                        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100">
                                 @if(isset($uploadedDocs['clinic_proof']))
                                     <p class="text-xs text-gray-600 mt-2">Leave empty to keep current file, or upload a new one to replace.</p>
                                 @endif
                             </label>
                         </div>
+
+                        {{-- Optional certifications --}}
+                        @php
+                            $certDocs = [
+                                'certified_womens_health_physiotherapy' => 'Certified Women\'s Health Physiotherapy',
+                                'certified_reproductive_health_therapist' => 'Certified Reproductive Health Therapist',
+                                'certified_pelvic_floor_rehab_therapist' => 'Certified Pelvic Floor Rehab Therapist',
+                                'certified_pregnancy_postnatal_rehab_therapist' => 'Certified Pregnancy and Postnatal Rehab Therapist',
+                                'certified_lactation_counselor' => 'Certified Lactation Counselor',
+                            ];
+                        @endphp
+                        @foreach($certDocs as $docKey => $docLabel)
+                        <div class="border-2 border-dashed {{ isset($uploadedDocs[$docKey]) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-blue-400 transition">
+                            <label class="block">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div>
+                                        <span class="block text-sm font-semibold text-gray-900">{{ $docLabel }}</span>
+                                        <span class="text-xs text-gray-500">Optional certification</span>
+                                        @if(isset($uploadedDocs[$docKey]))
+                                            <span class="text-xs text-green-600 font-medium block mt-1">✓ Uploaded: {{ $uploadedDocs[$docKey]->file_name }}</span>
+                                        @endif
+                                    </div>
+                                    <span class="px-2 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded">Optional</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mb-3">Supported: PDF, JPG, PNG (Max 5MB)</p>
+                                <input type="file" name="{{ $docKey }}" accept=".pdf,.jpg,.jpeg,.png"
+                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100">
+                                @if(isset($uploadedDocs[$docKey]))
+                                    <p class="text-xs text-gray-600 mt-2">Leave empty to keep current file, or upload a new one to replace.</p>
+                                @endif
+                            </label>
+                        </div>
+                        @endforeach
                     </div>
 
                     <!-- Confirmation Checkbox -->

@@ -4,6 +4,19 @@
 @section('page-title', 'Doctor Verification Details')
 
 @section('content')
+@if(session('success'))
+    <div class="mb-4 bg-green-50 border-l-4 border-green-400 p-4 rounded-lg text-sm text-green-700">{{ session('success') }}</div>
+@endif
+@if(session('error'))
+    <div class="mb-4 bg-red-50 border-l-4 border-red-400 p-4 rounded-lg text-sm text-red-700">{{ session('error') }}</div>
+@endif
+
+@if($doctor->trashed())
+    <div class="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-center justify-between">
+        <p class="text-amber-800 font-medium">This doctor has been deleted.</p>
+    </div>
+@endif
+
 <div class="space-y-6">
     <!-- Doctor Info -->
     <div class="bg-white rounded-lg shadow p-6">
@@ -69,19 +82,29 @@
     <!-- Actions -->
     <div class="bg-white rounded-lg shadow p-6">
         <h3 class="text-lg font-semibold mb-4">Actions</h3>
-        <div class="flex space-x-4">
-            @if(!$doctor->doctorProfile || $doctor->doctorProfile->verification_status != 'approved')
-            <form action="{{ route('super-admin.doctor-verification.approve', $doctor->id) }}" method="POST" class="inline">
-                @csrf
-                <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
-                    Approve Doctor
+        <div class="flex flex-wrap gap-3">
+            @if(!$doctor->trashed())
+                @if(!$doctor->doctorProfile || $doctor->doctorProfile->verification_status != 'approved')
+                <form action="{{ route('super-admin.doctor-verification.approve', $doctor->id) }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
+                        Approve Doctor
+                    </button>
+                </form>
+                @endif
+                @if(!$doctor->doctorProfile || $doctor->doctorProfile->verification_status != 'rejected')
+                <button onclick="showRejectDoctorModal()" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700">
+                    Reject Doctor
                 </button>
-            </form>
-            @endif
-            @if(!$doctor->doctorProfile || $doctor->doctorProfile->verification_status != 'rejected')
-            <button onclick="showRejectDoctorModal()" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700">
-                Reject Doctor
-            </button>
+                @endif
+                @if($doctor->id !== auth()->id())
+                <form action="{{ route('super-admin.doctor-verification.soft-delete', $doctor->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this doctor?');">
+                    @csrf
+                    <button type="submit" class="bg-amber-600 text-white px-6 py-2 rounded-lg hover:bg-amber-700">
+                        Delete Doctor
+                    </button>
+                </form>
+                @endif
             @endif
             <a href="{{ route('super-admin.doctor-verification') }}" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300">
                 Back to List
