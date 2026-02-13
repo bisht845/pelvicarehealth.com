@@ -42,6 +42,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+<!-- PNG favicon (optional but recommended) -->
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon.webp') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.webp') }}">
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon.webp') }}">
+
     
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
