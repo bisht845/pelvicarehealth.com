@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\ServiceCategory;
+use App\Models\ServiceSubcategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,6 +18,8 @@ class DoctorProfile extends Model
         'rating',
         'specializations',
         'languages',
+        'service_category_ids',
+        'service_subcategory_ids',
         'verification_status',
         'rejection_reason',
         'verified_by',
@@ -39,6 +43,8 @@ class DoctorProfile extends Model
     protected $casts = [
         'specializations' => 'array',
         'languages' => 'array',
+        'service_category_ids' => 'array',
+        'service_subcategory_ids' => 'array',
         'rating' => 'decimal:2',
         'home_visit_fee' => 'decimal:2',
         'clinic_visit_fee' => 'decimal:2',
@@ -84,14 +90,59 @@ class DoctorProfile extends Model
         return $this->hasMany(DoctorPhoto::class)->where('type', 'clinic')->orderBy('sort_order');
     }
 
-    public static function generateSlug(string $name): string
+    public function serviceCategories(): \Illuminate\Database\Eloquent\Collection
     {
-        $base = Str::slug($name);
+        if (empty($this->service_category_ids)) {
+            return new \Illuminate\Database\Eloquent\Collection([]);
+        }
+        return ServiceCategory::whereIn('id', $this->service_category_ids)->ordered()->get();
+    }
+
+    public function serviceSubcategories(): \Illuminate\Database\Eloquent\Collection
+    {
+        if (empty($this->service_subcategory_ids)) {
+            return new \Illuminate\Database\Eloquent\Collection([]);
+        }
+        return ServiceSubcategory::whereIn('id', $this->service_subcategory_ids)->ordered()->get();
+    }
+
+    /**
+     * Get formatted category and subcategory names for display
+     */
+    public function getCategorySubcategoryDisplayAttribute(): string
+    {
+        $categories = $this->serviceCategories();
+        $subcategories = $this->serviceSubcategories();
+
+        if (!$categories->isEmpty() || !$subcategories->isEmpty()) {
+            $parts = [];
+            foreach ($categories as $cat) {
+                $subs = $subcategories->where('service_category_id', $cat->id)->pluck('name')->implode(', ');
+                $parts[] = $subs ? "{$cat->name} ({$subs})" : $cat->name;
+            }
+            $orphanSubs = $subcategories->whereNotIn('service_category_id', $categories->pluck('id'));
+            foreach ($orphanSubs as $sub) {
+                $parts[] = $sub->name;
+            }
+            return implode(', ', $parts);
+        }
+
+        // Fallback to legacy specializations
+        $specs = is_array($this->specializations) ? $this->specializations : [];
+        return !empty($specs) ? implode(', ', $specs) : 'N/A';
+    }
+
+    public static function generateSlug(string $name, ?int $userId = null): string
+    {
+        $base = Str::slug($name) ?: 'doctor';
         $slug = $base;
         $count = 0;
         while (static::where('slug', $slug)->exists()) {
             $count++;
-            $slug = $base . '-' . $count;
+            $slug = $userId ? "{$base}-{$userId}" : "{$base}-{$count}";
+            if ($userId) {
+                break; // userId is unique, no need to loop
+            }
         }
         return $slug;
     }

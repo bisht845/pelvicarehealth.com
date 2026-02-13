@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Page Header -->
-    <section class="bg-gradient-to-br from-pink-50 via-blue-50 to-pink-100 py-16">
+    <section class="bg-gradient-to-br from-pink-50 via-white to-pink-100 py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 class="text-4xl md:text-5xl font-bold heading-font text-gray-900 text-center mb-4">
                 Our Treatment Methods

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ServiceCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class DoctorController extends Controller
         $query = User::where('role', 'admin')
             ->whereHas('doctorProfile', function($q) {
                 $q->where('verification_status', 'approved')
-                  ->where('profile_completed', true);
+                  ->where('profile_completed', true)
+                  ->whereNotNull('slug');
             })
             ->with('doctorProfile');
 
@@ -39,10 +41,11 @@ class DoctorController extends Controller
             });
         }
 
-        // Filter by specialization
-        if ($request->has('specialization') && $request->specialization) {
-            $query->whereHas('doctorProfile', function($q) use ($request) {
-                $q->whereJsonContains('specializations', $request->specialization);
+        // Filter by category (service_category_id)
+        if ($request->has('category') && $request->category) {
+            $categoryId = (int) $request->category;
+            $query->whereHas('doctorProfile', function($q) use ($categoryId) {
+                $q->whereJsonContains('service_category_ids', $categoryId);
             });
         }
 
@@ -51,22 +54,10 @@ class DoctorController extends Controller
         // Cities: use config locations (Pelvicare service areas) for consistent filters
         $cities = collect(config('pelvicare.locations', []));
 
-        $allSpecializations = User::where('role', 'admin')
-            ->whereHas('doctorProfile', function($q) {
-                $q->where('verification_status', 'approved')
-                  ->where('profile_completed', true)
-                  ->whereNotNull('specializations');
-            })
-            ->with('doctorProfile')
-            ->get()
-            ->pluck('doctorProfile.specializations')
-            ->flatten()
-            ->filter()
-            ->unique()
-            ->sort()
-            ->values();
+        // Categories for filter dropdown
+        $allCategories = ServiceCategory::active()->ordered()->get();
 
-        return view('doctors.index', compact('doctors', 'cities', 'allSpecializations'));
+        return view('doctors.index', compact('doctors', 'cities', 'allCategories'));
     }
 
     /**

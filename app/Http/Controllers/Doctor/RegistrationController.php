@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\DoctorProfile;
 use App\Models\DoctorDocument;
+use App\Models\ServiceCategory;
+use App\Models\ServiceSubcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -32,7 +34,7 @@ class RegistrationController extends Controller
             }
             // If they have a profile but haven't completed, redirect to appropriate step
             if ($profile) {
-                if (!$profile->specializations) {
+                if (empty($profile->service_category_ids)) {
                     return redirect()->route('doctor.registration.step3')
                         ->with('info', 'Please continue your registration.');
                 }
@@ -217,14 +219,17 @@ class RegistrationController extends Controller
             return redirect()->route('doctor.registration.complete');
         }
 
-        return view('doctor.registration.step3', compact('profile'));
+        $serviceCategories = ServiceCategory::active()->ordered()->get();
+        return view('doctor.registration.step3', compact('profile', 'serviceCategories'));
     }
 
     public function storeStep3(Request $request)
     {
         $request->validate([
             'years_of_experience' => 'required|integer|min:0',
-            'specializations' => 'required|array|min:1',
+            'service_category_ids' => 'required|array|min:1',
+            'service_category_ids.*' => 'exists:service_categories,id',
+            'specializations' => 'nullable|array',
             'specializations.*' => 'string',
             'languages' => 'required|array|min:1',
             'languages.*' => 'string',
@@ -234,17 +239,24 @@ class RegistrationController extends Controller
         ]);
 
         $user = Auth::user();
+        $categoryIds = array_map('intval', $request->service_category_ids);
+
+        $profile = DoctorProfile::firstOrNew(['user_id' => $user->id]);
+        $slug = $profile->slug ?? DoctorProfile::generateSlug($user->name, $user->id);
 
         DoctorProfile::updateOrCreate(
             ['user_id' => $user->id],
             [
                 'years_of_experience' => $request->years_of_experience,
-                'specializations' => $request->specializations,
-                'languages' => $request->languages,
+                'service_category_ids' => array_values(array_unique($categoryIds)),
+                'service_subcategory_ids' => null, // set on step 4
+                'specializations' => $request->specializations ?? [],
+                'languages' => $request->input('languages'),
                 'bio' => $request->bio,
                 'clinic_name' => $request->clinic_name,
                 'clinic_address' => $request->clinic_address,
                 'verification_status' => 'pending',
+                'slug' => $slug,
             ]
         );
 
@@ -261,18 +273,31 @@ class RegistrationController extends Controller
         $user = Auth::user();
         $profile = $user->doctorProfile;
         
-        // Check if step3 is completed (specializations must exist)
-        if (!$profile || !$profile->specializations) {
+        // Check if step3 is completed (at least one service category must exist)
+        if (!$profile || empty($profile->service_category_ids)) {
             return redirect()->route('doctor.registration.step3')
-                ->with('error', 'Please complete your profile information first.');
+                ->with('error', 'Please select at least one service category first.');
         }
         
         // If profile is already completed, redirect to complete page
         if ($profile->profile_completed) {
             return redirect()->route('doctor.registration.complete');
         }
+
+        $categoriesWithSubs = ServiceCategory::whereIn('id', $profile->service_category_ids)
+            ->ordered()
+            ->get()
+            ->map(function ($category) {
+                return [
+                    'category' => $category,
+                    'subcategories' => ServiceSubcategory::where('service_category_id', $category->id)
+                        ->active()
+                        ->ordered()
+                        ->get(),
+                ];
+            });
         
-        return view('doctor.registration.step4', compact('profile'));
+        return view('doctor.registration.step4', compact('profile', 'categoriesWithSubs'));
     }
 
     public function storeStep4(Request $request)
@@ -323,6 +348,8 @@ class RegistrationController extends Controller
             }
             
             $validated = $request->validate([
+                'service_subcategory_ids' => 'nullable|array',
+                'service_subcategory_ids.*' => 'exists:service_subcategories,id',
                 'home_visit_fee' => 'nullable|numeric|min:0',
                 'clinic_visit_fee' => 'nullable|numeric|min:0',
                 'video_session_fee' => 'nullable|numeric|min:0',
@@ -331,6 +358,7 @@ class RegistrationController extends Controller
                 'buffer_time' => 'required|integer|min:0|max:60',
                 'same_day_bookings' => 'nullable', // Checkbox sends "on" when checked, we handle it with has()
             ], [
+                'service_subcategory_ids.*.exists' => 'One or more selected subcategories are invalid.',
                 'slot_duration.required' => 'Please select a slot duration.',
                 'slot_duration.integer' => 'Slot duration must be a number.',
                 'slot_duration.in' => 'Slot duration must be 30, 45, or 60 minutes.',
@@ -370,28 +398,34 @@ class RegistrationController extends Controller
             \Log::info('Profile found. Profile ID: ' . $profile->id);
             \Log::info('Profile Specializations: ' . json_encode($profile->specializations));
             
-            // Check if step 3 is completed (specializations must exist)
-            if (!$profile->specializations || (is_array($profile->specializations) && count($profile->specializations) == 0)) {
-                \Log::warning('Specializations missing or empty');
+            // Check if step 3 is completed (at least one service category must exist)
+            if (empty($profile->service_category_ids)) {
+                \Log::warning('Service categories missing');
                 return redirect()->route('doctor.registration.step3')
-                    ->with('error', 'Please complete your profile information first.')
+                    ->with('error', 'Please select at least one service category first.')
+                    ->withInput();
+            }
+
+            $subcategoryIds = $request->service_subcategory_ids ? array_map('intval', $request->service_subcategory_ids) : [];
+            $validSubcategoryIds = ServiceSubcategory::whereIn('id', $subcategoryIds)
+                ->whereIn('service_category_id', $profile->service_category_ids)
+                ->pluck('id')
+                ->all();
+            if (count($subcategoryIds) !== count($validSubcategoryIds)) {
+                return redirect()->back()
+                    ->withErrors(['service_subcategory_ids' => 'One or more selected subcategories do not belong to your service categories.'])
                     ->withInput();
             }
             
             \Log::info('Starting profile update...');
-            \Log::info('Update Data: ', [
-                'home_visit_fee' => $request->home_visit_fee ? (float) $request->home_visit_fee : null,
-                'clinic_visit_fee' => $request->clinic_visit_fee ? (float) $request->clinic_visit_fee : null,
-                'video_session_fee' => $request->video_session_fee ? (float) $request->video_session_fee : null,
-                'slot_duration' => (int) $request->slot_duration,
-                'max_patients_per_day' => (int) $request->max_patients_per_day,
-                'buffer_time' => (int) $request->buffer_time,
-                'same_day_bookings' => $request->has('same_day_bookings'),
-                'profile_completed' => true,
-            ]);
-            
-            // Update only the fee and settings fields
+
+            // Ensure slug is set (in case it was missed in earlier steps)
+            $slug = $profile->slug ?? DoctorProfile::generateSlug($user->name, $user->id);
+
+            // Update fee, settings, and service subcategories
             $profile->update([
+                'slug' => $slug,
+                'service_subcategory_ids' => array_values(array_unique($validSubcategoryIds)),
                 'home_visit_fee' => $request->home_visit_fee ? (float) $request->home_visit_fee : null,
                 'clinic_visit_fee' => $request->clinic_visit_fee ? (float) $request->clinic_visit_fee : null,
                 'video_session_fee' => $request->video_session_fee ? (float) $request->video_session_fee : null,
@@ -441,6 +475,19 @@ class RegistrationController extends Controller
         }
     }
 
+    /**
+     * Return subcategories for a service category (for AJAX / dynamic dropdowns).
+     */
+    public function subcategoriesByCategory(Request $request)
+    {
+        $request->validate(['category_id' => 'required|exists:service_categories,id']);
+        $subcategories = ServiceSubcategory::where('service_category_id', $request->category_id)
+            ->active()
+            ->ordered()
+            ->get(['id', 'name']);
+        return response()->json($subcategories);
+    }
+
     public function complete()
     {
         if (!Auth::check() || !Auth::user()->isAdmin()) {
@@ -456,7 +503,7 @@ class RegistrationController extends Controller
             if (!$profile) {
                 return redirect()->route('doctor.registration.step2');
             }
-            if (!$profile->specializations) {
+            if (empty($profile->service_category_ids)) {
                 return redirect()->route('doctor.registration.step3');
             }
             if (!$profile->home_visit_fee && !$profile->clinic_visit_fee) {
@@ -503,6 +550,7 @@ class RegistrationController extends Controller
             DoctorProfile::create([
                 'user_id' => $user->id,
                 'profile_image' => $path,
+                'slug' => DoctorProfile::generateSlug($user->name, $user->id),
             ]);
         }
         
@@ -530,6 +578,7 @@ class RegistrationController extends Controller
             DoctorProfile::create([
                 'user_id' => $user->id,
                 'profile_image' => $path,
+                'slug' => DoctorProfile::generateSlug($user->name, $user->id),
             ]);
         }
     }

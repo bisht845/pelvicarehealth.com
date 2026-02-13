@@ -2,7 +2,7 @@
 
 @section('title', 'Doctor Registration - Step 2')
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mx-auto">
         @if(session('success'))
             <div class="mb-6 bg-green-50 border-l-4 border-green-400 p-4 rounded-lg">
@@ -19,34 +19,34 @@
             </div>
         @endif
 
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="theme-card overflow-hidden rounded-2xl">
             <!-- Progress Header -->
-            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-6">
+            <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-6">
                 <div class="flex items-center justify-between mb-4">
                     <div>
                         <h2 class="text-2xl font-bold text-white heading-font">Verify Your Identity</h2>
-                        <p class="text-blue-100 text-sm mt-1">Upload your professional documents</p>
+                        <p class="text-pink-100 text-sm mt-1">Upload your professional documents</p>
                     </div>
-                    <div class="bg-white text-black bg-opacity-20 rounded-full px-4 py-2">
-                        <span class="text-black font-semibold">Step 2 of 4</span>
+                    <div class="bg-white/20 rounded-full px-4 py-2">
+                        <span class="text-white font-semibold">Step 2 of 4</span>
                     </div>
                 </div>
-                <div class="w-full bg-white bg-opacity-20 rounded-full h-2">
+                <div class="w-full bg-white/20 rounded-full h-2">
                     <div class="bg-white h-2 rounded-full transition-all duration-300" style="width: 50%"></div>
                 </div>
             </div>
 
             <!-- Form Content -->
             <div class="p-8">
-                <div class="mb-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded">
+                <div class="mb-6 bg-pink-50 border-l-4 border-pink-400 p-4 rounded">
                     <div class="flex">
                         <div class="flex-shrink-0">
-                            <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="h-5 w-5 text-pink-400" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <p class="text-sm text-blue-700">
+                            <p class="text-sm text-pink-700">
                                 <strong>Verification Process:</strong> Our medical team will review your documents. Verification usually takes 24-48 hours. You'll receive an email once your profile is approved.
                             </p>
                         </div>
@@ -57,7 +57,7 @@
                     @csrf
                     
                     <!-- Profile Photo Upload -->
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-blue-400 transition mb-6">
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-pink-400 transition mb-6">
                         <label class="block">
                             <div class="flex items-center justify-between mb-2">
                                 <div>
@@ -70,7 +70,7 @@
                                         </div>
                                     @endif
                                 </div>
-                                <span class="px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded">Recommended</span>
+                                <span class="px-2 py-1 text-xs font-semibold bg-pink-100 text-pink-800 rounded">Recommended</span>
                             </div>
                             <p class="text-xs text-gray-500 mb-3">Supported: JPG, PNG (Max 1MB, 1:1 square)</p>
                             
@@ -84,7 +84,7 @@
                             </div>
                             
                             <input type="file" name="profile_image" id="profile_image" accept="image/jpeg,image/jpg,image/png" 
-                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 @error('profile_image') border-red-500 @enderror">
+                                   class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 @error('profile_image') border-red-500 @enderror">
                             @error('profile_image')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -101,7 +101,7 @@
                                 }
                             }
                         @endphp
-                        <div class="border-2 border-dashed {{ isset($uploadedDocs['degree_certificate']) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-blue-400 transition">
+                        <div class="border-2 border-dashed {{ isset($uploadedDocs['degree_certificate']) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-pink-400 transition">
                             <label class="block">
                                 <div class="flex items-center justify-between mb-2">
                                     <div>
@@ -115,7 +115,7 @@
                                 </div>
                                 <p class="text-xs text-gray-500 mb-3">Supported: PDF, JPG, PNG (Max 5MB)</p>
                                 <input type="file" name="degree_certificate" {{ !isset($uploadedDocs['degree_certificate']) ? 'required' : '' }} accept=".pdf,.jpg,.jpeg,.png" 
-                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 @error('degree_certificate') border-red-500 @enderror">
+                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 @error('degree_certificate') border-red-500 @enderror">
                                 @if(isset($uploadedDocs['degree_certificate']))
                                     <p class="text-xs text-gray-600 mt-2">Leave empty to keep current file, or upload a new one to replace.</p>
                                 @endif
@@ -125,7 +125,7 @@
                             </label>
                         </div>
 
-                        <div class="border-2 border-dashed {{ isset($uploadedDocs['council_registration']) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-blue-400 transition">
+                        <div class="border-2 border-dashed {{ isset($uploadedDocs['council_registration']) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-pink-400 transition">
                             <label class="block">
                                 <div class="flex items-center justify-between mb-2">
                                     <div>
@@ -149,7 +149,7 @@
                             </label>
                         </div>
 
-                        <div class="border-2 border-dashed {{ isset($uploadedDocs['government_id']) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-blue-400 transition">
+                        <div class="border-2 border-dashed {{ isset($uploadedDocs['government_id']) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-pink-400 transition">
                             <label class="block">
                                 <div class="flex items-center justify-between mb-2">
                                     <div>
@@ -163,7 +163,7 @@
                                 </div>
                                 <p class="text-xs text-gray-500 mb-3">Supported: PDF, JPG, PNG (Max 5MB)</p>
                                 <input type="file" name="government_id" {{ !isset($uploadedDocs['government_id']) ? 'required' : '' }} accept=".pdf,.jpg,.jpeg,.png" 
-                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 @error('government_id') border-red-500 @enderror">
+                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 @error('government_id') border-red-500 @enderror">
                                 @if(isset($uploadedDocs['government_id']))
                                     <p class="text-xs text-gray-600 mt-2">Leave empty to keep current file, or upload a new one to replace.</p>
                                 @endif
@@ -173,7 +173,7 @@
                             </label>
                         </div>
 
-                        <div class="border-2 border-dashed {{ isset($uploadedDocs['iap_membership']) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-blue-400 transition">
+                        <div class="border-2 border-dashed {{ isset($uploadedDocs['iap_membership']) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-pink-400 transition">
                             <label class="block">
                                 <div class="flex items-center justify-between mb-2">
                                     <div>
@@ -194,7 +194,7 @@
                             </label>
                         </div>
 
-                        <div class="border-2 border-dashed {{ isset($uploadedDocs['clinic_proof']) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-blue-400 transition">
+                        <div class="border-2 border-dashed {{ isset($uploadedDocs['clinic_proof']) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-pink-400 transition">
                             <label class="block">
                                 <div class="flex items-center justify-between mb-2">
                                     <div>
@@ -226,7 +226,7 @@
                             ];
                         @endphp
                         @foreach($certDocs as $docKey => $docLabel)
-                        <div class="border-2 border-dashed {{ isset($uploadedDocs[$docKey]) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-blue-400 transition">
+                        <div class="border-2 border-dashed {{ isset($uploadedDocs[$docKey]) ? 'border-green-400 bg-green-50' : 'border-gray-300' }} rounded-lg p-6 hover:border-pink-400 transition">
                             <label class="block">
                                 <div class="flex items-center justify-between mb-2">
                                     <div>
@@ -252,7 +252,7 @@
                     <!-- Confirmation Checkbox -->
                     <div class="bg-gray-50 border-2 border-gray-200 rounded-lg p-4">
                         <label class="flex items-start">
-                            <input type="checkbox" name="confirm" required class="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <input type="checkbox" name="confirm" required class="mt-1 rounded border-gray-300 text-pink-600 focus:ring-pink-500">
                             <span class="ml-3 text-sm text-gray-700">
                                 <strong>I confirm</strong> that all information provided is correct and all documents are authentic. I understand that providing false information may result in account termination.
                             </span>
@@ -268,7 +268,7 @@
                             Back
                         </a>
                         <button type="submit" 
-                                class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-lg hover:from-blue-600 hover:to-indigo-700 font-semibold shadow-lg transform hover:scale-[1.02] transition-all">
+                                class="bg-gradient-to-r from-pink-500 to-pink-600 text-white px-8 py-3 rounded-lg hover:from-pink-600 hover:to-pink-700 font-semibold shadow-lg transform hover:scale-[1.02] transition-all">
                             Next: Build Profile →
                         </button>
                     </div>

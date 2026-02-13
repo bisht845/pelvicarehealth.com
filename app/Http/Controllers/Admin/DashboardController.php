@@ -22,7 +22,7 @@ class DashboardController extends Controller
                     return redirect()->route('doctor.registration.step2')
                         ->with('info', 'Please complete your registration to access the dashboard.');
                 }
-                if (!$profile->specializations) {
+                if (empty($profile->service_category_ids)) {
                     return redirect()->route('doctor.registration.step3')
                         ->with('info', 'Please complete your profile to access the dashboard.');
                 }

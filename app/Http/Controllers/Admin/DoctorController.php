@@ -28,7 +28,7 @@ class DoctorController extends Controller
                 return redirect()->route('doctor.registration.step2')
                     ->with('info', 'Please complete your registration to access the dashboard.');
             }
-            if (!$profile->specializations) {
+            if (empty($profile->service_category_ids)) {
                 return redirect()->route('doctor.registration.step3')
                     ->with('info', 'Please complete your profile to access the dashboard.');
             }
@@ -156,7 +156,7 @@ class DoctorController extends Controller
         $doctor = auth()->user();
         $profile = $doctor->doctorProfile;
 
-        $slug = DoctorProfile::generateSlug($doctor->name);
+        $slug = DoctorProfile::generateSlug($doctor->name, $doctor->id);
         if (!$profile->slug) {
             $profile->slug = $slug;
         }

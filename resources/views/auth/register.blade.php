@@ -3,7 +3,7 @@
 @section('title', 'Register - Pelvicare')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-pink-50 via-white to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mx-auto">
         <!-- Header -->
         <div class="text-center mb-8">
@@ -27,7 +27,7 @@
         </div>
 
         <!-- Registration Form Card -->
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div class="theme-card rounded-2xl overflow-hidden">
             <!-- Role Selection Tabs -->
             <!-- Role Selection Tabs -->
             <div class="p-6 pb-0">

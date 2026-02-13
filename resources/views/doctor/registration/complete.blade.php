@@ -2,9 +2,9 @@
 
 @section('title', 'Registration Complete')
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-pink-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mx-auto">
-        <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+        <div class="theme-card p-8 text-center">
             <div class="mb-6">
                 <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

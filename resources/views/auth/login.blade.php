@@ -3,8 +3,8 @@
 @section('title', 'Login - Pelvicare')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl w-full theme-card rounded-3xl overflow-hidden flex flex-col md:flex-row">
         
         <!-- Left Side - Image -->
         <div class="w-full md:w-1/2 h-48 md:h-auto relative bg-pink-50">

@@ -3,8 +3,8 @@
 @section('title', 'Verify OTP - Pelvicare')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full theme-card rounded-3xl overflow-hidden">
         <div class="p-8 md:p-12">
             <div class="text-center mb-10">
                 <div class="flex justify-center mb-6">

@@ -86,9 +86,9 @@ Join as Physiotherapist - Pelvic Health Platform
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Specialization in Women's Health *</label>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Category (Women's Health) *</label>
                                     <select name="specialization" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all">
-                                        <option value="">Select specialization...</option>
+                                        <option value="">Select category...</option>
                                         <option value="pelvic-floor">Pelvic Floor Rehabilitation</option>
                                         <option value="womens-health">Women's Health Physiotherapy</option>
                                         <option value="postpartum">Postpartum Care</option>
