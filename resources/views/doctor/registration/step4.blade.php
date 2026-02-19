@@ -2,7 +2,7 @@
 
 @section('title', 'Doctor Registration - Step 4')
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-pink-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-2xl mx-auto">
         @if(session('success'))
             <div class="mb-6 bg-green-50 border-l-4 border-green-400 p-4 rounded-lg">
@@ -34,7 +34,7 @@
             </div>
         @endif
 
-        <div class="bg-white rounded-lg shadow-lg p-8">
+        <div class="theme-card p-8">
             <div class="mb-6">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-2xl font-bold heading-font text-gray-900">Fees & Availability</h2>
@@ -67,7 +67,41 @@
 
             <form action="{{ route('doctor.registration.store.step4') }}" method="POST" class="space-y-6" id="step4Form">
                 @csrf
-                <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                <div class="theme-card-solid border-pink-100 rounded-xl p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-1">Update Profile Info</h3>
+                    <p class="text-sm text-gray-500 mb-4">Select service subcategories for each category you offer (you can select multiple).</p>
+                    @php
+                        $savedSubcategoryIds = old('service_subcategory_ids', $profile->service_subcategory_ids ?? []);
+                        if (!is_array($savedSubcategoryIds)) {
+                            $savedSubcategoryIds = [];
+                        }
+                    @endphp
+                    <div class="space-y-6">
+                        @foreach($categoriesWithSubs as $item)
+                            <div class="border border-gray-200 rounded-lg p-4 bg-gray-50/50">
+                                <h4 class="text-sm font-semibold text-gray-800 mb-3">{{ $item['category']->name }}</h4>
+                                @if($item['subcategories']->isEmpty())
+                                    <p class="text-xs text-gray-500">No subcategories available for this category.</p>
+                                @else
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                        @foreach($item['subcategories'] as $sub)
+                                            <label class="flex items-center p-2 rounded-lg hover:bg-white/80 cursor-pointer">
+                                                <input type="checkbox" name="service_subcategory_ids[]" value="{{ $sub->id }}"
+                                                    {{ in_array($sub->id, $savedSubcategoryIds) ? 'checked' : '' }}
+                                                    class="h-4 w-4 rounded text-pink-600 border-gray-300 focus:ring-pink-500">
+                                                <span class="ml-2 text-sm text-gray-700">{{ $sub->name }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                    @error('service_subcategory_ids')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="theme-card-solid border-pink-100 p-4 rounded-xl mb-6">
                     <h3 class="font-semibold mb-4">Session Fees</h3>
                     <div class="space-y-4">
                         <div>
@@ -88,7 +122,7 @@
                     </div>
                 </div>
 
-                <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                <div class="theme-card-solid border-pink-100 p-4 rounded-xl mb-6">
                     <h3 class="font-semibold mb-4">Session Settings</h3>
                     <div class="space-y-4">
                         <div>

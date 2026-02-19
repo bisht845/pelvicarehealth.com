@@ -233,7 +233,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                         @foreach($featuredDoctors as $doctor)
                             @php
                                 $profile = $doctor->doctorProfile;
-                                $specializations = is_array($profile->specializations) ? $profile->specializations : [];
+                                $categoryDisplay = $profile->category_subcategory_display ?? 'N/A';
                                 $rating = $profile->rating ?? 4.5;
                                 $image = $profile->profile_image ? asset('storage/' . $profile->profile_image) : asset('images/physiotherapist_' . (($loop->index % 3) + 1) . '.png');
                             @endphp
@@ -246,12 +246,29 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                                         </div>
                                     </div>
                                     <h3 class="text-lg font-bold heading-font text-gray-900 mb-2">{{ $doctor->name }}</h3>
-                                    @if(!empty($specializations))
+                                    @php
+                                        $homeCatList = $profile->serviceCategories();
+                                        $homeSubList = $profile->serviceSubcategories();
+                                        $homeLinks = collect();
+                                        foreach ($homeCatList as $cat) {
+                                            $subs = $homeSubList->where('service_category_id', $cat->id);
+                                            if ($subs->isNotEmpty()) {
+                                                foreach ($subs->take(2) as $sub) {
+                                                    $homeLinks->push(['url' => route('services.subservice', [$cat->slug, $sub->slug]), 'name' => $sub->name]);
+                                                }
+                                            } else {
+                                                $homeLinks->push(['url' => route('services.show', $cat->slug), 'name' => $cat->name]);
+                                            }
+                                        }
+                                        foreach ($homeSubList->whereNotIn('service_category_id', $homeCatList->pluck('id'))->take(2) as $sub) {
+                                            $parentCat = $sub->serviceCategory;
+                                            $homeLinks->push(['url' => $parentCat ? route('services.subservice', [$parentCat->slug, $sub->slug]) : route('services'), 'name' => $sub->name]);
+                                        }
+                                    @endphp
+                                    @if($homeLinks->isNotEmpty())
                                         <div class="flex flex-wrap gap-1.5 mb-3 min-h-[3.25rem] overflow-hidden content-start" style="max-height: 3.53rem;">
-                                            @foreach(array_slice($specializations, 0, 4) as $spec)
-                                                <span class="bg-pink-100 text-pink-700 px-2.5 py-1 rounded-full text-xs font-semibold border border-pink-200 shrink-0">
-                                                    {{ $spec }}
-                                                </span>
+                                            @foreach($homeLinks->take(4) as $link)
+                                                <a href="{{ $link['url'] }}" class="bg-pink-100 text-pink-700 px-2.5 py-1 rounded-full text-xs font-semibold border border-pink-200 shrink-0 hover:bg-pink-200 transition-colors">{{ $link['name'] }}</a>
                                             @endforeach
                                         </div>
                                     @else

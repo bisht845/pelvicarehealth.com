@@ -42,6 +42,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
+<!-- PNG favicon (optional but recommended) -->
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon.webp') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon.webp') }}">
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon.webp') }}">
+
     
     <!-- Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -127,6 +138,28 @@
         /* Remove global transition that causes conflicts */
         button, a, input, select, textarea {
             transition: all 0.2s ease;
+        }
+        
+        /* Theme: same as home page – page background and cards site-wide */
+        .theme-page-bg {
+            background: linear-gradient(to bottom right, var(--pink-50, #fdf2f8) 0%, #ffffff 50%, rgba(253, 242, 248, 0.6) 100%);
+            min-height: 100%;
+        }
+        .theme-card {
+            background: linear-gradient(to bottom right, #fdf2f8, #ffffff);
+            border: 1px solid rgba(251, 207, 232, 0.8);
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+        .theme-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .theme-card-solid {
+            background: #ffffff;
+            border: 1px solid rgba(251, 207, 232, 0.8);
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         
         /* Glassmorphism effect */
@@ -373,7 +406,7 @@
                         </span>
                     </div>
                 </div>
-                <!-- Specialization -->
+                <!-- Category -->
                 <div class="flex-1 sm:max-w-[200px] lg:max-w-[220px] sm:border-r sm:border-gray-200 sm:pr-3">
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
@@ -381,10 +414,10 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                             </svg>
                         </span>
-                        <select name="specialization" id="nav-search-specialization" class="w-full pl-10 pr-10 py-3 sm:py-2.5 border border-gray-200 rounded-xl sm:rounded-r-none sm:rounded-l-none text-gray-900 font-medium focus:ring-2 focus:ring-pink-500 focus:border-pink-500 bg-gray-50/50 sm:bg-white appearance-none cursor-pointer text-sm">
-                            <option value="">Specialization</option>
-                            @foreach($navSpecializations ?? [] as $spec)
-                                <option value="{{ $spec }}" {{ request('specialization') === $spec ? 'selected' : '' }}>{{ $spec }}</option>
+                        <select name="category" id="nav-search-category" class="w-full pl-10 pr-10 py-3 sm:py-2.5 border border-gray-200 rounded-xl sm:rounded-r-none sm:rounded-l-none text-gray-900 font-medium focus:ring-2 focus:ring-pink-500 focus:border-pink-500 bg-gray-50/50 sm:bg-white appearance-none cursor-pointer text-sm">
+                            <option value="">Category</option>
+                            @foreach($navCategories ?? [] as $cat)
+                                <option value="{{ $cat->id }}" {{ request('category') == (string)$cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                             @endforeach
                         </select>
                         <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
@@ -414,8 +447,8 @@
         </div>
     </section>
     
-    <!-- Main Content -->
-    <main>
+    <!-- Main Content: theme background same as home page -->
+    <main class="theme-page-bg">
         @yield('content')
     </main>
     

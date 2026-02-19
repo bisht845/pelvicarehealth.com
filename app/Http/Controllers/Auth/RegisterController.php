@@ -26,7 +26,7 @@ class RegisterController extends Controller
                     if (!$profile) {
                         return redirect()->route('doctor.registration.step2');
                     }
-                    if (!$profile->specializations) {
+                    if (empty($profile->service_category_ids)) {
                         return redirect()->route('doctor.registration.step3');
                     }
                     if (!$profile->home_visit_fee && !$profile->clinic_visit_fee) {

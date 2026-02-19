@@ -18,9 +18,9 @@
             @if(isset($specializations) && $specializations !== [] && count($specializations) > 0)
             <div class="mt-8 flex flex-wrap justify-center gap-3">
                 <form method="get" action="{{ route('services') }}" class="flex flex-wrap items-center justify-center gap-2">
-                    <label for="specialization" class="text-sm font-medium text-gray-700 sr-only">Filter by specialization</label>
+                    <label for="specialization" class="text-sm font-medium text-gray-700 sr-only">Filter by category</label>
                     <select name="specialization" id="specialization" onchange="this.form.submit()" class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 shadow-sm focus:border-pink-500 focus:ring-pink-500">
-                        <option value="all" {{ (isset($specialization) && $specialization === 'all') || !isset($specialization) ? 'selected' : '' }}>All Specializations</option>
+                        <option value="all" {{ (isset($specialization) && $specialization === 'all') || !isset($specialization) ? 'selected' : '' }}>All Categories</option>
                         @foreach($specializations as $spec)
                             <option value="{{ $spec }}" {{ (isset($specialization) && $specialization === $spec) ? 'selected' : '' }}>{{ $spec }}</option>
                         @endforeach

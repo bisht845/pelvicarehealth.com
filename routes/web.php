@@ -56,6 +56,7 @@ Route::prefix('doctor/register')->name('doctor.registration.')->group(function (
         Route::get('/step4', [App\Http\Controllers\Doctor\RegistrationController::class, 'step4'])->name('step4');
         Route::post('/step4', [App\Http\Controllers\Doctor\RegistrationController::class, 'storeStep4'])->name('store.step4');
         Route::get('/complete', [App\Http\Controllers\Doctor\RegistrationController::class, 'complete'])->name('complete');
+        Route::get('/subcategories', [App\Http\Controllers\Doctor\RegistrationController::class, 'subcategoriesByCategory'])->name('subcategories');
     });
 });
 

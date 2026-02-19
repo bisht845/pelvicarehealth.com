@@ -13,6 +13,14 @@ class DoctorVerificationController extends Controller
 {
     public function index(Request $request)
     {
+        // Default to Pending tab when no valid status
+        if (!$request->has('status') || !in_array($request->status, ['pending', 'approved', 'rejected'])) {
+            return redirect()->route('super-admin.doctor-verification', array_merge(
+                $request->only(['search', 'city']),
+                ['status' => 'pending']
+            ));
+        }
+
         $query = User::where('role', 'admin')
             ->with(['doctorProfile', 'doctorDocuments']);
 
@@ -20,29 +28,20 @@ class DoctorVerificationController extends Controller
             $query->withTrashed();
         }
 
-        // Filter by verification status
-        if ($request->has('status') && $request->status) {
-            if ($request->status === 'pending') {
-                $query->where(function($q) {
-                    $q->whereHas('doctorProfile', function($profileQuery) {
-                        $profileQuery->where('verification_status', 'pending');
-                    })->orDoesntHave('doctorProfile');
-                });
-            } elseif ($request->status === 'rejected') {
-                $query->whereHas('doctorProfile', function($q) {
-                    $q->where('verification_status', 'rejected');
-                });
-            } elseif ($request->status === 'approved') {
-                $query->whereHas('doctorProfile', function($q) {
-                    $q->where('verification_status', 'approved');
-                });
-            }
-        } else {
-            // Default: show pending and rejected
+        // Filter by verification status (tab)
+        if ($request->status === 'pending') {
             $query->where(function($q) {
                 $q->whereHas('doctorProfile', function($profileQuery) {
-                    $profileQuery->whereIn('verification_status', ['pending', 'rejected']);
+                    $profileQuery->where('verification_status', 'pending');
                 })->orDoesntHave('doctorProfile');
+            });
+        } elseif ($request->status === 'rejected') {
+            $query->whereHas('doctorProfile', function($q) {
+                $q->where('verification_status', 'rejected');
+            });
+        } elseif ($request->status === 'approved') {
+            $query->whereHas('doctorProfile', function($q) {
+                $q->where('verification_status', 'approved');
             });
         }
 
@@ -103,7 +102,8 @@ class DoctorVerificationController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Doctor approved successfully!');
+        return redirect()->route('super-admin.doctor-verification', ['status' => 'approved'])
+            ->with('success', 'Doctor approved successfully!');
     }
 
     public function rejectDoctor(Request $request, $id)
@@ -119,7 +119,7 @@ class DoctorVerificationController extends Controller
         }
 
         $profile = $doctor->doctorProfile;
-        
+
         if ($profile) {
             $profile->update([
                 'verification_status' => 'rejected',
@@ -127,9 +127,18 @@ class DoctorVerificationController extends Controller
                 'verified_by' => Auth::id(),
                 'verified_at' => now(),
             ]);
+        } else {
+            DoctorProfile::create([
+                'user_id' => $doctor->id,
+                'verification_status' => 'rejected',
+                'rejection_reason' => $request->rejection_reason,
+                'verified_by' => Auth::id(),
+                'verified_at' => now(),
+            ]);
         }
 
-        return redirect()->back()->with('success', 'Doctor rejected.');
+        return redirect()->route('super-admin.doctor-verification', ['status' => 'rejected'])
+            ->with('success', 'Doctor rejected.');
     }
 
     public function approveDocument($documentId)
@@ -244,12 +253,14 @@ class DoctorVerificationController extends Controller
         $doctor = User::where('role', 'admin')->findOrFail($id);
 
         if ($doctor->id === Auth::id()) {
-            return redirect()->back()->with('error', 'You cannot delete your own account.');
+            return redirect()->route('super-admin.doctor-verification', ['status' => 'pending'])
+                ->with('error', 'You cannot delete your own account.');
         }
 
         $doctor->delete();
 
-        return redirect()->back()->with('success', 'Doctor has been deleted.');
+        return redirect()->route('super-admin.doctor-verification', ['status' => 'pending'])
+            ->with('success', 'Doctor has been deleted.');
     }
 
     public function restoreDoctor($id)

@@ -15,7 +15,8 @@ class HomeController extends Controller
             ->whereHas('doctorProfile', function($q) {
                 $q->where('verification_status', 'approved')
                   ->where('profile_completed', true)
-                  ->where('is_featured', true);
+                  ->where('is_featured', true)
+                  ->whereNotNull('slug');
             })
             ->with('doctorProfile')
             ->inRandomOrder()
