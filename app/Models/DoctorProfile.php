@@ -24,6 +24,7 @@ class DoctorProfile extends Model
         'clinic_name',
         'clinic_address',
         'city',
+        'state',
         'profile_image',
         'home_visit_fee',
         'clinic_visit_fee',

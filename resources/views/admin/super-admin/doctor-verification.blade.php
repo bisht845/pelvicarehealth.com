@@ -81,34 +81,22 @@
                 </button>
             </div>
             <div class="flex space-x-2">
-                <select name="city" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400" onchange="document.getElementById('filterForm').submit()">
-                    <option value="">All Cities</option>
-                    @php
-                        $statusFilter = request('status');
-                        $citiesQuery = \App\Models\User::where('role', 'admin')
-                            ->whereHas('doctorProfile', function($q) use ($statusFilter) {
-                                $q->whereNotNull('city');
-                                if ($statusFilter == 'approved') {
-                                    $q->where('verification_status', 'approved');
-                                } elseif ($statusFilter == 'pending') {
-                                    $q->where('verification_status', 'pending');
-                                } elseif ($statusFilter == 'rejected') {
-                                    $q->where('verification_status', 'rejected');
-                                } else {
-                                    $q->whereIn('verification_status', ['pending', 'rejected']);
-                                }
-                            });
-                        $cities = $citiesQuery->with('doctorProfile')
-                            ->get()
-                            ->pluck('doctorProfile.city')
-                            ->filter()
-                            ->unique()
-                            ->sort()
-                            ->values();
-                    @endphp
-                    @foreach($cities as $city)
-                        <option value="{{ $city }}" {{ request('city') == $city ? 'selected' : '' }}>{{ $city }}</option>
+                <select name="state" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400" onchange="document.getElementById('filterForm').submit()">
+                    <option value="">All States / UTs</option>
+                    <optgroup label="── States">
+                    @foreach(config('pelvicare.locations', []) as $loc => $type)
+                        @if($type === 'state')
+                        <option value="{{ $loc }}" {{ request('state') == $loc ? 'selected' : '' }}>{{ $loc }}</option>
+                        @endif
                     @endforeach
+                    </optgroup>
+                    <optgroup label="── Union Territories">
+                    @foreach(config('pelvicare.locations', []) as $loc => $type)
+                        @if($type === 'union_territory')
+                        <option value="{{ $loc }}" {{ request('state') == $loc ? 'selected' : '' }}>{{ $loc }}</option>
+                        @endif
+                    @endforeach
+                    </optgroup>
                 </select>
                 <select name="status" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400" onchange="document.getElementById('filterForm').submit()">
                     @if(request('status') == 'approved')
@@ -120,7 +108,7 @@
                         <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
                     @endif
                 </select>
-                @if(request()->has('search') || request()->has('city') || request()->has('status'))
+                @if(request()->has('search') || request()->has('state') || request()->has('status'))
                     <a href="{{ route('super-admin.doctor-verification') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 text-sm flex items-center">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>

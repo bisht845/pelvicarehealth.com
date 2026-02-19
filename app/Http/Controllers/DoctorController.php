@@ -32,10 +32,13 @@ class DoctorController extends Controller
             });
         }
 
-        // Filter by city
-        if ($request->has('city') && $request->city) {
+        // Filter by state/UT
+        if ($request->has('state') && $request->state) {
             $query->whereHas('doctorProfile', function($q) use ($request) {
-                $q->where('city', 'like', "%{$request->city}%");
+                $q->where(function ($sub) use ($request) {
+                    $sub->where('state', $request->state)
+                        ->orWhere('city', $request->state);
+                });
             });
         }
 
@@ -48,8 +51,8 @@ class DoctorController extends Controller
 
         $doctors = $query->paginate(9);
 
-        // Cities: use config locations (Pelvicare service areas) for consistent filters
-        $cities = collect(config('pelvicare.locations', []));
+        // States/UTs: use config locations (single source of truth)
+        $cities = collect(array_keys(config('pelvicare.locations', [])));
 
         $allSpecializations = User::where('role', 'admin')
             ->whereHas('doctorProfile', function($q) {

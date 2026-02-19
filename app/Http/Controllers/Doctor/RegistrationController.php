@@ -231,6 +231,14 @@ class RegistrationController extends Controller
             'bio' => 'nullable|string',
             'clinic_name' => 'nullable|string|max:255',
             'clinic_address' => 'nullable|string',
+            'state' => [
+                'required',
+                'string',
+                \Illuminate\Validation\Rule::in(array_keys(config('pelvicare.locations', []))),
+            ],
+        ], [
+            'state.required' => 'Please select your State or Union Territory.',
+            'state.in'       => 'Please select a valid Indian State or Union Territory.',
         ]);
 
         $user = Auth::user();
@@ -244,6 +252,7 @@ class RegistrationController extends Controller
                 'bio' => $request->bio,
                 'clinic_name' => $request->clinic_name,
                 'clinic_address' => $request->clinic_address,
+                'state' => $request->state,
                 'verification_status' => 'pending',
             ]
         );

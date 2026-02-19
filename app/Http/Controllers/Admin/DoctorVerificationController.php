@@ -46,10 +46,10 @@ class DoctorVerificationController extends Controller
             });
         }
 
-        // Filter by city
-        if ($request->has('city') && $request->city) {
+        // Filter by state/UT (stored in 'city' column for backward compatibility)
+        if ($request->has('state') && $request->state) {
             $query->whereHas('doctorProfile', function($q) use ($request) {
-                $q->where('city', 'like', '%' . $request->city . '%');
+                $q->where('city', $request->state);
             });
         }
 

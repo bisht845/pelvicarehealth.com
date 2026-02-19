@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\PhysiotherapistController;
 use App\Http\Controllers\DoctorController;
 
@@ -23,9 +24,15 @@ Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
 Route::get('/doctors/{slug}', [DoctorController::class, 'show'])->name('doctors.show');
 
-// Appointment Booking Routes
-Route::get('/book-appointment', [AppointmentController::class, 'showBookingForm'])->name('book-appointment');
-Route::post('/book-appointment', [AppointmentController::class, 'store'])->name('appointment.store');
+// ── Doctor Appointment Booking Flow ─────────────────────────────────────────
+Route::get('/book-appointment', [BookingController::class, 'index'])->name('book-appointment');
+Route::get('/book-appointment/confirmation/{id}', [BookingController::class, 'confirmation'])->name('booking.confirmation');
+Route::get('/book-appointment/{slug}', [BookingController::class, 'showDoctor'])->name('booking.doctor');
+Route::post('/book-appointment/{slug}/book', [BookingController::class, 'store'])->name('booking.store');
+
+// AJAX Endpoints (booking)
+Route::get('/api/booking/doctors', [BookingController::class, 'getDoctors'])->name('api.booking.doctors');
+Route::get('/api/booking/slots', [BookingController::class, 'getSlots'])->name('api.booking.slots');
 
 // Physiotherapist Registration Routes (Legacy - redirect to new flow)
 Route::get('/register-physiotherapist', function() {

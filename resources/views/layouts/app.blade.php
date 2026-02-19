@@ -351,11 +351,22 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
                         </span>
-                        <select name="city" id="nav-search-city" class="w-full pl-10 pr-10 py-3 sm:py-2.5 border border-gray-200 rounded-xl sm:rounded-r-none sm:rounded-l-xl text-gray-900 font-medium focus:ring-2 focus:ring-pink-500 focus:border-pink-500 bg-gray-50/50 sm:bg-white appearance-none cursor-pointer text-sm">
-                            <option value="">Select location</option>
-                            @foreach(config('pelvicare.locations', []) as $loc)
-                                <option value="{{ $loc }}" {{ request('city') === $loc ? 'selected' : '' }}>{{ $loc }}</option>
+                        <select name="state" id="nav-search-city" class="w-full pl-10 pr-10 py-3 sm:py-2.5 border border-gray-200 rounded-xl sm:rounded-r-none sm:rounded-l-xl text-gray-900 font-medium focus:ring-2 focus:ring-pink-500 focus:border-pink-500 bg-gray-50/50 sm:bg-white appearance-none cursor-pointer text-sm">
+                            <option value="">Select State / UT</option>
+                            <optgroup label="── States">
+                            @foreach(config('pelvicare.locations', []) as $loc => $type)
+                                @if($type === 'state')
+                                <option value="{{ $loc }}" {{ request('state') === $loc ? 'selected' : '' }}>{{ $loc }}</option>
+                                @endif
                             @endforeach
+                            </optgroup>
+                            <optgroup label="── Union Territories">
+                            @foreach(config('pelvicare.locations', []) as $loc => $type)
+                                @if($type === 'union_territory')
+                                <option value="{{ $loc }}" {{ request('state') === $loc ? 'selected' : '' }}>{{ $loc }}</option>
+                                @endif
+                            @endforeach
+                            </optgroup>
                         </select>
                         <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -434,7 +445,6 @@
                     <div class="text-gray-400 text-sm">
                         <p class="font-semibold mb-2">Locations:</p>
                         <p>Currently in <strong class="text-white">Delhi NCR, Mumbai, Bangalore, Pune</strong></p>
-                        <p class="text-xs mt-2">(Pincode checker available)</p>
                     </div>
                 </div>
                 
@@ -484,7 +494,6 @@
                                 </svg>
                             </a>
                         </div>
-                        <p class="text-xs text-gray-500 mt-2">For awareness, not selling</p>
                     </div>
                 </div>
             </div>

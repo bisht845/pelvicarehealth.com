@@ -111,6 +111,49 @@
                     <input type="text" name="clinic_name" value="{{ old('clinic_name', $profile->clinic_name ?? '') }}" 
                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400">
                 </div>
+
+                {{-- ── State / Union Territory (required) ── --}}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        State / Union Territory <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <select name="state"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 appearance-none cursor-pointer @error('state') border-red-500 @enderror"
+                                required>
+                            <option value="">— Select your State / Union Territory —</option>
+                            <optgroup label="── States">
+                                @foreach(config('pelvicare.locations', []) as $loc => $type)
+                                    @if($type === 'state')
+                                    <option value="{{ $loc }}"
+                                        {{ old('state', $profile->state ?? '') === $loc ? 'selected' : '' }}>
+                                        {{ $loc }}
+                                    </option>
+                                    @endif
+                                @endforeach
+                            </optgroup>
+                            <optgroup label="── Union Territories">
+                                @foreach(config('pelvicare.locations', []) as $loc => $type)
+                                    @if($type === 'union_territory')
+                                    <option value="{{ $loc }}"
+                                        {{ old('state', $profile->state ?? '') === $loc ? 'selected' : '' }}>
+                                        {{ $loc }}
+                                    </option>
+                                    @endif
+                                @endforeach
+                            </optgroup>
+                        </select>
+                        <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </span>
+                    </div>
+                    @error('state')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Clinic Address (Optional)</label>
                     <textarea name="clinic_address" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400">{{ old('clinic_address', $profile->clinic_address ?? '') }}</textarea>

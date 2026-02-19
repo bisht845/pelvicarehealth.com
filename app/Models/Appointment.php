@@ -19,12 +19,17 @@ class Appointment extends Model
         'reason',
         'notes',
         'doctor_notes',
+        'guest_name',
+        'guest_phone',
+        'guest_email',
     ];
 
     protected $casts = [
         'appointment_date' => 'date',
-        'appointment_time' => 'datetime',
+        'session_fee'      => 'decimal:2',
     ];
+
+    // ─── Relationships ────────────────────────────────────────────────────────
 
     public function patient(): BelongsTo
     {
@@ -35,5 +40,38 @@ class Appointment extends Model
     {
         return $this->belongsTo(User::class, 'doctor_id');
     }
-}
 
+    public function slot(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(AppointmentSlot::class);
+    }
+
+    // ─── Helpers ──────────────────────────────────────────────────────────────
+
+    /**
+     * Returns patient display name (logged-in or guest).
+     */
+    public function getPatientNameAttribute(): string
+    {
+        if ($this->patient) {
+            return $this->patient->name;
+        }
+        return $this->guest_name ?? 'Guest';
+    }
+
+    /**
+     * Returns patient contact (logged-in or guest).
+     */
+    public function getPatientPhoneAttribute(): ?string
+    {
+        if ($this->patient) {
+            return $this->patient->phone ?? null;
+        }
+        return $this->guest_phone;
+    }
+
+    public function isGuest(): bool
+    {
+        return is_null($this->patient_id);
+    }
+}

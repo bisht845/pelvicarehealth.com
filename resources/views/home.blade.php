@@ -125,6 +125,9 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                         <span class="absolute -bottom-2 -right-2 w-full h-full bg-pink-50 rounded-lg -z-0"></span>
                     </span>
                 </h1>
+                <p class="text-3xl sm:text-lg text-gray-700 mb-6 leading-relaxed max-w-lg">
+                    <b>Do You Have</b>
+                </p>
                 <ul class="space-y-2.5 sm:space-y-3 mb-6 max-w-lg list-none pl-0" role="list">
                     <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base leading-relaxed font-bold py-0.5">
                         <span class="flex-shrink-0 w-2 h-2 rounded-full bg-pink-500 ring-4 ring-pink-100" aria-hidden="true"></span>
