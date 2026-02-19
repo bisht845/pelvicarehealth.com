@@ -283,7 +283,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                                         @endif
                                     </p>
                                     <div class="mt-auto flex items-center justify-between gap-2">
-                                        <a href="{{ route('book-appointment', ['doctor_id' => $doctor->id]) }}" class="inline-block bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 font-semibold text-sm transition-colors">Book Now</a>
+                                        <a href="{{ route('booking.doctor', $doctor->doctorProfile->slug) }}" class="inline-block bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 font-semibold text-sm transition-colors">Book Now</a>
                                         <a href="{{ route('doctors.show', $doctor->doctorProfile->slug) }}" class="text-pink-600 hover:text-pink-700 font-semibold text-sm whitespace-nowrap">View Profile →</a>
                                     </div>
                                 </div>

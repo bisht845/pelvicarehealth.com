@@ -129,7 +129,7 @@
                                 </div>
                             @endif
                             <div class="space-y-3">
-                                <a href="{{ route('book-appointment', ['doctor_id' => $doctor->id]) }}"
+                                <a href="{{ route('booking.doctor', $profile->slug) }}"
                                     class="block w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white text-center px-6 py-3 rounded-xl hover:from-pink-600 hover:to-pink-700 transition-all font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm sm:text-base">
                                     Book Appointment
                                 </a>

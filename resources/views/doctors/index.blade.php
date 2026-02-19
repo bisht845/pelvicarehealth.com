@@ -159,7 +159,7 @@
                                 <a href="{{ route('doctors.show', $profile->slug) }}" class="block w-full text-center py-3 px-4 bg-gradient-to-r from-pink-500 to-pink-600 text-white text-sm font-semibold rounded-xl hover:from-pink-600 hover:to-pink-700 transition-all shadow-md hover:shadow-lg">
                                     View profile
                                 </a>
-                                <a href="{{ route('book-appointment', ['doctor_id' => $doctor->id]) }}" class="block w-full text-center py-3 px-4 text-pink-600 text-sm font-semibold rounded-xl border-2 border-pink-200 bg-white hover:bg-pink-50 transition-colors">
+                                <a href="{{ route('booking.doctor', $profile->slug) }}" class="block w-full text-center py-3 px-4 text-pink-600 text-sm font-semibold rounded-xl border-2 border-pink-200 bg-white hover:bg-pink-50 transition-colors">
                                     Book appointment
                                 </a>
                             </div>
