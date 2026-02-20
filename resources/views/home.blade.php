@@ -214,6 +214,9 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             </div>
         </div>
     </section>
+    
+    <!-- Mobile Search Bar (Initially after Hero Section) -->
+    @include('partials.search-bar', ['class' => 'md:hidden'])
 
     <!-- Featured Physiotherapists Section -->
     <section class="py-8 bg-white">
