@@ -11,9 +11,9 @@
 
 @push('scripts')
 @php
-    $tinymceApiKey = config('services.tinymce.api_key') ?: 'no-api-key';
+    $tinymceApiKey = config('services.tinymce.api_key') ?: 'nw1gvxnimln6t5db7bprxottb76hjevrnasm6664q9si36om';
 @endphp
-<script src="https://cdn.tiny.cloud/1/{{ $tinymceApiKey }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/{{ $tinymceApiKey }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var editorId = '{{ $id ?? 'tinymce-content' }}';
@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
         height: parseInt('{{ $height ?? "500" }}'.replace('px','')) || 500,
         menubar: true,
         plugins: [
-            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor',
-            'searchreplace', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media', 'table', 'help', 'wordcount'
+            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+            'image', 'advlist', 'preview', 'code', 'fullscreen', 'insertdatetime', 'help'
         ],
-        toolbar: 'undo redo | blocks | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image media link | code fullscreen | help',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | code fullscreen | help',
         content_style: 'body { font-family: Inter, sans-serif; font-size: 16px; line-height: 1.8; color: #374151; padding: 20px; max-width: 800px; margin: 0 auto; } img { max-width: 100%; height: auto; border-radius: 8px; }',
         promotion: false,
         branding: false,

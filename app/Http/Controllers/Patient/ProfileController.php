@@ -65,7 +65,7 @@ class ProfileController extends Controller
         ]);
 
         $file = $request->file('file');
-        $path = $file->store('patient-documents', 'public');
+        $path = $file->store('patient-documents', 'public_html');
 
         PatientDocument::create([
             'patient_id' => auth()->id(),
@@ -84,8 +84,8 @@ class ProfileController extends Controller
     {
         $document = PatientDocument::where('patient_id', auth()->id())->findOrFail($id);
         
-        if (Storage::disk('public')->exists($document->file_path)) {
-            Storage::disk('public')->delete($document->file_path);
+        if (Storage::disk('public_html')->exists($document->file_path)) {
+            Storage::disk('public_html')->delete($document->file_path);
         }
         
         $document->delete();

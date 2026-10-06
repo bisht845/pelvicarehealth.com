@@ -20,6 +20,49 @@
     @endif
 
     <div class="space-y-6">
+        <!-- Profile Photo -->
+        @if ($doctor->doctorProfile)
+        <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold mb-4">Profile Photo</h3>
+            <div class="flex flex-col sm:flex-row items-center gap-6">
+                <!-- Current Photo -->
+                <div class="shrink-0">
+                    @if ($doctor->doctorProfile->profile_image)
+                        <img src="{{ media_url($doctor->doctorProfile->profile_image) }}" alt="{{ $doctor->name }}" class="w-32 h-32 object-cover rounded-full border-2 border-pink-100 shadow-sm">
+                    @else
+                        <div class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold text-2xl border-2 border-gray-300">
+                            {{ strtoupper(substr($doctor->name, 0, 1)) }}
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Upload/Remove Actions -->
+                <div class="flex-1 w-full space-y-4">
+                    <form action="{{ route('super-admin.doctor-verification.photo.update', $doctor->id) }}" method="POST" enctype="multipart/form-data" class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                        @csrf
+                        <div class="flex-1">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Update Photo</label>
+                            <input type="file" name="profile_image" accept="image/jpeg,image/png,image/jpg,image/webp,image/gif" required class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 border border-gray-200 rounded-lg p-1">
+                        </div>
+                        <button type="submit" class="bg-pink-600 text-white px-4 py-2 rounded-lg hover:bg-pink-700 text-sm font-semibold transition mt-2 sm:mt-6 shrink-0">
+                            Upload New Photo
+                        </button>
+                    </form>
+
+                    @if ($doctor->doctorProfile->profile_image)
+                        <form action="{{ route('super-admin.doctor-verification.photo.remove', $doctor->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this profile photo?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:text-red-800 text-sm font-semibold underline">
+                                Remove Current Photo
+                            </button>
+                        </form>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endif
+
         <!-- Doctor Info -->
         <div class="bg-white rounded-lg shadow p-6">
             <div class="flex items-center justify-between mb-4">
@@ -64,7 +107,7 @@
                                 </span>
                             </div>
                             <div class="flex space-x-2">
-                                <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank"
+                                <a href="{{ asset('' . $document->file_path) }}" target="_blank"
                                     class="text-blue-600 hover:text-blue-900 text-sm">View</a>
                                 @if ($document->status != 'approved')
                                     <form

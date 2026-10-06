@@ -32,7 +32,7 @@
             <div>
                 <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Description (optional)</label>
                 <p class="text-xs text-gray-500 mb-2">Detail about this treatment or condition. Supports headings, lists, and images.</p>
-                <x-tinymce-editor name="description" id="description" :value="old('description')" height="320px" />
+                <x-quill-editor name="description" id="description" :value="old('description')" height="320px" />
                 @error('description')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
             </div>
 

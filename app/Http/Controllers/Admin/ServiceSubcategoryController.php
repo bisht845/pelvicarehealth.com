@@ -71,7 +71,7 @@ class ServiceSubcategoryController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('services/subcategories', 'public');
+            $data['image'] = $request->file('image')->store('service_images/subcategories', 'public_html');
         }
 
         ServiceSubcategory::create($data);
@@ -111,9 +111,9 @@ class ServiceSubcategoryController extends Controller
 
         if ($request->hasFile('image')) {
             if ($subcategory->image) {
-                Storage::disk('public')->delete($subcategory->image);
+                Storage::disk('public_html')->delete($subcategory->image);
             }
-            $data['image'] = $request->file('image')->store('services/subcategories', 'public');
+            $data['image'] = $request->file('image')->store('service_images/subcategories', 'public_html');
         }
 
         $subcategory->update($data);
@@ -127,7 +127,7 @@ class ServiceSubcategoryController extends Controller
         $subcategory = ServiceSubcategory::findOrFail($id);
 
         if ($subcategory->image) {
-            Storage::disk('public')->delete($subcategory->image);
+            Storage::disk('public_html')->delete($subcategory->image);
         }
 
         $subcategory->delete();

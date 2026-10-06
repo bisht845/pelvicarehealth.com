@@ -22,14 +22,14 @@
             <div>
                 <label for="short_description" class="block text-sm font-semibold text-gray-700 mb-2">Short description (optional)</label>
                 <p class="text-xs text-gray-500 mb-2">Brief tagline for the category card. Supports formatting.</p>
-                <x-tinymce-editor name="short_description" id="short_description" :value="old('short_description', $category->short_description)" height="180px" />
+                <x-quill-editor name="short_description" id="short_description" :value="old('short_description', $category->short_description)" height="180px" />
                 @error('short_description')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
             </div>
 
             <div>
                 <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Full description (optional)</label>
                 <p class="text-xs text-gray-500 mb-2">Detailed content for the category page. Shown below the hero.</p>
-                <x-tinymce-editor name="description" id="description" :value="old('description', $category->description)" height="320px" />
+                <x-quill-editor name="description" id="description" :value="old('description', $category->description)" height="320px" />
                 @error('description')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
             </div>
 
@@ -37,7 +37,7 @@
                 <label for="image" class="block text-sm font-semibold text-gray-700 mb-2">Image (optional)</label>
                 @if($category->image)
                 <div class="mb-3 flex items-center gap-4">
-                    <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="h-24 w-32 object-cover rounded-lg border border-gray-200">
+                    <img src="{{ media_url($category->image) }}" alt="{{ $category->name }}" class="h-24 w-32 object-cover rounded-lg border border-gray-200">
                     <span class="text-sm text-gray-500">Current image. Upload a new file to replace.</span>
                 </div>
                 @endif

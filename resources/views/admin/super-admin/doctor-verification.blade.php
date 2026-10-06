@@ -243,7 +243,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
                                         @if ($profile && $profile->profile_image)
-                                            <img src="{{ asset('storage/' . $profile->profile_image) }}"
+                                            <img src="{{ media_url($profile->profile_image) }}"
                                                 alt="{{ $doctor->name }}"
                                                 class="w-10 h-10 rounded-full object-cover mr-3">
                                         @else
@@ -513,7 +513,6 @@
                     // Find the container div (not a form)
                     const container = checkbox.closest('.featured-toggle-container');
                     if (!container) {
-                        console.error('Container not found for doctor ID:', doctorId);
                         checkbox.checked = !checkbox.checked; // Revert
                         alert('Error: Could not find toggle container. Please refresh the page.');
                         return false;
@@ -521,7 +520,6 @@
 
                     const statusText = container.querySelector('.featured-status-text');
                     if (!statusText) {
-                        console.error('Status text not found');
                         checkbox.checked = !checkbox.checked; // Revert
                         return false;
                     }
@@ -545,7 +543,6 @@
                     // Get action URL from container data attribute
                     const actionUrl = container.getAttribute('data-action');
                     if (!actionUrl) {
-                        console.error('Action URL not found');
                         checkbox.checked = !originalChecked;
                         checkbox.disabled = false;
                         alert('Action URL not found. Please refresh the page.');
@@ -612,7 +609,6 @@
                                     }
                                 }
                                 checkbox.disabled = false;
-                                console.log(data.message || 'Status updated successfully');
                             } else {
                                 throw new Error(data?.message || 'Update failed');
                             }
@@ -654,13 +650,11 @@
 
                             const errorMsg = error.message || error.error ||
                                 'Failed to update featured status. Please try again.';
-                            console.error('Toggle error:', error);
                             alert(errorMsg);
                         });
 
                     return false;
                 } catch (error) {
-                    console.error('Unexpected error in toggleFeaturedStatus:', error);
                     checkbox.checked = !checkbox.checked;
                     checkbox.disabled = false;
                     alert('An unexpected error occurred. Please try again.');

@@ -155,7 +155,7 @@ class RegistrationController extends Controller
 
         foreach ($documents as $type => $file) {
             if ($file) {
-                $path = $file->store('doctor-documents', 'public');
+                $path = $file->store('doctor-documents', 'public_html');
                 
                 DoctorDocument::updateOrCreate(
                     [
@@ -178,7 +178,7 @@ class RegistrationController extends Controller
             // Fallback: if cropped image not provided, use original (shouldn't happen but just in case)
             $file = $request->file('profile_image');
             if ($file->getSize() <= 1024 * 1024) { // 1MB check
-                $path = $file->store('doctor-profiles', 'public');
+                $path = $file->store('doctor-profiles', 'public_html');
                 $this->updateDoctorProfileImage($user, $path);
             }
         }
@@ -544,13 +544,13 @@ class RegistrationController extends Controller
         $profile = $user->doctorProfile;
         if ($profile && $profile->profile_image) {
             $oldPath = $profile->profile_image;
-            if (Storage::disk('public')->exists($oldPath)) {
-                Storage::disk('public')->delete($oldPath);
+            if (Storage::disk('public_html')->exists($oldPath)) {
+                Storage::disk('public_html')->delete($oldPath);
             }
         }
         
         // Save new image
-        Storage::disk('public')->put($path, $imageData);
+        Storage::disk('public_html')->put($path, $imageData);
         
         // Update or create profile with image path
         if ($profile) {
@@ -575,8 +575,8 @@ class RegistrationController extends Controller
         
         // Delete old profile image if exists
         if ($profile && $profile->profile_image && $profile->profile_image !== $path) {
-            if (Storage::disk('public')->exists($profile->profile_image)) {
-                Storage::disk('public')->delete($profile->profile_image);
+            if (Storage::disk('public_html')->exists($profile->profile_image)) {
+                Storage::disk('public_html')->delete($profile->profile_image);
             }
         }
         

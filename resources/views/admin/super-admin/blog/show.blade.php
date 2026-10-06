@@ -67,7 +67,7 @@
     @if($post->featured_image)
     <div class="bg-white rounded-lg shadow p-6">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">Featured Image</h3>
-        <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" 
+        <img src="{{ media_url($post->featured_image) }}" alt="{{ $post->title }}" 
              class="w-full rounded-lg shadow-lg">
     </div>
     @endif

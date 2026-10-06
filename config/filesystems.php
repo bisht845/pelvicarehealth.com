@@ -33,18 +33,26 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            // Must stay false: if true, Laravel registers GET /storage for this disk (wrong root).
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => public_path(),
+            'url' => env('APP_URL'),
             'visibility' => 'public',
+            'serve' => false,
             'throw' => false,
-            'report' => false,
+        ],
+
+        'public_html' => [
+            'driver' => 'local',
+            'root' => base_path(env('PUBLIC_DIR_NAME', 'public_html')),
+            'url' => env('APP_URL'),
+            'visibility' => 'public',
         ],
 
         's3' => [

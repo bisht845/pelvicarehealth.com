@@ -74,7 +74,7 @@
                             <div class="flex items-center">
                                 @if($sub->image)
                                 <div class="flex-shrink-0 h-12 w-16 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 mr-3">
-                                    <img class="h-full w-full object-cover" src="{{ asset('storage/' . $sub->image) }}" alt="{{ $sub->name }}">
+                                    <img class="h-full w-full object-cover" src="{{ media_url($sub->image) }}" alt="{{ $sub->name }}">
                                 </div>
                                 @endif
                                 <div>

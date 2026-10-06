@@ -180,7 +180,7 @@
                     @endif
                 </div>
                 <div class="flex space-x-2">
-                    <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank" class="text-blue-600 hover:text-blue-900 text-sm">View</a>
+                    <a href="{{ asset('' . $document->file_path) }}" target="_blank" class="text-blue-600 hover:text-blue-900 text-sm">View</a>
                     <form action="{{ route('patient.documents.delete', $document->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure?')">
                         @csrf
                         @method('DELETE')

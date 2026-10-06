@@ -59,7 +59,7 @@
                     <!-- Current Photo -->
                     <div class="flex-shrink-0">
                         @if($profile->profile_image)
-                            <img src="{{ asset('storage/' . $profile->profile_image) }}" alt="Current profile photo" class="w-48 h-48 object-cover rounded-xl border-4 border-gray-200 shadow-lg aspect-square">
+                            <img src="{{ media_url($profile->profile_image) }}" alt="Current profile photo" class="w-48 h-48 object-cover rounded-xl border-4 border-gray-200 shadow-lg aspect-square">
                         @else
                             <div class="w-48 h-48 bg-gray-200 rounded-xl border-4 border-gray-300 flex items-center justify-center aspect-square">
                                 <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,7 +132,7 @@
             <div class="mb-8">
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Professional Bio / Description</label>
                 <p class="text-xs text-gray-500 mb-2">Format your description with headings, lists, and images. Shown on your public profile.</p>
-                <x-tinymce-editor name="bio" id="doctor-bio" :value="old('bio', $profile->bio)" height="400px" :uploadUrl="route('doctor.upload-image')" />
+                <x-quill-editor name="bio" id="doctor-bio" :value="old('bio', $profile->bio)" height="400px" />
                 @error('bio')
                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                 @enderror
@@ -350,7 +350,7 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
                 @foreach($profile->photos as $photo)
                 <div class="relative group rounded-xl overflow-hidden border border-gray-200 aspect-square">
-                    <img src="{{ asset('storage/' . $photo->path) }}" alt="" class="w-full h-full object-cover">
+                    <img src="{{ asset('' . $photo->path) }}" alt="" class="w-full h-full object-cover">
                     <span class="absolute top-2 left-2 px-2 py-0.5 rounded text-xs font-medium {{ $photo->type === 'clinic' ? 'bg-amber-500 text-white' : 'bg-gray-800 text-white' }}">{{ $photo->type }}</span>
                     <form action="{{ route('doctor.photos.destroy', $photo->id) }}" method="POST" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition">
                         @csrf
@@ -531,7 +531,7 @@
 
                                 <div class="flex items-center space-x-3 ml-4">
                                     @if($document->file_path)
-                                        <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank" class="text-indigo-600 hover:text-indigo-800 transition-colors">
+                                        <a href="{{ asset('' . $document->file_path) }}" target="_blank" class="text-indigo-600 hover:text-indigo-800 transition-colors">
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>

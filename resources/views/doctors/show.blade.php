@@ -9,13 +9,13 @@
     @php
         $profile = $doctor->doctorProfile;
         $profileImageUrl = $profile->profile_image
-            ? asset('storage/' . $profile->profile_image)
+            ? (media_url($profile->profile_image) ?? asset('images/physiotherapist_1.png'))
             : asset('images/physiotherapist_1.png');
         $allPhotos = collect();
         $allPhotos->push((object) ['url' => $profileImageUrl, 'type' => 'profile']);
         $photosList = $profile->photos instanceof \Illuminate\Support\Collection ? $profile->photos : collect();
         foreach ($photosList as $p) {
-            $allPhotos->push((object) ['url' => asset('storage/' . $p->path), 'type' => $p->type]);
+            $allPhotos->push((object) ['url' => media_url($p->path) ?? asset($p->path), 'type' => $p->type]);
         }
         $rating = $profile->rating ?? 4.5;
         $faqsList = $profile->faqs instanceof \Illuminate\Support\Collection ? $profile->faqs : collect();
@@ -152,8 +152,7 @@
                         <div class="theme-card-solid rounded-2xl p-6 sm:p-8 border border-pink-100">
                             <h2 class="text-xl sm:text-2xl font-bold heading-font text-gray-900 mb-4">About
                                 {{ $doctor->name }}</h2>
-                            <div
-                                class="prose prose-pink max-w-none prose-headings:font-heading prose-p:text-gray-700 prose-a:text-pink-600 prose-img:rounded-xl">
+                            <div class="rich-content prose prose-lg prose-pink max-w-none prose-img:rounded-xl">
                                 {!! $profile->bio !!}
                             </div>
                         </div>
@@ -182,7 +181,7 @@
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
                                 @foreach ($clinicPhotosList as $photo)
                                     <div class="rounded-xl overflow-hidden border border-gray-200 aspect-square">
-                                        <img src="{{ asset('storage/' . $photo->path) }}" alt="Clinic"
+                                        <img src="{{ asset('' . $photo->path) }}" alt="Clinic"
                                             class="w-full h-full object-cover">
                                     </div>
                                 @endforeach

@@ -54,7 +54,7 @@
                         <label for="content" class="block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-pink-600 transition-colors">
                             Content <span class="text-pink-500">*</span>
                         </label>
-                        <x-tinymce-editor name="content" id="content" :value="old('content')" height="500px" />
+                        <x-quill-editor name="content" id="content" :value="old('content')" height="500px" />
                         @error('content')
                             <p class="mt-2 text-sm text-red-600 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>

@@ -66,7 +66,7 @@
                                     @if(isset($profile) && $profile->profile_image)
                                         <span class="text-xs text-green-600 font-medium block mt-1">✓ Photo uploaded</span>
                                         <div class="mt-3">
-                                            <img src="{{ asset('storage/' . $profile->profile_image) }}" alt="Current profile photo" class="w-32 h-32 object-cover rounded-lg border-2 border-gray-200 aspect-square">
+                                            <img src="{{ media_url($profile->profile_image) }}" alt="Current profile photo" class="w-32 h-32 object-cover rounded-lg border-2 border-gray-200 aspect-square">
                                         </div>
                                     @endif
                                 </div>

@@ -17,6 +17,13 @@
     @hasSection('meta_keywords')
     <meta name="keywords" content="@yield('meta_keywords')">
     @endif
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K8TJPFHL');</script>
+<!-- End Google Tag Manager -->
     @stack('meta')
     
     <!-- Schema Markup (JSON-LD) -->
@@ -52,6 +59,15 @@
 
 <!-- Apple Touch Icon -->
 <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon.webp') }}">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L4N4P17NNW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-L4N4P17NNW');
+</script>
 
     
     <!-- Styles -->
@@ -100,8 +116,205 @@
         li { font-size: 13px !important; }
         .prose p { font-size: 14px !important; }
         .prose li { font-size: 13px !important; }
+        /* Ensure rich-text editor lists render as real lists */
+        .prose ul {
+            list-style-type: disc !important;
+            list-style-position: outside !important;
+            margin: 0.75rem 0 0.75rem 1.25rem !important;
+            padding-left: 1rem !important;
+        }
+        .prose ol {
+            list-style-type: decimal !important;
+            list-style-position: outside !important;
+            margin: 0.75rem 0 0.75rem 1.25rem !important;
+            padding-left: 1rem !important;
+        }
+        .prose li {
+            display: list-item !important;
+            margin: 0.25rem 0 !important;
+        }
+
+        /*
+         * Editorial / CMS rich text — overrides global heading scale (!important) so
+         * Quill/TinyMCE headings look like polished article typography, not page heroes.
+         */
+        .rich-content {
+            --rich-text: #374151;
+            --rich-heading: #111827;
+            --rich-muted: #6b7280;
+            --rich-border: #fce7f3;
+            --rich-accent: #db2777;
+            color: var(--rich-text);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .rich-content > *:first-child {
+            margin-top: 0 !important;
+        }
+        .rich-content > *:last-child {
+            margin-bottom: 0 !important;
+        }
+        .rich-content p {
+            font-size: 1rem !important;
+            line-height: 1.75 !important;
+            color: var(--rich-text) !important;
+            margin: 0 0 1.125rem !important;
+        }
+        .rich-content li {
+            font-size: 0.9375rem !important;
+            line-height: 1.65 !important;
+            color: var(--rich-text) !important;
+        }
+        .rich-content strong,
+        .rich-content b {
+            color: var(--rich-heading) !important;
+            font-weight: 600 !important;
+        }
+        .rich-content a {
+            color: var(--rich-accent) !important;
+            font-weight: 500;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.15s ease;
+        }
+        .rich-content a:hover {
+            color: #be185d !important;
+        }
+        /* Headings: editorial scale (NOT page-hero sizes) */
+        .rich-content h1,
+        .rich-content h2,
+        .rich-content h3,
+        .rich-content h4,
+        .rich-content h5,
+        .rich-content h6 {
+            font-family: 'Poppins', sans-serif !important;
+            font-weight: 700 !important;
+            color: var(--rich-heading) !important;
+            letter-spacing: -0.025em !important;
+            line-height: 1.28 !important;
+        }
+        .rich-content h1 {
+            font-size: 1.5rem !important;
+            margin: 0 0 0.875rem !important;
+            padding-bottom: 0.5rem !important;
+            border-bottom: 1px solid var(--rich-border) !important;
+        }
+        .rich-content h2 {
+            font-size: 1.25rem !important;
+            margin: 2rem 0 0.75rem !important;
+            padding-bottom: 0.375rem !important;
+            border-bottom: 1px solid #f3f4f6 !important;
+        }
+        .rich-content h1 + h2,
+        .rich-content h2:first-child {
+            margin-top: 0 !important;
+        }
+        .rich-content h3 {
+            font-size: 1.125rem !important;
+            font-weight: 600 !important;
+            margin: 1.5rem 0 0.5rem !important;
+            color: #1f2937 !important;
+        }
+        .rich-content h4 {
+            font-size: 1.0625rem !important;
+            font-weight: 600 !important;
+            margin: 1.25rem 0 0.5rem !important;
+            color: #374151 !important;
+        }
+        .rich-content h5,
+        .rich-content h6 {
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            margin: 1rem 0 0.375rem !important;
+            color: #4b5563 !important;
+        }
+        .rich-content ul,
+        .rich-content ol {
+            margin: 0.75rem 0 1.25rem !important;
+            padding-left: 1.35rem !important;
+        }
+        .rich-content ul {
+            list-style-type: disc !important;
+        }
+        .rich-content ol {
+            list-style-type: decimal !important;
+        }
+        .rich-content li {
+            margin: 0.35rem 0 !important;
+            padding-left: 0.25rem !important;
+        }
+        .rich-content li::marker {
+            color: #f472b6 !important;
+        }
+        .rich-content blockquote {
+            margin: 1.25rem 0 !important;
+            padding: 1rem 1.25rem !important;
+            border-left: 4px solid #f9a8d4 !important;
+            border-radius: 0 0.75rem 0.75rem 0 !important;
+            background: linear-gradient(90deg, rgba(253, 242, 248, 0.9) 0%, rgba(255, 255, 255, 0.5) 100%) !important;
+            color: #4b5563 !important;
+            font-style: normal !important;
+        }
+        .rich-content blockquote p {
+            margin-bottom: 0.5rem !important;
+        }
+        .rich-content blockquote p:last-child {
+            margin-bottom: 0 !important;
+        }
+        .rich-content hr {
+            margin: 2rem 0 !important;
+            border: 0 !important;
+            height: 1px !important;
+            background: linear-gradient(90deg, transparent, #e5e7eb, transparent) !important;
+        }
+        .rich-content img {
+            border-radius: 0.75rem !important;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.06) !important;
+            margin: 1.25rem 0 !important;
+            max-width: 100% !important;
+            height: auto !important;
+        }
+        .rich-content table {
+            width: 100% !important;
+            font-size: 0.875rem !important;
+            border-collapse: collapse !important;
+            margin: 1.25rem 0 !important;
+            border-radius: 0.5rem !important;
+            overflow: hidden !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+        }
+        .rich-content th,
+        .rich-content td {
+            border: 1px solid #e5e7eb !important;
+            padding: 0.625rem 0.875rem !important;
+            text-align: left !important;
+        }
+        .rich-content th {
+            background: #fdf2f8 !important;
+            font-weight: 600 !important;
+            color: var(--rich-heading) !important;
+        }
+        @media (min-width: 640px) {
+            .rich-content h1 {
+                font-size: 1.75rem !important;
+            }
+            .rich-content h2 {
+                font-size: 1.375rem !important;
+            }
+            .rich-content h3 {
+                font-size: 1.1875rem !important;
+            }
+        }
+
         article p { font-size: 13px !important; }
         article li { font-size: 13px !important; }
+        /* Blog/article body: keep editorial rich text readable (overrides article p/li above) */
+        article .rich-content p {
+            font-size: 1rem !important;
+        }
+        article .rich-content li {
+            font-size: 0.9375rem !important;
+        }
         @media (min-width: 640px) {
             h1 { font-size: 2.5rem !important; }
             h2 { font-size: 1.5rem !important; }
@@ -195,6 +408,10 @@
     </style>
 </head>
 <body class="bg-white text-gray-900 antialiased">
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K8TJPFHL"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
     <!-- Navigation -->
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -136,7 +136,7 @@
                     <div
                         class="w-full max-w-sm mx-auto lg:mx-0 lg:w-full h-full flex flex-col theme-card-solid rounded-xl border border-pink-100 overflow-hidden">
                         <div class="relative w-full aspect-[3/4] sm:aspect-[4/5] shrink-0 bg-gray-100">
-                            <img src="{{ asset('images/physiotherapist_1.png') }}" alt="Dr. Sunita Patel"
+                            <img src="{{ asset('images/dr-sunita.png') }}" alt="Dr. Sunita Patel"
                                 class="w-full h-full object-cover object-top">
                         </div>
                         <div class="flex flex-col justify-center p-5 sm:p-6 flex-1">
@@ -212,7 +212,7 @@
             <p class="text-center text-gray-600 text-sm sm:text-base max-w-2xl mx-auto mb-10">Evidence-based women's health
                 physiotherapy, personalised to your body, symptoms, and life stage.</p>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-4">
                 {{-- 1. Manual Therapy --}}
                 <div
                     class="theme-card-solid rounded-xl p-4 sm:p-5 border border-pink-100 hover:shadow-lg transition-shadow">
@@ -391,7 +391,7 @@
                 </div>
 
                 {{-- 7. Scar & Perineal Rehabilitation --}}
-                <div
+                <!-- <div
                     class="theme-card-solid rounded-xl p-4 sm:p-5 border border-pink-100 hover:shadow-lg transition-shadow">
                     <div class="flex items-start gap-3 mb-3">
                         <div class="w-10 h-10 rounded-lg bg-pink-400 flex items-center justify-center shrink-0">
@@ -418,10 +418,10 @@
                     </ul>
                     <p class="text-gray-500 text-xs mt-2 mb-0">Supports pain-free movement, pelvic health, and
                         comfortable intimacy.</p>
-                </div>
+                </div> -->
 
                 {{-- 8. Pregnancy & Antenatal Physiotherapy --}}
-                <div
+                <!-- <div
                     class="theme-card-solid rounded-xl p-4 sm:p-5 border border-pink-100 hover:shadow-lg transition-shadow">
                     <div class="flex items-start gap-3 mb-3">
                         <div class="w-10 h-10 rounded-lg bg-pink-500 flex items-center justify-center shrink-0">
@@ -451,7 +451,7 @@
                     </ul>
                     <p class="text-gray-500 text-xs mt-2 mb-0">Ideal for pregnancy-related discomfort, staying active
                         safely, and reducing risk of postpartum issues.</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -464,64 +464,57 @@
                 PelviCare?</h2>
             <p class="text-center text-gray-600 text-sm sm:text-base max-w-2xl mx-auto mb-10">Verified specialists,
                 evidence-based care, and a commitment to your comfort and privacy.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                <div
-                    class="theme-card-solid rounded-xl p-4 sm:p-5 border border-pink-100 hover:shadow-lg transition-shadow">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                            <div class="w-10 h-10 rounded-lg bg-pink-500 flex items-center justify-center mb-2">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                </svg>
-                            </div>
-                            <h3 class="text-base font-bold text-gray-800 mb-1">Specialised Expertise</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">Focused training in women's pelvic health
-                                physiotherapy.</p>
-                        </div>
-                        <div>
-                            <div class="w-10 h-10 rounded-lg bg-pink-600 flex items-center justify-center mb-2">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                            </div>
-                            <h3 class="text-base font-bold text-gray-800 mb-1">Evidence-Based</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">Treatment grounded in the latest research and
-                                clinical evidence.</p>
-                        </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+                <div class="theme-card-solid rounded-xl p-5 sm:p-6 border border-pink-100 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-pink-500 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
                     </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Specialised Expertise</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Focused training in women's pelvic health
+                        physiotherapy.</p>
                 </div>
-                <div
-                    class="theme-card-solid rounded-xl p-4 sm:p-5 border border-pink-100 hover:shadow-lg transition-shadow">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                            <div class="w-10 h-10 rounded-lg bg-pink-500 flex items-center justify-center mb-2">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                            </div>
-                            <h3 class="text-base font-bold text-gray-800 mb-1">Personalized Care</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">Each plan customized to your needs, goals, and
-                                lifestyle.</p>
-                        </div>
-                        <div>
-                            <div class="w-10 h-10 rounded-lg bg-pink-600 flex items-center justify-center mb-2">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                </svg>
-                            </div>
-                            <h3 class="text-base font-bold text-gray-800 mb-1">Comprehensive Support</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">From assessment through treatment and
-                                follow-up, we're with you every step.</p>
-                        </div>
+                
+                <div class="theme-card-solid rounded-xl p-5 sm:p-6 border border-pink-100 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-pink-600 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
                     </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Evidence-Based</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Treatment grounded in the latest research and
+                        clinical evidence.</p>
+                </div>
+
+                <div class="theme-card-solid rounded-xl p-5 sm:p-6 border border-pink-100 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-pink-500 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Personalized Care</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Each plan customized to your needs, goals, and
+                        lifestyle.</p>
+                </div>
+
+                <div class="theme-card-solid rounded-xl p-5 sm:p-6 border border-pink-100 hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-pink-600 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Comprehensive Support</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">From assessment through treatment and
+                        follow-up, we're with you every step.</p>
                 </div>
             </div>
             <p class="text-center text-gray-500 text-sm mt-10 max-w-xl mx-auto">We combine expertise with empathy so you
@@ -559,7 +552,7 @@
                     <div class="lg:col-span-2 flex flex-col items-center lg:items-end justify-center gap-6">
                         <div
                             class="w-full max-w-[240px] rounded-xl overflow-hidden bg-gray-100 shadow-sm shrink-0 border border-pink-100/50">
-                            <img src="{{ asset('images/physiotherapist_1.png') }}" alt="Dr. Sunita Patel, Founder"
+                            <img src="{{ asset('images/dr-sunita.png') }}" alt="Dr. Sunita Patel, Founder"
                                 class="w-full h-auto object-cover aspect-[3/4] object-top">
                         </div>
                         <div

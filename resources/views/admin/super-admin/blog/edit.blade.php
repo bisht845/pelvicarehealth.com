@@ -56,7 +56,7 @@
                         <label for="content" class="block text-sm font-semibold text-gray-700 mb-2 group-focus-within:text-pink-600 transition-colors">
                             Content <span class="text-pink-500">*</span>
                         </label>
-                        <x-tinymce-editor name="content" id="content" :value="old('content', $post->content)" height="500px" />
+                        <x-quill-editor name="content" id="content" :value="old('content', $post->content)" height="500px" />
                         @error('content')
                             <p class="mt-2 text-sm text-red-600 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -183,7 +183,7 @@
                     <div class="space-y-4">
                         @if($post->featured_image)
                         <div id="current-image-container" class="relative group rounded-xl overflow-hidden shadow-sm aspect-video">
-                            <img src="{{ asset('storage/' . $post->featured_image) }}" alt="Current featured image" class="w-full h-full object-cover">
+                            <img src="{{ media_url($post->featured_image) }}" alt="Current featured image" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200">
                                 <span class="text-white text-sm font-medium bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">Current Image</span>
                             </div>
@@ -235,7 +235,7 @@
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
                         @foreach($post->images as $img)
                         <div class="relative group rounded-xl overflow-hidden border border-gray-200 aspect-square">
-                            <img src="{{ asset('storage/' . $img->path) }}" alt="" class="w-full h-full object-cover">
+                            <img src="{{ media_url($img->path) }}" alt="" class="w-full h-full object-cover">
                             <button type="button" onclick="deleteGalleryImage({{ $post->id }}, {{ $img->id }}, this)"
                                     class="absolute top-2 right-2 w-8 h-8 bg-red-500 text-white rounded-lg opacity-0 group-hover:opacity-100 transition flex items-center justify-center hover:bg-red-600">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -279,7 +279,7 @@
                         <div>
                             <label for="og_image" class="block text-sm font-semibold text-gray-700 mb-1">OG image (social share)</label>
                             @if($post->og_image)
-                            <div class="mb-2"><img src="{{ asset('storage/' . $post->og_image) }}" alt="OG" class="h-16 w-auto object-cover rounded border"></div>
+                            <div class="mb-2"><img src="{{ media_url($post->og_image) }}" alt="OG" class="h-16 w-auto object-cover rounded border"></div>
                             @endif
                             <input type="file" name="og_image" id="og_image" accept="image/*"
                                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-gray-100 file:text-gray-700">

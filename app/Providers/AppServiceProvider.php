@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\ServiceCategory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->usePublicPath(
+            base_path(trim((string) env('PUBLIC_DIR_NAME', 'public_html'), '/\\'))
+        );
     }
 
     /**
@@ -21,9 +24,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Share categories for navbar search (doctors filter)
-        View::composer('layouts.app', function ($view) {
-            $navCategories = ServiceCategory::active()->ordered()->get();
+        View::composer(['layouts.app', 'partials.search-bar'], function ($view) {
+            try {
+                $navCategories = Cache::remember('nav.service_categories', 3600, function () {
+                    return ServiceCategory::active()->ordered()->get();
+                });
+            } catch (\Throwable) {
+                $navCategories = collect();
+            }
+
             $view->with('navCategories', $navCategories);
         });
     }

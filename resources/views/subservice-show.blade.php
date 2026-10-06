@@ -36,9 +36,9 @@
                 </div>
                 <div class="lg:w-1/2 order-1 lg:order-2">
                     @if($subcategory->image)
-                    <img src="{{ asset('storage/' . $subcategory->image) }}" alt="{{ $subcategory->name }}" class="w-full rounded-2xl shadow-xl object-cover max-h-96">
+                    <img src="{{ media_url($subcategory->image) }}" alt="{{ $subcategory->name }}" class="w-full rounded-2xl shadow-xl object-cover max-h-96">
                     @elseif($category->image)
-                    <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $subcategory->name }}" class="w-full rounded-2xl shadow-xl object-cover max-h-96">
+                    <img src="{{ media_url($category->image) }}" alt="{{ $subcategory->name }}" class="w-full rounded-2xl shadow-xl object-cover max-h-96">
                     @else
                     <img src="{{ asset('images/pelvic_health_services.png') }}" alt="{{ $subcategory->name }}" class="w-full rounded-2xl shadow-xl object-cover max-h-96">
                     @endif
@@ -48,11 +48,13 @@
     </section>
 
     <!-- Content -->
-    <section class="py-16 bg-white">
+    <section class="py-16 bg-gradient-to-b from-gray-50/50 to-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             @if($subcategory->description)
-            <div class="prose prose-lg prose-pink max-w-none prose-headings:font-heading prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-pink-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl">
-                {!! $subcategory->description !!}
+            <div class="overflow-hidden rounded-2xl border border-gray-200/80 bg-white p-6 shadow-sm ring-1 ring-gray-100/80 sm:p-8 lg:p-10">
+                <div class="rich-content prose prose-lg prose-pink max-w-none">
+                    {!! $subcategory->description !!}
+                </div>
             </div>
             @else
             <p class="text-gray-600">Detailed information about this treatment is being updated. Please <a href="{{ route('contact') }}" class="text-pink-600 hover:underline">contact us</a> for more information or to book a consultation.</p>

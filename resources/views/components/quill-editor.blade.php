@@ -1,8 +1,11 @@
-<div class="quill-editor-wrapper">
-    <div id="{{ $id ?? 'editor' }}" style="height: {{ $height ?? '400px' }};">
+@php
+    $editorId = $id ?? 'editor';
+@endphp
+<div class="quill-editor-wrapper" data-editor-id="{{ $editorId }}" data-placeholder="{{ $placeholder ?? 'Start writing your content...' }}" data-height="{{ $height ?? '400px' }}">
+    <div id="{{ $editorId }}" style="height: {{ $height ?? '400px' }};">
         {!! $content ?? '' !!}
     </div>
-    <input type="hidden" name="{{ $name }}" id="{{ $id ?? 'editor' }}-input" value="{{ $value ?? '' }}">
+    <input type="hidden" name="{{ $name }}" id="{{ $editorId }}-input" value="{{ $value ?? '' }}">
 </div>
 
 @once
@@ -14,7 +17,7 @@
         font-size: 16px;
     }
     .quill-editor-wrapper .ql-editor {
-        min-height: {{ $height ?? '400px' }};
+        min-height: 120px;
     }
     .quill-editor-wrapper .ql-toolbar {
         background: #f9fafb;
@@ -39,14 +42,17 @@
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    var editorId = '{{ $id ?? 'editor' }}';
-    var quillContainer = document.getElementById(editorId);
-    var hiddenInput = document.getElementById(editorId + '-input');
-    
-    if (quillContainer && !quillContainer.classList.contains('quill-initialized')) {
+    var wrappers = document.querySelectorAll('.quill-editor-wrapper:not(.quill-initialized)');
+    wrappers.forEach(function(wrapper) {
+        var editorId = wrapper.getAttribute('data-editor-id');
+        var placeholder = wrapper.getAttribute('data-placeholder') || 'Start writing your content...';
+        var quillContainer = document.getElementById(editorId);
+        var hiddenInput = document.getElementById(editorId + '-input');
+        if (!quillContainer || !hiddenInput) return;
+
         var quill = new Quill('#' + editorId, {
             theme: 'snow',
-            placeholder: '{{ $placeholder ?? 'Start writing your content...' }}',
+            placeholder: placeholder,
             modules: {
                 toolbar: [
                     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -64,36 +70,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 ]
             }
         });
-        
-        quillContainer.classList.add('quill-initialized');
-        
-        // Update hidden input on text change
+
+        wrapper.classList.add('quill-initialized');
+
         quill.on('text-change', function() {
             var html = quill.root.innerHTML;
-            // If editor is empty, set to empty string
-            if (html === '<p><br></p>') {
-                html = '';
-            }
+            if (html === '<p><br></p>') html = '';
             hiddenInput.value = html;
         });
-        
-        // Set initial value if exists
+
         if (hiddenInput.value) {
             quill.root.innerHTML = hiddenInput.value;
         }
-        
-        // Update hidden input before form submission
-        var form = quillContainer.closest('form');
+
+        var form = wrapper.closest('form');
         if (form) {
             form.addEventListener('submit', function() {
                 var html = quill.root.innerHTML;
-                if (html === '<p><br></p>') {
-                    html = '';
-                }
+                if (html === '<p><br></p>') html = '';
                 hiddenInput.value = html;
             });
         }
-    }
+    });
 });
 </script>
 @endpush

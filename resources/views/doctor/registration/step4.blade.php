@@ -179,34 +179,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('step4Form');
     const submitBtn = document.getElementById('submitBtn');
-    
+
     if (!form || !submitBtn) {
-        console.error('Form or submit button not found!');
         return;
     }
-    
-    form.addEventListener('submit', function(e) {
-        console.log('Form submission started...');
+
+    form.addEventListener('submit', function() {
         const submitText = submitBtn.querySelector('.submit-text');
         const loadingText = submitBtn.querySelector('.loading-text');
-        
-        // Log form data
-        const formData = new FormData(form);
-        console.log('Form Data:');
-        for (let [key, value] of formData.entries()) {
-            console.log(key + ': ' + value);
-        }
-        
-        // Disable button and show loading state
+
         submitBtn.disabled = true;
         if (submitText) submitText.classList.add('hidden');
         if (loadingText) loadingText.classList.remove('hidden');
-        
-        console.log('Form is submitting...');
-        // Allow form to submit normally
     });
-    
-    console.log('Step 4 form initialized');
 });
 </script>
 @endsection

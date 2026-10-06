@@ -53,7 +53,7 @@
                         <div class="h-48 overflow-hidden relative">
                             <div class="absolute inset-0 {{ $theme['overlay'] }} group-hover:bg-transparent transition-colors z-10"></div>
                             @if($category->image)
-                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <img src="{{ media_url($category->image) }}" alt="{{ $category->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             @else
                             <img src="{{ asset('images/pelvic_pain_service.png') }}" alt="{{ $category->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             @endif

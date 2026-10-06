@@ -79,7 +79,7 @@ class BookingController extends Controller
                 'rating'         => $profile->rating,
                 'experience'     => $profile->years_of_experience,
                 'profile_image'  => $profile->profile_image
-                                        ? asset('storage/' . $profile->profile_image)
+                                        ? media_url($profile->profile_image)
                                         : null,
                 'clinic_visit_fee' => $profile->clinic_visit_fee,
                 'video_session_fee' => $profile->video_session_fee,

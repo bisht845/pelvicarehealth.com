@@ -105,6 +105,113 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     .animation-delay-4000 {
         animation-delay: 4s;
     }
+
+    /* ── Home: professional motion (scoped) ───────────────────────────── */
+    @keyframes home-fade-up {
+        from { opacity: 0; transform: translateY(22px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes home-fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes home-float-soft {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+    @keyframes home-shine {
+        0% { background-position: 200% center; }
+        100% { background-position: -200% center; }
+    }
+
+    .home-hero-line {
+        opacity: 0;
+        animation: home-fade-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .home-hero-line:nth-child(1) { animation-delay: 0.04s; }
+    .home-hero-line:nth-child(2) { animation-delay: 0.1s; }
+    .home-hero-line:nth-child(3) { animation-delay: 0.16s; }
+    .home-hero-line:nth-child(4) { animation-delay: 0.22s; }
+    .home-hero-line:nth-child(5) { animation-delay: 0.28s; }
+    .home-hero-line:nth-child(6) { animation-delay: 0.34s; }
+    .home-hero-line:nth-child(7) { animation-delay: 0.4s; }
+    .home-hero-line:nth-child(8) { animation-delay: 0.46s; }
+
+    .home-hero-img-wrap {
+        opacity: 0;
+        animation: home-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    }
+    .home-hero-img-wrap img {
+        transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+    }
+    .home-hero-img-wrap:hover img {
+        transform: scale(1.02);
+        box-shadow: 0 25px 50px -12px rgba(219, 39, 119, 0.25);
+    }
+
+    .home-reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+        will-change: opacity, transform;
+    }
+    .home-reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .home-card-interactive {
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                    box-shadow 0.4s ease,
+                    border-color 0.35s ease;
+    }
+    .home-card-interactive:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(236, 72, 153, 0.12);
+    }
+
+    .home-stat-card {
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    }
+    .home-stat-card:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 16px 32px -8px rgba(219, 39, 119, 0.18);
+    }
+
+    .home-step-card .home-step-icon {
+        transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+    }
+    .home-step-card:hover .home-step-icon {
+        transform: scale(1.08);
+        box-shadow: 0 12px 24px -6px rgba(219, 39, 119, 0.35);
+    }
+
+    .home-cta-pulse {
+        animation: home-float-soft 5s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .home-hero-line,
+        .home-hero-img-wrap {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        .home-reveal {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+        .home-card-interactive:hover,
+        .home-stat-card:hover {
+            transform: none !important;
+        }
+        .home-cta-pulse {
+            animation: none !important;
+        }
+    }
 </style>
 @endpush
 
@@ -115,20 +222,20 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full py-8">
                 <!-- Left Column - Text Content -->
             <div class="order-2 lg:order-1 flex flex-col justify-center">
-                <div class="inline-block bg-pink-50 border border-pink-100 text-pink-700 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold mb-6 w-fit shadow-sm">
+                <div class="home-hero-line inline-block bg-pink-50 border border-pink-100 text-pink-700 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold mb-6 w-fit shadow-sm">
                     ✨ Trusted by 5,000+ Women Across India
                 </div>
-                <h1 class="text-5xl sm:text-5xl md:text-5xl font-bold heading-font text-gray-900 mb-5 leading-tight">
+                <h1 class="home-hero-line text-5xl sm:text-5xl md:text-5xl font-bold heading-font text-gray-900 mb-5 leading-tight">
                     Your Body Deserves <br>
                     <span class="relative inline-block mb-2">
                         <span class="relative z-10 bg-pink-100 text-pink-600 px-3 py-1 rounded-lg shadow-md border border-pink-200 text-lg sm:text-xl md:text-4xl">Expert Care</span>
                         <span class="absolute -bottom-2 -right-2 w-full h-full bg-pink-50 rounded-lg -z-0"></span>
                     </span>
                 </h1>
-                <p class="text-3xl sm:text-lg text-gray-700 mb-6 leading-relaxed max-w-lg">
+                <p class="home-hero-line text-3xl sm:text-lg text-gray-700 mb-6 leading-relaxed max-w-lg">
                     <b>Do You Have</b>
                 </p>
-                <ul class="space-y-2.5 sm:space-y-3 mb-6 max-w-lg list-none pl-0" role="list">
+                <ul class="home-hero-line space-y-2.5 sm:space-y-3 mb-6 max-w-lg list-none pl-0" role="list">
                     <li class="flex items-center gap-3 text-gray-700 text-sm sm:text-base leading-relaxed font-bold py-0.5">
                         <span class="flex-shrink-0 w-2 h-2 rounded-full bg-pink-500 ring-4 ring-pink-100" aria-hidden="true"></span>
                         <span>Pain during sex?</span>
@@ -142,12 +249,12 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                         <span>Pelvic discomfort?</span>
                     </li>
                 </ul>
-                <p class="text-base sm:text-lg text-gray-700 mb-6 leading-relaxed max-w-lg">
+                <p class="home-hero-line text-base sm:text-lg text-gray-700 mb-6 leading-relaxed max-w-lg">
                     You're not alone. Connect with verified women's health physiotherapists who understand your concerns.
                 </p>
                 
                 <!-- Trust Signals - One Line with Icons -->
-                <div class="flex items-center gap-6 md:gap-8 mb-8 flex-wrap">
+                <div class="home-hero-line flex items-center gap-6 md:gap-8 mb-8 flex-wrap">
                     <div class="flex items-center gap-3 group">
                         <div class="w-10 h-10 bg-white border border-pink-100 rounded-full flex items-center justify-center flex-shrink-0 shadow-sm group-hover:shadow-md transition-all text-pink-500">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -186,7 +293,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 </div>
                 
                 <!-- CTAs -->
-                <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                <div class="home-hero-line flex flex-col sm:flex-row gap-4 mb-6">
                     <a href="{{ route('book-appointment') }}" class="flex items-center justify-center bg-pink-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-pink-700 transition-all shadow-lg hover:shadow-pink-200 hover:-translate-y-0.5 text-center text-base min-w-[200px]" style="background-color: #db2777;">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -198,7 +305,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     </a>
                 </div>
                 
-                <p class="text-xs text-gray-500 flex items-center gap-2">
+                <p class="home-hero-line text-xs text-gray-500 flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                     Available in <strong>Delhi NCR, Mumbai, Bangalore, Pune</strong> • 💻 Online & In-Person
                 </p>
@@ -206,7 +313,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             
             <!-- Right Column - Image -->
             <div class="order-1 lg:order-2 flex items-center justify-center p-4 lg:p-8">
-                <div class="relative w-full max-w-md mx-auto">
+                <div class="home-hero-img-wrap relative w-full max-w-md mx-auto">
                     <div class="absolute inset-0 bg-gradient-to-tr from-pink-100 to-pink-50 rounded-[2rem] transform rotate-3 scale-105 -z-10"></div>
                     <img src="{{ asset('images/hero_woman_consultation.png') }}" alt="Women's Health Consultation" class="relative rounded-[1.5rem] shadow-2xl w-full h-auto object-cover border-4 border-white max-h-[500px]">
                 </div>
@@ -222,10 +329,10 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     <section class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold heading-font text-gray-900 mb-3">
+                <h2 class="home-reveal text-xl sm:text-2xl md:text-3xl font-bold heading-font text-gray-900 mb-3">
                     Meet Pelvicare's Verified Women's Health Physiotherapists
                 </h2>
-                <p class="text-base text-gray-600">Trained Specialists in Pelvic floor, Pregnancy, Postpartum, and Intemate Health Care</p>
+                <p class="home-reveal text-base text-gray-600" style="--reveal-delay: 80ms">Trained Specialists in Pelvic floor, Pregnancy, Postpartum, and Intemate Health Care</p>
             </div>
             
             @if($featuredDoctors->count() > 0)
@@ -236,12 +343,30 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                         @foreach($featuredDoctors as $doctor)
                             @php
                                 $profile = $doctor->doctorProfile;
-                                $categoryDisplay = $profile->category_subcategory_display ?? 'N/A';
                                 $rating = $profile->rating ?? 4.5;
-                                $image = $profile->profile_image ? asset('storage/' . $profile->profile_image) : asset('images/physiotherapist_' . (($loop->index % 3) + 1) . '.png');
+                                $image = $profile->profile_image ? (media_url($profile->profile_image) ?? asset('images/physiotherapist_' . (($loop->index % 3) + 1) . '.png')) : asset('images/physiotherapist_' . (($loop->index % 3) + 1) . '.png');
+                                $catIds = $profile->service_category_ids ?? [];
+                                $subIds = $profile->service_subcategory_ids ?? [];
+                                $homeCatList = $categoriesById->only($catIds)->values();
+                                $homeSubList = $subcategoriesById->only($subIds)->values();
+                                $homeLinks = collect();
+                                foreach ($homeCatList as $cat) {
+                                    $subs = $homeSubList->where('service_category_id', $cat->id);
+                                    if ($subs->isNotEmpty()) {
+                                        foreach ($subs->take(2) as $sub) {
+                                            $homeLinks->push(['url' => route('services.subservice', [$cat->slug, $sub->slug]), 'name' => $sub->name]);
+                                        }
+                                    } else {
+                                        $homeLinks->push(['url' => route('services.show', $cat->slug), 'name' => $cat->name]);
+                                    }
+                                }
+                                foreach ($homeSubList->whereNotIn('service_category_id', $homeCatList->pluck('id'))->take(2) as $sub) {
+                                    $parentCat = $categoriesById->get($sub->service_category_id);
+                                    $homeLinks->push(['url' => $parentCat ? route('services.subservice', [$parentCat->slug, $sub->slug]) : route('services'), 'name' => $sub->name]);
+                                }
                             @endphp
                             <div class="swiper-slide">
-                                <div class="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-2 border border-pink-100 h-full flex flex-col">
+                                <div class="home-card-interactive bg-gradient-to-br from-pink-50 to-white rounded-2xl p-6 shadow-lg border border-pink-100 h-full flex flex-col">
                                     <div class="relative mb-4">
                                         <img src="{{ $image }}" alt="{{ $doctor->name }}" class="w-full h-52 object-cover rounded-xl">
                                         <div class="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-xs font-semibold text-pink-600 shadow-md">
@@ -249,25 +374,6 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                                         </div>
                                     </div>
                                     <h3 class="text-lg font-bold heading-font text-gray-900 mb-2">{{ $doctor->name }}</h3>
-                                    @php
-                                        $homeCatList = $profile->serviceCategories();
-                                        $homeSubList = $profile->serviceSubcategories();
-                                        $homeLinks = collect();
-                                        foreach ($homeCatList as $cat) {
-                                            $subs = $homeSubList->where('service_category_id', $cat->id);
-                                            if ($subs->isNotEmpty()) {
-                                                foreach ($subs->take(2) as $sub) {
-                                                    $homeLinks->push(['url' => route('services.subservice', [$cat->slug, $sub->slug]), 'name' => $sub->name]);
-                                                }
-                                            } else {
-                                                $homeLinks->push(['url' => route('services.show', $cat->slug), 'name' => $cat->name]);
-                                            }
-                                        }
-                                        foreach ($homeSubList->whereNotIn('service_category_id', $homeCatList->pluck('id'))->take(2) as $sub) {
-                                            $parentCat = $sub->serviceCategory;
-                                            $homeLinks->push(['url' => $parentCat ? route('services.subservice', [$parentCat->slug, $sub->slug]) : route('services'), 'name' => $sub->name]);
-                                        }
-                                    @endphp
                                     @if($homeLinks->isNotEmpty())
                                         <div class="flex flex-wrap gap-1.5 mb-3 min-h-[3.25rem] overflow-hidden content-start" style="max-height: 3.53rem;">
                                             @foreach($homeLinks->take(4) as $link)
@@ -307,7 +413,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             @endif
             
             <div class="text-center mt-8">
-                <a href="{{ route('doctors.index') }}" class="inline-block bg-gradient-to-r from-pink-400 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-pink-500 hover:to-pink-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                <a href="{{ route('doctors.index') }}" class="home-reveal inline-block bg-gradient-to-r from-pink-400 to-pink-500 text-white px-8 py-3 rounded-full font-semibold hover:from-pink-500 hover:to-pink-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1" style="--reveal-delay: 120ms">
                     View All Specialists
                 </a>
             </div>
@@ -318,7 +424,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     <section id="problems" class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold heading-font text-gray-900 mb-3">
+                <h2 class="home-reveal text-xl sm:text-2xl md:text-3xl font-bold heading-font text-gray-900 mb-3">
                     Search Your Symptoms – Get Real Answers
                 </h2>
             </div>
@@ -337,8 +443,8 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 @if(isset($serviceCategories) && $serviceCategories->isNotEmpty())
                     @foreach($serviceCategories as $category)
                         @php $theme = $problemColors[$category->card_color ?? 'pink'] ?? $problemColors['pink']; @endphp
-                        <div class="bg-gradient-to-br {{ $theme['from'] }} {{ $theme['to'] }} rounded-2xl p-6 hover:shadow-xl transition-all transform hover:-translate-y-2 border {{ $theme['border'] }}">
-                            <div class="w-12 h-12 bg-gradient-to-br {{ $theme['icon'] }} rounded-xl flex items-center justify-center mb-4">
+                        <div class="home-reveal home-card-interactive group/svc bg-gradient-to-br {{ $theme['from'] }} {{ $theme['to'] }} rounded-2xl p-6 border {{ $theme['border'] }}" style="--reveal-delay: {{ $loop->index * 75 }}ms">
+                            <div class="w-12 h-12 bg-gradient-to-br {{ $theme['icon'] }} rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover/svc:scale-110 group-hover/svc:rotate-3">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
@@ -368,7 +474,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             </div>
 
             <div class="text-center mt-8">
-                <a href="{{ route('services') }}" class="inline-flex items-center gap-2 bg-pink-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-700 transition-all shadow-lg hover:shadow-xl">
+                <a href="{{ route('services') }}" class="home-reveal inline-flex items-center gap-2 bg-pink-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-700 transition-all shadow-lg hover:shadow-xl" style="--reveal-delay: 100ms">
                     View All Services
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
@@ -383,7 +489,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 items-center">
                 <!-- Left: Text Content -->
-                <div class="order-2 lg:order-1 lg:pr-10 py-4">
+                <div class="home-reveal order-2 lg:order-1 lg:pr-10 py-4" style="--reveal-delay: 0ms">
                     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold heading-font text-slate-900 mb-4 leading-tight">
                         Meet Pelvicare-Verified <br class="hidden lg:block">
                         Women's Health Physiotherapists
@@ -422,7 +528,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 </div>
 
                 <!-- Right: Image with Horizontal Fade -->
-                <div class="order-1 lg:order-2 relative lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-1/2 h-full min-h-[320px] lg:min-h-auto w-full">
+                <div class="home-reveal order-1 lg:order-2 relative lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-1/2 h-full min-h-[320px] lg:min-h-auto w-full" style="--reveal-delay: 120ms">
                     <div class="relative w-full h-full">
                         <img src="{{ asset('images/hero_woman_consultation.png') }}" 
                              alt="Pelvicare verified specialist consultation" 
@@ -440,10 +546,10 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="text-center mb-10 sm:mb-14 max-w-3xl mx-auto">
-                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold heading-font text-gray-900 mb-5 leading-tight">
+                <h2 class="home-reveal text-xl sm:text-2xl md:text-3xl font-bold heading-font text-gray-900 mb-5 leading-tight">
                     When Tests Are Normal, But the Pain Is Still Real
                 </h2>
-                <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-2">
+                <p class="home-reveal text-gray-700 text-sm sm:text-base leading-relaxed mb-2" style="--reveal-delay: 90ms">
                     If you've been told <em>"just relax,"</em> <em>"it's stress,"</em> <em>"give it more time,"</em> or <em>"this is normal after childbirth"</em> — or <em>"this happens to many women"</em> — but the pain or leakage continues — <em>These conditions are common — but they are treatable.</em>
                </p>
             </div>
@@ -451,7 +557,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             <!-- 5 Stats Cards – subtle gradient per card, soft shadow -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-6 mb-8 sm:mb-10">
                 <!-- Card 1: Urine Leakage -->
-                <div class="bg-gradient-to-br from-pink-50 to-pink-100/80 rounded-2xl p-5 sm:p-6 shadow-sm border border-pink-100/80">
+                <div class="home-reveal home-stat-card bg-gradient-to-br from-pink-50 to-pink-100/80 rounded-2xl p-5 sm:p-6 shadow-sm border border-pink-100/80" style="--reveal-delay: 0ms">
                     <div class="w-11 h-11 rounded-xl bg-pink-500 flex items-center justify-center mb-4 shadow-sm">
                         <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69C12 2.69 6 10 6 14c0 3.31 2.69 6 6 6s6-2.69 6-6c0-4-6-11.31-6-11.31z"/></svg>
                     </div>
@@ -461,7 +567,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     <p class="text-gray-700 text-xs sm:text-sm mt-1.5 leading-snug">Common, but not something you have to live with</p>
                 </div>
                 <!-- Card 2: Pain During Sex -->
-                <div class="bg-gradient-to-br from-rose-50 to-red-50 rounded-2xl p-5 sm:p-6 shadow-sm border border-red-100/80">
+                <div class="home-reveal home-stat-card bg-gradient-to-br from-rose-50 to-red-50 rounded-2xl p-5 sm:p-6 shadow-sm border border-red-100/80" style="--reveal-delay: 60ms">
                     <div class="w-11 h-11 rounded-xl bg-red-500 flex items-center justify-center mb-4 shadow-sm">
                         <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                     </div>
@@ -471,7 +577,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     <p class="text-gray-700 text-xs sm:text-sm mt-1.5 leading-snug">Pain is common — but not normal to ignore</p>
                 </div>
                 <!-- Card 3: Pelvic Organ Prolapse -->
-                <div class="bg-gradient-to-br from-purple-50 to-purple-100/70 rounded-2xl p-5 sm:p-6 shadow-sm border border-purple-100/80">
+                <div class="home-reveal home-stat-card bg-gradient-to-br from-purple-50 to-purple-100/70 rounded-2xl p-5 sm:p-6 shadow-sm border border-purple-100/80" style="--reveal-delay: 120ms">
                     <div class="w-11 h-11 rounded-xl bg-purple-500 flex items-center justify-center mb-4 shadow-sm">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                     </div>
@@ -481,7 +587,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     <p class="text-gray-700 text-xs sm:text-sm mt-1.5 leading-snug">Often managed with pelvic rehabilitation</p>
                 </div>
                 <!-- Card 4: Back or Pelvic Pain -->
-                <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 sm:p-6 shadow-sm border border-green-100/80">
+                <div class="home-reveal home-stat-card bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-5 sm:p-6 shadow-sm border border-green-100/80" style="--reveal-delay: 180ms">
                     <div class="w-11 h-11 rounded-xl bg-green-500 flex items-center justify-center mb-4 shadow-sm">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                     </div>
@@ -491,7 +597,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     <p class="text-gray-700 text-xs sm:text-sm mt-1.5 leading-snug">Pain is common — persistent pain deserves care</p>
                 </div>
                 <!-- Card 5: Diastasis Recti -->
-                <div class="bg-gradient-to-br from-indigo-50 to-sky-50 rounded-2xl p-5 sm:p-6 shadow-sm border border-indigo-100/80">
+                <div class="home-reveal home-stat-card bg-gradient-to-br from-indigo-50 to-sky-50 rounded-2xl p-5 sm:p-6 shadow-sm border border-indigo-100/80" style="--reveal-delay: 240ms">
                     <div class="w-11 h-11 rounded-xl bg-indigo-500 flex items-center justify-center mb-4 shadow-sm">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16M6 6v12M18 6v12"></path></svg>
                     </div>
@@ -552,12 +658,12 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 </div>
             </div> --}}
 
-            <p class="text-center text-pink-400/90 text-sm sm:text-base mb-10 font-medium font-weight-bold">
+            <p class="home-reveal text-center text-pink-400/90 text-sm sm:text-base mb-10 font-medium font-weight-bold" style="--reveal-delay: 100ms">
                 Private. Respectful. Women-only care.
             </p>
 
             <div class="text-center">
-                <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-semibold hover:from-pink-600 hover:to-pink-700 transition-all shadow-md hover:shadow-lg text-sm sm:text-base">
+                <a href="{{ route('contact') }}" class="home-reveal inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-pink-600 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-semibold hover:from-pink-600 hover:to-pink-700 transition-all shadow-md hover:shadow-lg text-sm sm:text-base home-cta-pulse" style="--reveal-delay: 160ms">
                     Talk to a Women's Health Specialist
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
@@ -569,14 +675,14 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     <section class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
+                <h2 class="home-reveal text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
                     Private Care Without Judgment – Here's How
                 </h2>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-gradient-to-br from-pink-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold">
+                <div class="home-step-card home-reveal text-center" style="--reveal-delay: 0ms">
+                    <div class="home-step-icon w-20 h-20 bg-gradient-to-br from-pink-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold">
                         1
                     </div>
                     <h3 class="text-xl font-bold heading-font text-gray-900 mb-4">
@@ -587,8 +693,8 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     </p>
                 </div>
                 
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold">
+                <div class="home-step-card home-reveal text-center" style="--reveal-delay: 100ms">
+                    <div class="home-step-icon w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold">
                         2
                     </div>
                     <h3 class="text-xl font-bold heading-font text-gray-900 mb-4">
@@ -599,8 +705,8 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     </p>
                 </div>
                 
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold">
+                <div class="home-step-card home-reveal text-center" style="--reveal-delay: 200ms">
+                    <div class="home-step-icon w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold">
                         3
                     </div>
                     <h3 class="text-xl font-bold heading-font text-gray-900 mb-4">
@@ -618,22 +724,22 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     <section id="testimonials" class="py-8 bg-gradient-to-br from-gray-50 to-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
+                <h2 class="home-reveal text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
                     You're in Safe Company
                 </h2>
             </div>
             
             <!-- Stats Bar -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="bg-white rounded-xl p-6 text-center shadow-md">
+                <div class="home-reveal home-stat-card bg-white rounded-xl p-6 text-center shadow-md" style="--reveal-delay: 0ms">
                     <div class="text-4xl font-bold text-pink-600 mb-2">5,247</div>
                     <div class="text-gray-700">women found answers here</div>
                 </div>
-                <div class="bg-white rounded-xl p-6 text-center shadow-md">
+                <div class="home-reveal home-stat-card bg-white rounded-xl p-6 text-center shadow-md" style="--reveal-delay: 80ms">
                     <div class="text-4xl font-bold text-pink-600 mb-2">200+</div>
                     <div class="text-gray-700">verified women's health specialists</div>
                 </div>
-                <div class="bg-white rounded-xl p-6 text-center shadow-md">
+                <div class="home-reveal home-stat-card bg-white rounded-xl p-6 text-center shadow-md" style="--reveal-delay: 160ms">
                     <div class="text-4xl font-bold text-pink-600 mb-2">10+</div>
                     <div class="text-gray-700">Cities: Delhi NCR | Mumbai | Bangalore ...</div>
                 </div>
@@ -641,7 +747,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             
             <!-- Testimonials -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-xl p-8 shadow-lg">
+                <div class="home-reveal home-card-interactive bg-white rounded-xl p-8 shadow-lg" style="--reveal-delay: 0ms">
                     <div class="flex items-center mb-4">
                         <svg class="w-8 h-8 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
@@ -653,7 +759,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     <p class="text-sm text-gray-600">– Anonymous, Delhi (Age 31)</p>
                 </div>
                 
-                <div class="bg-white rounded-xl p-8 shadow-lg">
+                <div class="home-reveal home-card-interactive bg-white rounded-xl p-8 shadow-lg" style="--reveal-delay: 100ms">
                     <div class="flex items-center mb-4">
                         <svg class="w-8 h-8 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.996 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
@@ -787,7 +893,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     <section class="py-12 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
-                <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
+                <h2 class="home-reveal text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-4">
                     The Questions You've Been Googling
                 </h2>
                 {{-- <p class="text-xl text-gray-600">Written like a friend explaining, not a doctor.</p> --}}
@@ -802,7 +908,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
             @endphp
             <div class="space-y-4">
                 @foreach($homeFaqs as $index => $item)
-                <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md group">
+                <div class="home-reveal bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md group" style="--reveal-delay: {{ $index * 70 }}ms">
                     <button class="w-full flex items-start text-left p-6 focus:outline-none" onclick="toggleFaq(this)">
                         <span class="text-pink-600 font-bold mr-4 text-lg shrink-0 mt-0.5">{{ $index + 1 }}.</span>
                         <span class="text-gray-900 font-bold text-lg flex-1 group-hover:text-pink-600 transition-colors">{{ $item['q'] }}</span>
@@ -817,7 +923,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 @endforeach
             </div>
             <div class="text-center mt-10">
-                <a href="{{ route('faq') }}" class="inline-flex items-center gap-2 bg-pink-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-700 transition-colors shadow-md hover:shadow-lg">
+                <a href="{{ route('faq') }}" class="home-reveal inline-flex items-center gap-2 bg-pink-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-pink-700 transition-colors shadow-md hover:shadow-lg" style="--reveal-delay: 120ms">
                     View All Answers
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
@@ -845,12 +951,12 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     <!-- Privacy Promise Section -->
     <section class="py-8 bg-gradient-to-br from-gray-50 to-gray-100">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-8">
+            <h2 class="home-reveal text-3xl md:text-4xl font-bold heading-font text-gray-900 mb-8">
                 Your Privacy Is Non-Negotiable
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white rounded-xl p-6 shadow-md">
+                <div class="home-reveal home-card-interactive bg-white rounded-xl p-6 shadow-md" style="--reveal-delay: 0ms">
                     <svg class="w-12 h-12 text-pink-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                     </svg>
@@ -858,7 +964,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     <p class="text-gray-700 text-sm">Use a pseudonym</p>
                 </div>
                 
-                <div class="bg-white rounded-xl p-6 shadow-md">
+                <div class="home-reveal home-card-interactive bg-white rounded-xl p-6 shadow-md" style="--reveal-delay: 80ms">
                     <svg class="w-12 h-12 text-pink-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                     </svg>
@@ -866,7 +972,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     <p class="text-gray-700 text-sm">Labeled as "Wellness Consultation"</p>
                 </div>
                 
-                <div class="bg-white rounded-xl p-6 shadow-md">
+                <div class="home-reveal home-card-interactive bg-white rounded-xl p-6 shadow-md" style="--reveal-delay: 160ms">
                     <svg class="w-12 h-12 text-pink-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                     </svg>
@@ -874,7 +980,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                     <p class="text-gray-700 text-sm">No data selling</p>
                 </div>
                 
-                <div class="bg-white rounded-xl p-6 shadow-md">
+                <div class="home-reveal home-card-interactive bg-white rounded-xl p-6 shadow-md" style="--reveal-delay: 240ms">
                     <svg class="w-12 h-12 text-pink-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                     </svg>
@@ -883,7 +989,7 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 </div>
             </div>
             
-            <a href="#" class="inline-block text-pink-600 font-semibold hover:text-pink-700 transition-colors">
+            <a href="#" class="home-reveal inline-block text-pink-600 font-semibold hover:text-pink-700 transition-colors" style="--reveal-delay: 200ms">
                 Read our full privacy policy →
             </a>
         </div>
@@ -892,21 +998,21 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
     <!-- Final Conversion Push -->
     <section class="py-8 bg-gradient-to-r from-pink-500 to-pink-600">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-xl md:text-2xl font-bold heading-font text-gray-900 mb-4">
+            <h2 class="home-reveal text-xl md:text-2xl font-bold heading-font text-white mb-4">
                 If You've Been Carrying This Silently – Put It Down Here
             </h2>
-            <p class="text-sm md:text-base text-pink-100 mb-8 leading-relaxed max-w-2xl mx-auto">
+            <p class="home-reveal text-sm md:text-base text-pink-100 mb-8 leading-relaxed max-w-2xl mx-auto" style="--reveal-delay: 80ms">
                 You don't have to explain perfectly, be brave, or know what's wrong—you just have to be tired of the pain.
             </p>
 
             <div class="flex flex-col sm:flex-row gap-3 justify-center items-center flex-wrap">
-                <a href="{{ route('doctors.index') }}" class="inline-flex items-center justify-center bg-white text-pink-600 px-5 py-2.5 rounded-full font-semibold hover:bg-pink-50 transition-all shadow-lg hover:shadow-xl text-sm whitespace-nowrap border border-pink-200">
+                <a href="{{ route('doctors.index') }}" class="home-reveal inline-flex items-center justify-center bg-white text-pink-600 px-5 py-2.5 rounded-full font-semibold hover:bg-pink-50 transition-all shadow-lg hover:shadow-xl text-sm whitespace-nowrap border border-pink-200" style="--reveal-delay: 140ms">
                     Find a Specialist Now →
                 </a>
-                <a href="#problems" class="inline-flex items-center justify-center bg-pink-400/20 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-pink-400/30 transition-all border border-white/50 text-sm whitespace-nowrap">
+                <a href="#problems" class="home-reveal inline-flex items-center justify-center bg-pink-400/20 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-pink-400/30 transition-all border border-white/50 text-sm whitespace-nowrap" style="--reveal-delay: 200ms">
                     Read About Common Issues First →
                 </a>
-                <a href="{{ route('contact') }}" class="inline-flex items-center justify-center bg-pink-400/20 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-pink-400/30 transition-all border border-white/50 text-sm whitespace-nowrap">
+                <a href="{{ route('contact') }}" class="home-reveal inline-flex items-center justify-center bg-pink-400/20 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-pink-400/30 transition-all border border-white/50 text-sm whitespace-nowrap" style="--reveal-delay: 260ms">
                     Ask a Question Anonymously →
                 </a>
             </div>
@@ -981,6 +1087,27 @@ Pain during sex? Leaking urine after childbirth? Connect with verified women's h
                 lastSlideMessage: 'This is the last doctor',
             },
         });
+
+        // Scroll reveal: .home-reveal → .is-visible (CSS keeps content visible if prefers-reduced-motion)
+        const revealNodes = document.querySelectorAll('.home-reveal');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (revealNodes.length && !reducedMotion) {
+            if ('IntersectionObserver' in window) {
+                const io = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (!entry.isIntersecting) return;
+                            entry.target.classList.add('is-visible');
+                            io.unobserve(entry.target);
+                        });
+                    },
+                    { root: null, rootMargin: '0px 0px -6% 0px', threshold: 0.06 }
+                );
+                revealNodes.forEach((el) => io.observe(el));
+            } else {
+                revealNodes.forEach((el) => el.classList.add('is-visible'));
+            }
+        }
     });
 </script>
 @endpush

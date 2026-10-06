@@ -9,13 +9,13 @@
     <meta property="og:title" content="{{ $post->meta_title ?: $post->title }}">
     <meta property="og:description" content="{{ $post->meta_description ?: Str::limit(strip_tags($post->excerpt ?: $post->content), 160) }}">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:image" content="{{ $post->og_image ? asset('storage/' . $post->og_image) : ($post->featured_image ? asset('storage/' . $post->featured_image) : asset('images/pelvicarehealth_logo.png')) }}">
+    <meta property="og:image" content="{{ $post->og_image ? media_url($post->og_image) : ($post->featured_image ? media_url($post->featured_image) : asset('images/pelvicarehealth_logo.png')) }}">
     <meta property="article:published_time" content="{{ $post->published_at?->toIso8601String() }}">
     <meta property="article:author" content="{{ $post->author->name }}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $post->meta_title ?: $post->title }}">
     <meta name="twitter:description" content="{{ $post->meta_description ?: Str::limit(strip_tags($post->excerpt ?: $post->content), 160) }}">
-    <meta name="twitter:image" content="{{ $post->og_image ? asset('storage/' . $post->og_image) : ($post->featured_image ? asset('storage/' . $post->featured_image) : asset('images/pelvicarehealth_logo.png')) }}">
+    <meta name="twitter:image" content="{{ $post->og_image ? media_url($post->og_image) : ($post->featured_image ? media_url($post->featured_image) : asset('images/pelvicarehealth_logo.png')) }}">
 @endpush
 
 @section('content')
@@ -55,14 +55,14 @@
         @if($post->featured_image)
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
             <div class="rounded-2xl overflow-hidden shadow-lg aspect-video bg-gray-100">
-                <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" class="w-full h-full object-cover">
+                <img src="{{ media_url($post->featured_image) }}" alt="{{ $post->title }}" class="w-full h-full object-cover">
             </div>
         </div>
         @endif
 
         <!-- Content -->
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-            <div class="prose prose-lg prose-pink max-w-none prose-headings:font-heading prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-pink-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-img:shadow-md">
+            <div class="rich-content prose prose-lg prose-pink max-w-none prose-img:rounded-xl">
                 {!! $post->content !!}
             </div>
         </div>
@@ -74,7 +74,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach($post->images as $img)
                 <div class="rounded-xl overflow-hidden border border-gray-100 shadow-sm aspect-square bg-gray-50">
-                    <img src="{{ asset('storage/' . $img->path) }}" alt="{{ $img->caption ?: 'Article image' }}" class="w-full h-full object-cover">
+                    <img src="{{ media_url($img->path) }}" alt="{{ $img->caption ?: 'Article image' }}" class="w-full h-full object-cover">
                     @if($img->caption)
                     <p class="p-2 text-sm text-gray-600 bg-white">{{ $img->caption }}</p>
                     @endif
@@ -93,7 +93,7 @@
                 <a href="{{ route('blog.show', $rel->slug) }}" class="group block">
                     <div class="aspect-video rounded-xl overflow-hidden bg-gray-100 mb-3">
                         @if($rel->featured_image)
-                        <img src="{{ asset('storage/' . $rel->featured_image) }}" alt="{{ $rel->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <img src="{{ media_url($rel->featured_image) }}" alt="{{ $rel->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         @else
                         <div class="w-full h-full flex items-center justify-center text-pink-300"><svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg></div>
                         @endif

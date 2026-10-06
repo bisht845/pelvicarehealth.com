@@ -32,7 +32,7 @@
             <div>
                 <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Description (optional)</label>
                 <p class="text-xs text-gray-500 mb-2">Detail about this treatment or condition. Supports headings, lists, and images.</p>
-                <x-tinymce-editor name="description" id="description" :value="old('description', $subcategory->description)" height="320px" />
+                <x-quill-editor name="description" id="description" :value="old('description', $subcategory->description)" height="320px" />
                 @error('description')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
             </div>
 
@@ -40,7 +40,7 @@
                 <label for="image" class="block text-sm font-semibold text-gray-700 mb-2">Image (optional)</label>
                 @if($subcategory->image)
                 <div class="mb-3 flex items-center gap-4">
-                    <img src="{{ asset('storage/' . $subcategory->image) }}" alt="{{ $subcategory->name }}" class="h-24 w-32 object-cover rounded-lg border border-gray-200">
+                    <img src="{{ media_url($subcategory->image) }}" alt="{{ $subcategory->name }}" class="h-24 w-32 object-cover rounded-lg border border-gray-200">
                     <span class="text-sm text-gray-500">Current image. Upload a new file to replace.</span>
                 </div>
                 @endif

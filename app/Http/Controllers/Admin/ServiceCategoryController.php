@@ -63,7 +63,7 @@ class ServiceCategoryController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('services/categories', 'public');
+            $data['image'] = $request->file('image')->store('service_images/categories', 'public_html');
         }
 
         ServiceCategory::create($data);
@@ -104,9 +104,9 @@ class ServiceCategoryController extends Controller
 
         if ($request->hasFile('image')) {
             if ($category->image) {
-                Storage::disk('public')->delete($category->image);
+                Storage::disk('public_html')->delete($category->image);
             }
-            $data['image'] = $request->file('image')->store('services/categories', 'public');
+            $data['image'] = $request->file('image')->store('service_images/categories', 'public_html');
         }
 
         $category->update($data);
@@ -120,7 +120,7 @@ class ServiceCategoryController extends Controller
         $category = ServiceCategory::findOrFail($id);
 
         if ($category->image) {
-            Storage::disk('public')->delete($category->image);
+            Storage::disk('public_html')->delete($category->image);
         }
 
         $category->delete();

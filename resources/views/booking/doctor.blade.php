@@ -41,7 +41,7 @@
                     <div class="bg-gradient-to-br from-pink-500 to-rose-500 p-6 text-white">
                         <div class="flex gap-4 items-start">
                             @if($profile->profile_image)
-                                <img src="{{ asset('storage/' . $profile->profile_image) }}"
+                                <img src="{{ media_url($profile->profile_image) }}"
                                      alt="{{ $doctor->name }}"
                                      class="w-24 h-24 rounded-2xl object-cover border-4 border-white/40 flex-shrink-0">
                             @else

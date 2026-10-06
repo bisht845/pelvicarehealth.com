@@ -50,6 +50,7 @@ return [
         'Chandigarh'                  => 'union_territory',
         'Dadra and Nagar Haveli and Daman and Diu' => 'union_territory',
         'Delhi'                       => 'union_territory',
+        'Delhi NCR'                   => 'union_territory',
         'Jammu and Kashmir'           => 'union_territory',
         'Ladakh'                      => 'union_territory',
         'Lakshadweep'                 => 'union_territory',

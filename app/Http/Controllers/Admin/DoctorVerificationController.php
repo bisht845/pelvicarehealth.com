@@ -248,6 +248,66 @@ class DoctorVerificationController extends Controller
         return redirect()->back()->with('success', "Doctor marked as {$status} successfully!");
     }
 
+    public function updatePhoto(Request $request, $id)
+    {
+        $request->validate([
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+
+        $doctor = User::findOrFail($id);
+        
+        if (!$doctor->isAdmin()) {
+            abort(404);
+        }
+
+        $profile = $doctor->doctorProfile;
+
+        if (!$profile) {
+            return redirect()->back()->with('error', 'Doctor profile not found.');
+        }
+
+        // Delete old photo
+        if ($profile->profile_image && \Illuminate\Support\Facades\Storage::disk('public_html')->exists($profile->profile_image)) {
+            \Illuminate\Support\Facades\Storage::disk('public_html')->delete($profile->profile_image);
+        }
+
+        // Upload new photo
+        $path = $request->file('profile_image')->store('doctor_profiles', 'public_html');
+        
+        $profile->update([
+            'profile_image' => $path,
+        ]);
+
+        return redirect()->back()->with('success', 'Profile photo updated successfully!');
+    }
+
+    public function removePhoto($id)
+    {
+        $doctor = User::findOrFail($id);
+        
+        if (!$doctor->isAdmin()) {
+            abort(404);
+        }
+
+        $profile = $doctor->doctorProfile;
+
+        if (!$profile) {
+            return redirect()->back()->with('error', 'Doctor profile not found.');
+        }
+
+        if ($profile->profile_image && \Illuminate\Support\Facades\Storage::disk('public_html')->exists($profile->profile_image)) {
+            \Illuminate\Support\Facades\Storage::disk('public_html')->delete($profile->profile_image);
+            
+            $profile->update([
+                'profile_image' => null,
+            ]);
+
+            return redirect()->back()->with('success', 'Profile photo removed successfully!');
+        }
+
+        return redirect()->back()->with('error', 'No profile photo found to remove.');
+    }
+
     public function softDeleteDoctor($id)
     {
         $doctor = User::where('role', 'admin')->findOrFail($id);

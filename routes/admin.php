@@ -35,6 +35,8 @@ Route::middleware(['auth', 'role:super_admin'])->prefix('admin/super-admin')->na
     Route::post('/doctor-verification/{id}/restore', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'restoreDoctor'])->name('doctor-verification.restore');
     Route::post('/doctor-verification/document/{id}/approve', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'approveDocument'])->name('doctor-verification.document.approve');
     Route::post('/doctor-verification/document/{id}/reject', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'rejectDocument'])->name('doctor-verification.document.reject');
+    Route::post('/doctor-verification/{id}/photo', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'updatePhoto'])->name('doctor-verification.photo.update');
+    Route::delete('/doctor-verification/{id}/photo', [App\Http\Controllers\Admin\DoctorVerificationController::class, 'removePhoto'])->name('doctor-verification.photo.remove');
 });
 
 // Content Management (Super Admin only)

@@ -183,8 +183,8 @@ class DoctorController extends Controller
     public function uploadImage(Request $request)
     {
         $request->validate(['file' => 'required|image|max:5120']);
-        $path = $request->file('file')->store('doctor/bio-images', 'public');
-        return response()->json(['location' => asset('storage/' . $path)]);
+        $path = $request->file('file')->store('doctor/bio-images', 'public_html');
+        return response()->json(['location' => asset($path)]);
     }
 
     public function storeFaq(Request $request)
@@ -238,13 +238,13 @@ class DoctorController extends Controller
         $order = $maxOrder + 1;
         if ($request->hasFile('gallery_photos')) {
             foreach ($request->file('gallery_photos') as $file) {
-                $path = $file->store('doctor/photos', 'public');
+                $path = $file->store('doctor/photos', 'public_html');
                 $profile->photos()->create(['path' => $path, 'type' => 'gallery', 'sort_order' => $order++]);
             }
         }
         if ($request->hasFile('clinic_photos')) {
             foreach ($request->file('clinic_photos') as $file) {
-                $path = $file->store('doctor/photos', 'public');
+                $path = $file->store('doctor/photos', 'public_html');
                 $profile->photos()->create(['path' => $path, 'type' => 'clinic', 'sort_order' => $order++]);
             }
         }
@@ -254,7 +254,7 @@ class DoctorController extends Controller
     public function destroyPhoto($id)
     {
         $photo = auth()->user()->doctorProfile->photos()->findOrFail($id);
-        Storage::disk('public')->delete($photo->path);
+        Storage::disk('public_html')->delete($photo->path);
         $photo->delete();
         return redirect()->back()->with('success', 'Photo removed.');
     }
@@ -282,12 +282,12 @@ class DoctorController extends Controller
             if ($file->getSize() <= 1024 * 1024) { // 1MB check
                 // Delete old profile image if exists
                 if ($profile->profile_image) {
-                    if (Storage::disk('public')->exists($profile->profile_image)) {
-                        Storage::disk('public')->delete($profile->profile_image);
+                    if (Storage::disk('public_html')->exists($profile->profile_image)) {
+                        Storage::disk('public_html')->delete($profile->profile_image);
                     }
                 }
                 
-                $path = $file->store('doctor-profiles', 'public');
+                $path = $file->store('doctor-profiles', 'public_html');
                 $profile->update(['profile_image' => $path]);
             } else {
                 return redirect()->back()->with('error', 'Image size must be less than 1MB.');
@@ -317,8 +317,8 @@ class DoctorController extends Controller
         // Delete old profile image if exists
         if ($profile && $profile->profile_image) {
             $oldPath = $profile->profile_image;
-            if (Storage::disk('public')->exists($oldPath)) {
-                Storage::disk('public')->delete($oldPath);
+            if (Storage::disk('public_html')->exists($oldPath)) {
+                Storage::disk('public_html')->delete($oldPath);
             }
         }
         
@@ -327,7 +327,7 @@ class DoctorController extends Controller
         $path = 'doctor-profiles/' . $filename;
         
         // Save new image
-        Storage::disk('public')->put($path, $imageData);
+        Storage::disk('public_html')->put($path, $imageData);
         
         // Update profile with image path
         $profile->update(['profile_image' => $path]);
@@ -350,13 +350,13 @@ class DoctorController extends Controller
         }
 
         // Delete old file if it exists
-        if ($document->file_path && \Storage::disk('public')->exists($document->file_path)) {
-            \Storage::disk('public')->delete($document->file_path);
+        if ($document->file_path && \Storage::disk('public_html')->exists($document->file_path)) {
+            \Storage::disk('public_html')->delete($document->file_path);
         }
 
         // Store new file
         $file = $request->file('document');
-        $path = $file->store('doctor-documents', 'public');
+        $path = $file->store('doctor-documents', 'public_html');
         
         // Update document record
         $document->update([

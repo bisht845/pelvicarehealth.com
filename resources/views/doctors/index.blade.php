@@ -7,7 +7,7 @@
 {{-- Hero: theme gradient --}}
 <section class="bg-gradient-to-br from-pink-50 via-white to-pink-100 border-b border-pink-100/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div class="max-w-2xl">
+        <div class="max-w-2xl doctors-page-hero">
             <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold heading-font text-gray-900 tracking-tight leading-tight mb-3">
                 Find a specialist
             </h1>
@@ -71,7 +71,7 @@
 <section class="min-h-[50vh]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
         @if($doctors->count() > 0)
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
+            <div class="doctors-results-head flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
                 <p class="text-sm text-gray-600">
                     <span class="font-semibold text-gray-900">{{ $doctors->total() }}</span> specialist{{ $doctors->total() === 1 ? '' : 's' }}
                     @if(request()->has('search') || request()->has('city') || request()->has('category'))
@@ -94,9 +94,9 @@
                         $hasMeaningfulRating = $rating !== null && (float)$rating > 0;
                         $city = $profile->city ?? null;
                         $years = (int)($profile->years_of_experience ?? 0);
-                        $image = $profile->profile_image ? asset('storage/' . $profile->profile_image) : asset('images/physiotherapist_' . (($loop->index % 3) + 1) . '.png');
+                        $image = $profile->profile_image ? (media_url($profile->profile_image) ?? asset('images/physiotherapist_' . (($loop->index % 3) + 1) . '.png')) : asset('images/physiotherapist_' . (($loop->index % 3) + 1) . '.png');
                     @endphp
-                    <article class="theme-card overflow-hidden rounded-2xl flex flex-col h-full hover:shadow-xl transition-all duration-300 group">
+                    <article class="theme-card doctors-card-reveal overflow-hidden rounded-2xl flex flex-col h-full group" style="--reveal-delay: {{ min($loop->index * 42, 340) }}ms">
                         <a href="{{ route('doctors.show', $profile->slug) }}" class="block focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-inset rounded-t-2xl overflow-hidden">
                             <div class="relative aspect-[4/3] bg-pink-50/50 overflow-hidden">
                                 <img src="{{ $image }}" alt="{{ $doctor->name }}" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
@@ -188,3 +188,101 @@
     </div>
 </section>
 @endsection
+
+@push('styles')
+<style>
+    /* Page intro: one-shot fade-rise (no scroll observer) */
+    @keyframes doctors-hero-enter {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 14px, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    .doctors-page-hero h1 {
+        opacity: 0;
+        animation: doctors-hero-enter 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .doctors-page-hero p {
+        opacity: 0;
+        animation: doctors-hero-enter 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+    }
+    .doctors-results-head {
+        opacity: 0;
+        animation: doctors-hero-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    }
+
+    /* Cards: unified rise + fade + subtle settle (GPU-friendly) */
+    .doctors-card-reveal {
+        opacity: 0;
+        transform: translate3d(0, 22px, 0) scale(0.985);
+        transform-origin: 50% 80%;
+        backface-visibility: hidden;
+        transition:
+            opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+            box-shadow 0.35s ease;
+        transition-delay: var(--reveal-delay, 0ms);
+        will-change: opacity, transform;
+    }
+    .doctors-card-reveal.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+        will-change: auto;
+    }
+    .theme-card.doctors-card-reveal:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .doctors-page-hero h1,
+        .doctors-page-hero p,
+        .doctors-results-head {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        .doctors-card-reveal {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+            will-change: auto !important;
+        }
+    }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var cards = document.querySelectorAll('.doctors-card-reveal');
+        if (!cards.length) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        function reveal(el) {
+            el.classList.add('is-visible');
+        }
+
+        if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) return;
+                        reveal(entry.target);
+                        io.unobserve(entry.target);
+                    });
+                },
+                { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.04 }
+            );
+            cards.forEach(function (el) {
+                io.observe(el);
+            });
+        } else {
+            cards.forEach(reveal);
+        }
+    });
+</script>
+@endpush

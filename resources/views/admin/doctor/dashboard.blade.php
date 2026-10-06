@@ -195,10 +195,10 @@
                         <td class="px-6 py-4">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0 h-10 w-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <span class="text-blue-600 font-semibold">{{ substr($appointment->patient->name, 0, 1) }}</span>
+                                    <span class="text-blue-600 font-semibold">{{ substr($appointment->patient?->name ?? 'U', 0, 1) }}</span>
                                 </div>
                                 <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900">{{ $appointment->patient->name }}</div>
+                                    <div class="text-sm font-medium text-gray-900">{{ $appointment->patient?->name ?? 'Unknown Patient' }}</div>
                                     <div class="text-xs text-gray-500 capitalize">{{ str_replace('_', ' ', $appointment->session_type ?? 'clinic_visit') }}</div>
                                 </div>
                             </div>

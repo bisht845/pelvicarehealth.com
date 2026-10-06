@@ -122,7 +122,7 @@
                     {{-- Avatar --}}
                     <div class="flex-shrink-0">
                         @if($profile->profile_image)
-                            <img src="{{ asset('storage/' . $profile->profile_image) }}"
+                            <img src="{{ media_url($profile->profile_image) }}"
                                  alt="{{ $doctor->name }}"
                                  class="w-20 h-20 rounded-2xl object-cover border-2 border-pink-100">
                         @else

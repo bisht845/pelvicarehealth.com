@@ -21,7 +21,7 @@
     </div>
     @if($report->file_path)
     <div class="mt-6">
-        <a href="{{ asset('storage/' . $report->file_path) }}" target="_blank" class="bg-pink-600 text-white px-4 py-2 rounded-md hover:bg-pink-700 inline-block">Download Report</a>
+        <a href="{{ asset('' . $report->file_path) }}" target="_blank" class="bg-pink-600 text-white px-4 py-2 rounded-md hover:bg-pink-700 inline-block">Download Report</a>
     </div>
     @endif
     <div class="mt-6">

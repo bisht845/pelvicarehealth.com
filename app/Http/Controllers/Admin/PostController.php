@@ -88,11 +88,11 @@ class PostController extends Controller
         ];
 
         if ($request->hasFile('featured_image')) {
-            $data['featured_image'] = $request->file('featured_image')->store('blog', 'public');
+            $data['featured_image'] = $request->file('featured_image')->store('blog_images', 'public_html');
         }
 
         if ($request->hasFile('og_image')) {
-            $data['og_image'] = $request->file('og_image')->store('blog/og', 'public');
+            $data['og_image'] = $request->file('og_image')->store('blog_images/og', 'public_html');
         }
 
         if ($request->has('is_published') && $request->is_published) {
@@ -103,7 +103,7 @@ class PostController extends Controller
 
         if ($request->hasFile('gallery_images')) {
             foreach ($request->file('gallery_images') as $index => $file) {
-                $path = $file->store('blog/gallery', 'public');
+                $path = $file->store('blog_images/gallery', 'public_html');
                 $post->images()->create(['path' => $path, 'sort_order' => $index]);
             }
         }
@@ -163,16 +163,16 @@ class PostController extends Controller
 
         if ($request->hasFile('featured_image')) {
             if ($post->featured_image) {
-                Storage::disk('public')->delete($post->featured_image);
+                Storage::disk('public_html')->delete($post->featured_image);
             }
-            $data['featured_image'] = $request->file('featured_image')->store('blog', 'public');
+            $data['featured_image'] = $request->file('featured_image')->store('blog_images', 'public_html');
         }
 
         if ($request->hasFile('og_image')) {
             if ($post->og_image) {
-                Storage::disk('public')->delete($post->og_image);
+                Storage::disk('public_html')->delete($post->og_image);
             }
-            $data['og_image'] = $request->file('og_image')->store('blog/og', 'public');
+            $data['og_image'] = $request->file('og_image')->store('blog_images/og', 'public_html');
         }
 
         if ($request->has('is_published') && $request->is_published && !$post->published_at) {
@@ -184,7 +184,7 @@ class PostController extends Controller
         if ($request->hasFile('gallery_images')) {
             $startOrder = $post->images()->max('sort_order') ?? -1;
             foreach ($request->file('gallery_images') as $index => $file) {
-                $path = $file->store('blog/gallery', 'public');
+                $path = $file->store('blog_images/gallery', 'public_html');
                 $post->images()->create(['path' => $path, 'sort_order' => $startOrder + 1 + $index]);
             }
         }
@@ -202,7 +202,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($postId);
         $image = $post->images()->findOrFail($imageId);
-        Storage::disk('public')->delete($image->path);
+        Storage::disk('public_html')->delete($image->path);
         $image->delete();
         return response()->json(['success' => true]);
     }
@@ -212,13 +212,13 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         if ($post->featured_image) {
-            Storage::disk('public')->delete($post->featured_image);
+            Storage::disk('public_html')->delete($post->featured_image);
         }
         if ($post->og_image) {
-            Storage::disk('public')->delete($post->og_image);
+            Storage::disk('public_html')->delete($post->og_image);
         }
         foreach ($post->images as $img) {
-            Storage::disk('public')->delete($img->path);
+            Storage::disk('public_html')->delete($img->path);
         }
 
         $post->delete();
@@ -232,8 +232,8 @@ class PostController extends Controller
             'file' => 'required|image|max:5120',
         ]);
 
-        $path = $request->file('file')->store('blog/images', 'public');
-        $url = asset('storage/' . $path);
+        $path = $request->file('file')->store('blog_images/images', 'public_html');
+        $url = media_url($path);
 
         return response()->json(['location' => $url]);
     }
